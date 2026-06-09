@@ -1,0 +1,1231 @@
+/* ==========================================================================
+   🎨 糖尿病衛教單張 核心樣式系統 (含亮/深色模式與列印優化)
+   ========================================================================== */
+
+:root {
+  /* 亮色模式變數 (預設) */
+  --bg-main: #f0f2f5;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-nested: #f8fafc;
+  --text-color: #1e293b;
+  --text-muted: #64748b;
+  --primary-color: #0284c7;
+  --primary-hover: #0369a1;
+  --accent-color: #8b5cf6;
+  --border-color: #e2e8f0;
+  
+  /* 風險與燈號顏色 (調整為經典紅黃橘綠燈) */
+  --success-color: #2D7D46;   /* 莫蘭迪綠 */
+  --warning-color: #faad14;   /* 黃色 */
+  --danger-color: #ff4d4f;    /* 紅色 */
+  --risk-low: #e6f7ed;        /* 經典綠燈 (淺綠) */
+  --risk-mod: #fffbe6;        /* 經典黃燈 (淺黃) */
+  --risk-high: #fff2e8;       /* 經典橘燈 (淺橘) */
+  --risk-vhigh: #fff1f0;      /* 經典紅燈 (淺紅) */
+  
+  --risk-low-border: #95deac;
+  --risk-mod-border: #ffe58f;
+  --risk-high-border: #ffbb96;
+  --risk-vhigh-border: #ffa39e;
+
+  --risk-low-text: #1b5e20;   /* 深綠 */
+  --risk-mod-text: #b25900;   /* 深黃/棕 */
+  --risk-high-text: #c45100;  /* 深橘 */
+  --risk-vhigh-text: #cf1322; /* 深紅 */
+
+  --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+  --glass-blur: blur(8px);
+  --transition-speed: 0.3s;
+}
+
+[data-theme="dark"] {
+  /* 深色模式變數 */
+  --bg-main: #0f172a;
+  --bg-card: rgba(30, 41, 59, 0.8);
+  --bg-card-nested: #0f172a;
+  --text-color: #f8fafc;
+  --text-muted: #94a3b8;
+  --primary-color: #38bdf8;
+  --primary-hover: #7dd3fc;
+  --accent-color: #c084fc;
+  --border-color: #334155;
+  
+  /* 深色模式下的紅黃橘綠燈號背景，加深並增強亮色字體對比 */
+  --risk-low: #1b4332;        /* 深森林綠 */
+  --risk-mod: #5c4308;        /* 深金黃 */
+  --risk-high: #722c00;       /* 深橘 */
+  --risk-vhigh: #820014;      /* 深紅 */
+
+  --risk-low-border: #2d7d46;
+  --risk-mod-border: #faad14;
+  --risk-high-border: #ff7a00;
+  --risk-vhigh-border: #ff4d4f;
+
+  --risk-low-text: #b7eb8f;   /* 亮綠字 */
+  --risk-mod-text: #ffe58f;   /* 亮黃字 */
+  --risk-high-text: #ffd591;  /* 亮橘字 */
+  --risk-vhigh-text: #ffa39e; /* 亮紅字 */
+
+  --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   基礎設定與排版
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-color);
+  line-height: 1.6;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  padding-bottom: 2rem;
+}
+
+/* 網頁容器 */
+.main-container {
+  max-width: 1200px;
+  margin: 80px auto 20px;
+  padding: 0 20px;
+}
+
+/* ==========================================================================
+   Header & Button 樣式
+   ========================================================================== */
+.top-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px stroke var(--border-color);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  z-index: 100;
+  transition: background var(--transition-speed);
+}
+
+.header-container {
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition-speed) ease;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: var(--border-color);
+  color: var(--text-color);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+  background-color: rgba(255,255,255,0.05);
+}
+
+.btn-sm {
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.btn-sm:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.w-100 {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   卡片與網格佈局
+   ========================================================================== */
+.card {
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--card-shadow);
+  margin-bottom: 24px;
+  transition: background var(--transition-speed), border-color var(--transition-speed);
+}
+
+.card-bg-nested {
+  background: var(--bg-card-nested);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.intro-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+  color: var(--primary-color);
+}
+
+.intro-section p {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+/* 圖表網格 */
+.infographic-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.span-two-cols {
+  grid-column: span 2;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+}
+
+.card-icon {
+  font-size: 1.75rem;
+}
+
+.card-title-group h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.card-title-group .subtitle {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  background: var(--bg-card-nested);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   1. Beta Cell Aging & Slider
+   ========================================================================== */
+.interactive-control {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.interactive-control label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.slider-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.slider-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  min-width: 40px;
+}
+
+input[type="range"] {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border-color);
+  outline: none;
+  -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+  border: 2px solid #fff;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.info-card {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 10px;
+  border-left: 4px solid var(--primary-color);
+  background: var(--bg-card-nested);
+  transition: all 0.3s ease;
+}
+
+.info-card.highlight {
+  border-left-color: var(--accent-color);
+}
+
+.info-card h4 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.info-card p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   2. A1C Gauge
+   ========================================================================== */
+.a1c-display-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.gauge-wrapper {
+  position: relative;
+  width: 70%;
+  max-width: 260px;
+}
+
+.a1c-value-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.a1c-value-overlay .value-num {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--text-color);
+}
+
+.a1c-value-overlay .value-unit {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-left: 2px;
+}
+
+.a1c-input-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.a1c-input-wrapper label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg-card-nested);
+  width: 130px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+  outline: none;
+}
+
+.input-group .input-addon {
+  padding-right: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.quick-btns {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+/* 狀態指示燈 */
+.a1c-status-card {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.status-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.status-light {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 8px rgba(0,0,0,0.15);
+}
+
+.alert-green {
+  border-left: 5px solid var(--success-color);
+  background-color: rgba(82, 196, 26, 0.05);
+}
+.alert-green .status-light { background-color: var(--success-color); }
+
+.alert-yellow {
+  border-left: 5px solid var(--warning-color);
+  background-color: rgba(250, 173, 20, 0.05);
+}
+.alert-yellow .status-light { background-color: var(--warning-color); }
+
+.alert-red {
+  border-left: 5px solid var(--danger-color);
+  background-color: rgba(255, 77, 79, 0.05);
+}
+.alert-red .status-light { background-color: var(--danger-color); }
+
+/* ==========================================================================
+   3. DM Complication (人體互動圖)
+   ========================================================================== */
+.complication-flex {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.body-svg-container {
+  flex: 1.2;
+  max-width: 280px;
+  background: var(--bg-card-nested);
+  border-radius: 12px;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  justify-content: center;
+}
+
+.body-silhouette {
+  fill: none;
+  stroke: var(--text-muted);
+  stroke-width: 2;
+  opacity: 0.25;
+}
+
+/* 交互熱點 (Hotspots) */
+.hotspot {
+  cursor: pointer;
+}
+
+.hotspot .core {
+  fill: var(--primary-color);
+  transition: fill 0.3s, r 0.3s;
+}
+
+.hotspot .pulse {
+  fill: var(--primary-color);
+  fill-opacity: 0.15;
+  animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  transform-origin: center;
+}
+
+.hotspot .label {
+  font-size: 10px;
+  font-weight: 500;
+  fill: var(--text-muted);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* 當熱點被選中或 hover 時 */
+.hotspot.active .core,
+.hotspot:hover .core {
+  fill: var(--accent-color);
+  r: 8px;
+}
+
+.hotspot.active .pulse,
+.hotspot:hover .pulse {
+  fill: var(--accent-color);
+  animation-duration: 1.2s;
+}
+
+.hotspot.active .label,
+.hotspot:hover .label {
+  fill: var(--text-color);
+  font-weight: bold;
+  opacity: 1;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 1;
+  }
+  80%, 100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* 說明面板 */
+.complication-detail-panel {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.tab-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: var(--bg-card-nested);
+  border: 1.5px solid var(--border-color);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  color: var(--text-color);
+  border-color: var(--text-muted);
+}
+
+.tab-btn.active {
+  background: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
+}
+
+.detail-content {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.detail-icon {
+  font-size: 2rem;
+}
+
+.detail-header h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.info-group h5 {
+  font-size: 0.9rem;
+  color: var(--primary-color);
+  margin-bottom: 6px;
+}
+
+.info-group p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.info-group-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.info-sub-group h5 {
+  font-size: 0.9rem;
+  color: var(--accent-color);
+  margin-bottom: 6px;
+}
+
+.info-sub-group ul {
+  padding-left: 18px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ==========================================================================
+   4. KDIGO DM CKD 風險矩陣
+   ========================================================================== */
+.kdigo-container {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.kdigo-calculator {
+  flex: 1;
+  background: var(--bg-card-nested);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 250px;
+}
+
+.kdigo-calculator h4 {
+  font-size: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+}
+
+.calculator-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-item label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-item label .unit {
+  font-weight: normal;
+  color: var(--text-muted);
+}
+
+.input-item input {
+  padding: 8px 12px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-main);
+  color: var(--text-color);
+  outline: none;
+  font-weight: 600;
+}
+
+.input-item input:focus {
+  border-color: var(--primary-color);
+}
+
+/* 計算結果 */
+.calc-result-card {
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--bg-main);
+  border-left: 4px solid var(--border-color);
+  margin-top: 10px;
+}
+
+.calc-result-card h5 {
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.calc-result-card p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.result-action-tip {
+  font-size: 0.8rem;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+/* KDIGO 表格樣式 */
+.kdigo-table-wrapper {
+  flex: 2.2;
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.kdigo-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 4px;
+  font-size: 0.8rem;
+}
+
+/* 斜線表頭 */
+.diagonal-header {
+  position: relative;
+  background: var(--bg-card-nested) !important;
+  border: 1px solid var(--border-color) !important;
+  height: 50px;
+  padding: 4px !important;
+}
+
+.diag-text-ur {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  text-align: right;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.diag-text-bl {
+  position: absolute;
+  bottom: 4px;
+  left: 8px;
+  text-align: left;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.kdigo-table th, .kdigo-table td {
+  padding: 10px;
+  text-align: center;
+  border-radius: 6px;
+  vertical-align: middle;
+}
+
+.uacr-header {
+  background: var(--bg-card-nested);
+  border: 1px solid var(--border-color);
+  font-weight: 500;
+  width: 27%;
+}
+
+.egfr-header {
+  background: var(--bg-card-nested);
+  border: 1px solid var(--border-color);
+  font-weight: 500;
+  text-align: left !important;
+  width: 25%;
+}
+
+.egfr-val {
+  background: var(--bg-card-nested);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  width: 12%;
+}
+
+/* 風險儲存格 */
+.kdigo-cell {
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.kdigo-cell.risk-low {
+  background-color: var(--risk-low);
+  color: var(--risk-low-text);
+}
+.kdigo-cell.risk-mod {
+  background-color: var(--risk-mod);
+  color: var(--risk-mod-text);
+}
+.kdigo-cell.risk-high {
+  background-color: var(--risk-high);
+  color: var(--risk-high-text);
+}
+.kdigo-cell.risk-vhigh {
+  background-color: var(--risk-vhigh);
+  color: var(--risk-vhigh-text);
+}
+
+.kdigo-cell .risk-label {
+  display: block;
+  font-weight: 900;
+  font-size: 0.95rem; /* 大字體風險標籤 */
+}
+
+.kdigo-cell .freq-label {
+  display: block;
+  font-size: 1.05rem; /* 數字倍數/頻率顯著放大 */
+  font-weight: 900;   /* 字體加粗 */
+  opacity: 1;        /* 深色模式下不透明，保持最高亮度 */
+  margin-top: 4px;
+}
+
+/* 當表格格子被選取高亮時 */
+.kdigo-cell.highlight-cell {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 10;
+}
+
+.kdigo-cell.highlight-cell.risk-low { border-color: var(--risk-low-border); }
+.kdigo-cell.highlight-cell.risk-mod { border-color: var(--risk-mod-border); }
+.kdigo-cell.highlight-cell.risk-high { border-color: var(--risk-high-border); }
+.kdigo-cell.highlight-cell.risk-vhigh { border-color: var(--risk-vhigh-border); }
+
+/* 圖例 */
+.legend-container {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.section-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+/* ==========================================================================
+   5. 底部衛教小叮嚀與頁尾
+   ========================================================================== */
+.footer-tips-card h3 {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.tip-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.tip-num {
+  background: var(--primary-color);
+  color: #fff;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.tip-item p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.tip-item p strong {
+  color: var(--text-color);
+}
+
+.main-footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-color);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.print-only {
+  display: none;
+}
+
+/* ==========================================================================
+   📱 響應式排版 (Responsive Design)
+   ========================================================================== */
+@media (max-width: 900px) {
+  .infographic-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .span-two-cols {
+    grid-column: span 1;
+  }
+  
+  .complication-flex {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .body-svg-container {
+    max-width: 240px;
+  }
+  
+  .kdigo-container {
+    flex-direction: column;
+  }
+  
+  .tips-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    padding-bottom: 1rem;
+  }
+  
+  .main-container {
+    margin-top: 74px;
+    padding: 0 12px;
+  }
+  
+  .card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+  
+  .btn-text {
+    display: none;
+  }
+  
+  .top-header {
+    height: 56px;
+  }
+  
+  .logo h1 {
+    font-size: 1.1rem;
+  }
+  
+  .info-group-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .tab-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .kdigo-table {
+    font-size: 0.7rem;
+    border-spacing: 2px;
+  }
+  
+  .kdigo-table th, .kdigo-table td {
+    padding: 6px 4px;
+  }
+}
+
+/* ==========================================================================
+   🖨️ 列印最佳化樣式表 (@media print)
+   * 設計為適合 A4 尺寸單/雙頁面列印
+   ========================================================================== */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 1.2cm 1cm 1.2cm 1cm;
+  }
+
+  :root {
+    /* 強制為高對比白底黑字，省墨水 */
+    --bg-main: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-nested: #fafafa;
+    --text-color: #000000;
+    --text-muted: #444444;
+    --border-color: #cccccc;
+    --primary-color: #0d5c8a;
+    --accent-color: #5b21b6;
+    
+    /* 列印時保持彩色的背景，但邊框需稍微加深 */
+    --risk-low: #e6f7ff;
+    --risk-mod: #fffbe6;
+    --risk-high: #fff2e8;
+    --risk-vhigh: #fff1f0;
+    
+    --risk-low-border: #1890ff;
+    --risk-mod-border: #faad14;
+    --risk-high-border: #ff7875;
+    --risk-vhigh-border: #ff4d4f;
+
+    --risk-low-text: #0050b3;
+    --risk-mod-text: #d46b08;
+    --risk-high-text: #c45100;
+    --risk-vhigh-text: #cf1322;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 11pt;
+    padding: 0;
+  }
+
+  /* 隱藏網頁控制項 */
+  .no-print, 
+  #theme-toggle, 
+  #print-btn, 
+  .interactive-control, 
+  .a1c-input-wrapper, 
+  .tab-buttons, 
+  .kdigo-calculator {
+    display: none !important;
+  }
+
+  .main-container {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+
+  /* 調整標題，使列印時上方有乾淨標頭 */
+  body::before {
+    content: "🏥 糖尿病自我照護與健康指引衛教單張";
+    display: block;
+    font-size: 16pt;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0.5cm;
+    border-bottom: 2px solid #0d5c8a;
+    padding-bottom: 0.3cm;
+  }
+
+  .card {
+    border: 1px solid #aaa !important;
+    box-shadow: none !important;
+    background: #fff !important;
+    padding: 12pt !important;
+    margin-bottom: 12pt !important;
+    page-break-inside: avoid; /* 避免卡片內容被截斷至下一頁 */
+    border-radius: 8px !important;
+  }
+
+  .infographic-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12pt !important;
+  }
+
+  /* 強制併發症與 KDIGO 圖表寬度 */
+  .span-two-cols {
+    grid-column: span 2 !important;
+  }
+
+  .chart-container {
+    border: 1px solid #bbb !important;
+    background: #fff !important;
+  }
+
+  /* A1C 與 Beta Cell 併排在第一頁 */
+  #sec-beta-cell, #sec-a1c {
+    page-break-after: avoid;
+  }
+
+  /* 併發症排版調整 */
+  .complication-flex {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 20pt !important;
+    align-items: center !important;
+  }
+
+  .body-svg-container {
+    flex: 1 !important;
+    max-width: 180px !important;
+    border: 1px solid #ccc !important;
+  }
+  
+  .body-silhouette {
+    stroke: #333 !important;
+    opacity: 0.6 !important;
+  }
+  
+  .hotspot .core {
+    fill: #0d5c8a !important;
+  }
+  
+  .hotspot .pulse {
+    display: none !important; /* 列印時隱藏脈衝動畫 */
+  }
+  
+  .hotspot .label {
+    fill: #111 !important;
+    opacity: 1 !important;
+    font-size: 9px !important;
+  }
+
+  .complication-detail-panel {
+    flex: 2 !important;
+  }
+
+  .detail-content {
+    border: none !important;
+    padding: 0 !important;
+    min-height: auto !important;
+  }
+
+  /* KDIGO 列印調整 */
+  .kdigo-container {
+    flex-direction: row !important;
+  }
+
+  .kdigo-table-wrapper {
+    flex: 1 !important;
+  }
+
+  .kdigo-table {
+    border-spacing: 2px !important;
+    -webkit-print-color-adjust: exact; /* 允許 Chrome/Safari 列印背景色 */
+    color-adjust: exact;
+  }
+
+  .kdigo-cell {
+    border: 1px solid #aaa !important;
+    padding: 6px 4px !important;
+  }
+
+  /* 讓列印版的 KDIGO 選取效果溫和一點 */
+  .kdigo-cell.highlight-cell {
+    transform: none !important;
+    box-shadow: none !important;
+    outline: 2px solid #000 !important;
+  }
+
+  /* 底部提示 */
+  .tips-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12pt !important;
+  }
+
+  .print-only {
+    display: block !important;
+    margin-top: 8px;
+    font-style: italic;
+  }
+  
+  /* 分頁控制：確保排版美觀 */
+  #sec-beta-cell, #sec-a1c {
+    /* 第一頁 */
+  }
+  
+  #sec-complication {
+    page-break-before: always; /* 併發症與 KDIGO 在第二頁，形成漂亮的兩頁式精美衛教手冊 */
+  }
+}

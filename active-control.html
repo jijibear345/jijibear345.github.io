@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>糖尿病積極控糖行動指南 - 開業醫學診所高齡友善衛教</title>
+  <meta name="description" content="專為開業醫學診所打造的高齡友善與高效數位轉化方案。由專科醫師與衛教團隊研擬，結合 TIR、A1C 紅綠燈與細胞退化曲線之高質感互動衛教網頁。">
+  
+  <!-- 引入 Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* 🎨 高質感高齡友善核心設計系統 (專為長輩優化) */
+    :root {
+      --bg-warm: #FAF6EE;          /* 防眩光暖乳白底色 */
+      --bg-card: #FFFFFF;
+      --bg-card-nested: #F5EFE4;
+      --text-main: #1E293B;        /* 深色高對比字體 */
+      --text-muted: #64748B;
+      --text-white: #FFFFFF;
+      
+      /* 莫蘭迪/臨床優化色彩 */
+      --primary: #0284C7;          /* 醫學藍 */
+      --accent: #8B5CF6;           /* 質感紫 */
+      --safe-green: #2D7D46;       /* 莫蘭迪安全綠 */
+      --warn-yellow: #D46B08;      /* 莫蘭迪警示黃 */
+      --danger-red: #C93B3B;       /* 磚紅/玫瑰警告紅 */
+      
+      --border-color: #E2D9C8;
+      --card-shadow: 0 10px 30px rgba(45, 38, 25, 0.05);
+      --transition-speed: 0.3s;
+    }
+
+    [data-theme="dark"] {
+      --bg-warm: #12161A;          /* 暗色高對比底色 */
+      --bg-card: #1E252B;
+      --bg-card-nested: #2A333C;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --border-color: #384554;
+      --safe-green: #4ECB71;
+      --warn-yellow: #FFA940;
+      --danger-red: #FF7875;
+      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-warm);
+      color: var(--text-main);
+      line-height: 1.8;
+      padding-bottom: 5rem;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+      font-size: 18px; /* 預設 18px 長輩易讀 */
+    }
+
+    /* 限制網頁寬度 */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* 頂部 Header */
+    .header {
+      background-color: var(--bg-card);
+      border-bottom: 2px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      font-size: 32px;
+    }
+
+    .logo-title {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .logo-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 12px;
+      border: 2px solid var(--border-color);
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all var(--transition-speed);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: var(--text-white);
+      border: none;
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.2);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--card-shadow);
+      opacity: 0.95;
+    }
+
+    /* 前言區 */
+    .hero-section {
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    .hero-section h2 {
+      font-size: 36px;
+      font-weight: 900;
+      margin-bottom: 16px;
+      color: var(--text-main);
+    }
+
+    .hero-section p {
+      font-size: 20px;
+      color: var(--text-muted);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* 核心卡片風格 */
+    .card {
+      background-color: var(--bg-card);
+      border-radius: 24px;
+      padding: 32px;
+      margin-bottom: 32px;
+      border: 2px solid var(--border-color);
+      box-shadow: var(--card-shadow);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      border-bottom: 2px dashed var(--border-color);
+      padding-bottom: 16px;
+    }
+
+    .card-icon {
+      font-size: 36px;
+      background-color: var(--bg-warm);
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 18px;
+    }
+
+    .card-title-group h3 {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--text-main);
+    }
+
+    .card-title-group .subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Ⅰ. 情境引導入口 */
+    .entrance-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .entrance-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .entrance-card {
+      background-color: var(--bg-card);
+      border: 2px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px;
+      cursor: pointer;
+      transition: all var(--transition-speed);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .entrance-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+      box-shadow: 0 12px 24px rgba(2, 132, 199, 0.08);
+    }
+
+    .entrance-card.active {
+      border-color: var(--accent);
+      background-color: var(--bg-card-nested);
+    }
+
+    .entrance-badge {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--text-white);
+    }
+
+    .badge-blue { background-color: var(--primary); }
+    .badge-green { background-color: var(--safe-green); }
+    .badge-purple { background-color: var(--accent); }
+
+    .entrance-card h4 {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .entrance-card p {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* 導航內容盒 */
+    .guidance-box {
+      background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-card-nested) 100%);
+      border-radius: 20px;
+      padding: 28px;
+      border-left: 6px solid var(--primary);
+      margin-bottom: 40px;
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .guidance-box h5 {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .guidance-box p {
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+
+    .guidance-highlights {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 576px) {
+      .guidance-highlights { grid-template-columns: 1fr; }
+    }
+
+    .highlight-item {
+      background-color: var(--bg-card);
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      font-size: 16px;
+    }
+
+    /* 🟢 板塊 2: 個人化控糖紅綠燈 */
+    .slider-container {
+      margin: 32px 0;
+      text-align: center;
+    }
+
+    .big-a1c-display {
+      font-size: 72px;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 8px;
+      transition: color var(--transition-speed);
+    }
+
+    .big-a1c-unit {
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .eag-display {
+      font-size: 22px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .formula-box {
+      background-color: var(--bg-card-nested);
+      padding: 12px;
+      border-radius: 12px;
+      display: inline-block;
+      margin-bottom: 24px;
+      font-size: 15px;
+    }
+
+    .range-slider {
+      width: 100%;
+      height: 20px;
+      border-radius: 10px;
+      outline: none;
+      margin: 20px 0;
+      cursor: pointer;
+      -webkit-appearance: none;
+      background: linear-gradient(to right, var(--safe-green) 0%, var(--safe-green) 27%, var(--warn-yellow) 27%, var(--warn-yellow) 40%, var(--danger-red) 40%, var(--danger-red) 100%);
+    }
+
+    .range-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--text-main);
+      border: 4px solid var(--bg-card);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .range-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+
+    .lighthouse-card {
+      padding: 24px;
+      border-radius: 16px;
+      color: var(--text-white);
+      text-align: left;
+      transition: background-color var(--transition-speed);
+      margin-top: 24px;
+    }
+
+    .lh-green { background-color: var(--safe-green); }
+    .lh-yellow { background-color: var(--warn-yellow); }
+    .lh-red { background-color: var(--danger-red); }
+
+    .lighthouse-card h4 {
+      font-size: 22px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .lighthouse-card p {
+      font-size: 18px;
+    }
+
+    .elderly-target-note {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-top: 16px;
+      background-color: var(--bg-card-nested);
+      padding: 16px;
+      border-radius: 12px;
+      border-left: 4px solid var(--warn-yellow);
+    }
+
+    /* 🛡️ 板塊 4: 三高黃金防護網 */
+    .shield-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 768px) {
+      .shield-grid { grid-template-columns: 1fr; }
+    }
+
+    .shield-card {
+      background-color: var(--bg-card-nested);
+      border: 2px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-speed);
+    }
+
+    .shield-card:hover, .shield-card.active {
+      transform: translateY(-4px);
+      background-color: var(--bg-card);
+      border-color: var(--primary);
+      box-shadow: var(--card-shadow);
+    }
+
+    .shield-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .shield-card h4 {
+      font-size: 22px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .shield-target {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .shield-detail {
+      font-size: 16px;
+      text-align: left;
+      border-top: 1px dashed var(--border-color);
+      padding-top: 12px;
+      display: none;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    /* 📉 板塊 1: 胰島細胞自然退化表 */
+    .cell-chart-container {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .chart-tooltip {
+      background-color: var(--bg-card-nested);
+      border: 2px solid var(--border-color);
+      padding: 18px;
+      border-radius: 16px;
+      margin-top: 20px;
+      min-height: 110px;
+    }
+
+    .chart-tooltip h4 {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 6px;
+      color: var(--primary);
+    }
+
+    .stigma-gold {
+      color: var(--warn-yellow);
+      font-weight: 700;
+    }
+
+    /* 👣 板塊 3: 全身血管保衛戰 */
+    .map-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .map-grid { grid-template-columns: 1fr; }
+    }
+
+    .anatomy-svg-wrapper {
+      display: flex;
+      justify-content: center;
+      background-color: var(--bg-card-nested);
+      border-radius: 20px;
+      padding: 20px;
+      border: 1px solid var(--border-color);
+    }
+
+    .anatomy-pointer {
+      cursor: pointer;
+      transition: opacity var(--transition-speed);
+    }
+    .anatomy-pointer:hover {
+      opacity: 0.8;
+    }
+
+    .anatomy-details {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .anatomy-card {
+      border: 2px solid var(--border-color);
+      background-color: var(--bg-card-nested);
+      border-radius: 16px;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: all var(--transition-speed);
+    }
+
+    .anatomy-card:hover, .anatomy-card.active {
+      background-color: var(--bg-card);
+      border-color: var(--danger-red);
+      box-shadow: var(--card-shadow);
+    }
+
+    .anatomy-card h4 {
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .anatomy-card-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-top: 6px;
+      display: none;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    .anatomy-card.active .anatomy-card-desc {
+      display: block;
+    }
+
+    .clinic-badge {
+      background-color: var(--primary);
+      color: var(--text-white);
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    /* 頁尾與診所預約引導 */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: var(--text-white);
+      text-align: center;
+      border-radius: 24px;
+      padding: 40px;
+      margin-top: 40px;
+      box-shadow: 0 15px 35px rgba(2, 132, 199, 0.3);
+    }
+
+    .cta-banner h3 {
+      font-size: 32px;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .cta-banner p {
+      font-size: 20px;
+      margin-bottom: 24px;
+      opacity: 0.9;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+    @media (max-width: 576px) {
+      .cta-buttons { flex-direction: column; }
+    }
+
+    /* 漸入動畫 */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* TIR 挑戰區 */
+    .tir-challenge-box {
+      background-color: var(--bg-card-nested);
+      border-radius: 20px;
+      padding: 24px;
+      margin-top: 24px;
+      border: 1px solid var(--border-color);
+    }
+    .tir-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .tir-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--safe-green);
+    }
+    .tir-score {
+      font-size: 28px;
+      font-weight: 900;
+    }
+    .tir-btn-group {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    @media (max-width: 576px) {
+      .tir-btn-group { grid-template-columns: 1fr; }
+    }
+    .tir-option-btn {
+      padding: 12px;
+      border-radius: 12px;
+      border: 2px solid var(--border-color);
+      background-color: var(--bg-card);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--transition-speed);
+      text-align: center;
+    }
+    .tir-option-btn.active {
+      border-color: var(--safe-green);
+      background-color: #EBF8EE;
+      color: var(--safe-green);
+    }
+    [data-theme="dark"] .tir-option-btn.active {
+      background-color: #1b3a27;
+      color: var(--safe-green);
+    }
+
+    /* 💡 生活小叮嚀卡片樣式 */
+    .tips-box-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 20px;
+    }
+    @media (max-width: 768px) {
+      .tips-box-grid { grid-template-columns: 1fr; }
+    }
+    .tip-box-card {
+      background-color: var(--bg-card-nested);
+      border: 2px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      transition: all var(--transition-speed);
+    }
+    .tip-box-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+      box-shadow: var(--card-shadow);
+    }
+    .tip-box-icon {
+      font-size: 32px;
+      background-color: var(--bg-card);
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+    .tip-box-content h4 {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+    .tip-box-content p {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部導航 -->
+  <header class="header">
+    <div class="container header-content">
+      <div class="logo-area">
+        <span class="logo-icon">🩺</span>
+        <div>
+          <h1 class="logo-title">積極控糖行動指南</h1>
+          <div class="logo-subtitle">糖尿病專科診所高齡友善互動衛教</div>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a href="index.html" class="btn" id="btn-back">
+          <span>⬅️</span> 返回首頁
+        </a>
+        <button id="theme-toggle" class="btn" title="切換深淺色模式">
+          <span class="icon">🌙</span> <span class="btn-text">深色模式</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- Hero 導讀 -->
+    <section class="hero-section">
+      <h2>全方位主動控糖新思維</h2>
+      <p>結合連續血糖監測（TIR）與細胞健康概念，用最簡單的互動，為您打破糖尿病的心理壓力，迎向健康生活！</p>
+    </section>
+
+    <!-- Ⅰ. 情境引導入口 (三大核心策略決策之導航) -->
+    <h3 style="font-size: 24px; font-weight: 900; margin-bottom: 16px; text-align: center;">👇 請選擇您目前的健康狀態或心情：</h3>
+    <section class="entrance-grid" id="entrance-group">
+      
+      <!-- 入口 1 -->
+      <div class="entrance-card" data-entrance="1" id="card-ent-1">
+        <span class="entrance-badge badge-blue">消除焦慮</span>
+        <h4>剛發現糖尿病，天塌下來了嗎？</h4>
+        <p>「這不是你的錯，是細胞累了。」點此看簡單的起步心法。</p>
+      </div>
+
+      <!-- 入口 2 -->
+      <div class="entrance-card" data-entrance="2" id="card-ent-2">
+        <span class="entrance-badge badge-green">積極達標</span>
+        <h4>我想像正常人一樣生活，血糖要控到多少？</h4>
+        <p>學會比糖化血色素更即時的指標：TIR 目標範圍時間。</p>
+      </div>
+
+      <!-- 入口 3 -->
+      <div class="entrance-card" data-entrance="3" id="card-ent-3">
+        <span class="entrance-badge badge-purple">迷思破除</span>
+        <h4>醫生叫我打針（胰島素），是不是沒救了？</h4>
+        <p>「打針是幫胰臟放特休假！」保護細胞與免於洗腎的真相。</p>
+      </div>
+
+    </section>
+
+    <!-- 動態引導內容 -->
+    <div class="guidance-box" id="guidance-box">
+      <h5 id="guidance-title">引導標題</h5>
+      <p id="guidance-desc">引導說明</p>
+      <div class="guidance-highlights" id="guidance-highlights">
+        <!-- JS 動態生成 -->
+      </div>
+    </div>
+
+    <!-- 板塊 1: 【細胞的謝幕與特休】胰島細胞自然退化表 -->
+    <section class="card" id="sec-cell">
+      <div class="card-header">
+        <div class="card-icon">📉</div>
+        <div class="card-title-group">
+          <h3>【細胞的謝幕與特休】胰島細胞自然退化表</h3>
+          <p class="subtitle">Beta-Cell Nature Aging Curve</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <p style="margin-bottom: 20px;">病友常因為「要吃更多藥」或「要打針」而感到自責。其實，胰島細胞功能退化是一個<strong>生理上的必然過程</strong>，並非您的過錯。</p>
+        
+        <div class="cell-chart-container">
+          <!-- 互動的 SVG 細胞退化折線圖 -->
+          <svg viewBox="0 0 500 250" width="100%" height="100%">
+            <!-- 網格線 -->
+            <line x1="50" y1="50" x2="450" y2="50" stroke="var(--border-color)" stroke-dasharray="4,4" />
+            <line x1="50" y1="100" x2="450" y2="100" stroke="var(--border-color)" stroke-dasharray="4,4" />
+            <line x1="50" y1="150" x2="450" y2="150" stroke="var(--border-color)" stroke-dasharray="4,4" />
+            <line x1="50" y1="200" x2="450" y2="200" stroke="var(--border-color)" stroke-dasharray="4,4" />
+            
+            <!-- 坐標軸 -->
+            <line x1="50" y1="200" x2="450" y2="200" stroke="var(--text-main)" stroke-width="2" />
+            <line x1="50" y1="30" x2="50" y2="200" stroke="var(--text-main)" stroke-width="2" />
+            
+            <!-- X軸標籤 -->
+            <text x="50" y="220" fill="var(--text-muted)" font-size="12" text-anchor="middle">診斷前</text>
+            <text x="180" y="220" fill="var(--primary)" font-size="13" font-weight="bold" text-anchor="middle">確診第 0 年</text>
+            <text x="310" y="220" fill="var(--text-muted)" font-size="12" text-anchor="middle">第 5 年</text>
+            <text x="440" y="220" fill="var(--text-muted)" font-size="12" text-anchor="middle">第 10 年+</text>
+            <text x="440" y="238" fill="var(--text-main)" font-size="12" font-weight="bold" text-anchor="middle">病程階段</text>
+
+            <!-- Y軸標籤 -->
+            <text x="25" y="55" fill="var(--text-muted)" font-size="12" text-anchor="middle">100%</text>
+            <text x="25" y="125" fill="var(--text-muted)" font-size="12" text-anchor="middle">50%</text>
+            <text x="25" y="200" fill="var(--text-muted)" font-size="12" text-anchor="middle">10%</text>
+            <text x="35" y="20" fill="var(--text-main)" font-size="12" font-weight="bold" text-anchor="start">胰島細胞剩餘功能 (%)</text>
+
+            <!-- 折線路徑 -->
+            <path d="M 50 50 Q 130 60, 180 125 T 310 155 T 440 185" fill="none" stroke="var(--danger-red)" stroke-width="4" stroke-linecap="round" />
+            
+            <!-- 互動節點 -->
+            <g class="chart-point" onclick="selectYear(0)" style="cursor: pointer;">
+              <circle cx="180" cy="125" r="8" fill="var(--primary)" stroke="#fff" stroke-width="2" id="pt-0" />
+              <text x="180" y="110" fill="var(--primary)" font-size="11" font-weight="bold" text-anchor="middle">退化 50%</text>
+            </g>
+            <g class="chart-point" onclick="selectYear(5)" style="cursor: pointer;">
+              <circle cx="310" cy="155" r="6" fill="var(--text-muted)" stroke="#fff" stroke-width="2" id="pt-5" />
+              <text x="310" y="142" fill="var(--text-muted)" font-size="11" font-weight="bold" text-anchor="middle">退化 65%</text>
+            </g>
+            <g class="chart-point" onclick="selectYear(10)" style="cursor: pointer;">
+              <circle cx="440" cy="185" r="6" fill="var(--text-muted)" stroke="#fff" stroke-width="2" id="pt-10" />
+              <text x="440" y="172" fill="var(--text-muted)" font-size="11" font-weight="bold" text-anchor="middle">退化 80%+</text>
+            </g>
+          </svg>
+          <p class="text-muted" style="text-align: center; font-size: 15px; margin-top: 8px;">👆 點擊圖表中的圓點，查看對應病程的去污名化解說與建議 👆</p>
+        </div>
+
+        <div class="chart-tooltip" id="cell-explanation">
+          <h4 id="cell-year-title">確診第 0 年 (胰島細胞功能剩餘約 50%)</h4>
+          <p id="cell-year-desc">在您被診斷出糖尿病的第一天，胰島細胞便已經自然退化了將近一半。這<strong>不是因為您做錯了什麼</strong>，而是身體機能的自然耗損。請配合醫囑，積極吃藥保護殘存的細胞功能！</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 板塊 2: 【個人化控糖紅綠燈】A1C 目標與日常換算 -->
+    <section class="card" id="sec-lighthouse">
+      <div class="card-header">
+        <div class="card-icon">🚦</div>
+        <div class="card-title-group">
+          <h3>【個人化控糖紅綠燈】A1C 目標與日常換算</h3>
+          <p class="subtitle">HbA1c & eAG Calculator</p>
+        </div>
+      </div>
+      <div class="card-body" style="text-align: center;">
+        
+        <div class="formula-box">
+          <strong>估算日常平均血糖 (eAG) 公式：</strong>
+          <!-- MathML 呈現 -->
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <mi>eAG</mi>
+            <mo>(</mo>
+            <mi>mg/dL</mi>
+            <mo>)</mo>
+            <mo>&#x0003D;</mo>
+            <mn>28.7</mn>
+            <mo>&#x000D7;</mo>
+            <mi>HbA1c</mi>
+            <mo>&#x02212;</mo>
+            <mn>46.7</mn>
+          </math>
+        </div>
+
+        <div class="slider-container">
+          <div class="big-a1c-display" id="a1c-value">6.5<span class="big-a1c-unit">%</span></div>
+          <div class="eag-display" id="eag-value">估算平均血糖：140 mg/dL</div>
+          
+          <input type="range" class="range-slider" id="a1c-slider" min="4.0" max="12.0" step="0.1" value="6.5">
+          <p class="text-muted" style="font-size: 15px;">⬅️ 拖動上方滑桿調整糖化血色素 (A1C) 值 ➡️</p>
+        </div>
+
+        <!-- 狀態卡片 -->
+        <div class="lighthouse-card lh-green" id="lighthouse-card">
+          <h4 id="lh-title">🟢 綠燈安全 (A1C < 7.0%)</h4>
+          <p id="lh-desc">控糖模範生！併發症發生機率降到最低。<br><strong>日常口訣：</strong>「血糖乖乖聽話，血管跟著輕鬆、全家都安心！」</p>
+        </div>
+
+        <div class="elderly-target-note">
+          💡 <strong>專科醫師小提醒與實證：</strong>高齡衰弱或施打胰島素的長輩，<strong>嚴重低血糖年發生率約 11% - 25%</strong>，且會使主要心血管事件 (MACE) 風險增加 2 倍。因此控制目標可彈性放寬至 <strong>8.0% 甚至 8.5%</strong>，安全第一，防範低血糖更重要！<br>
+          <span style="font-size: 13px; color: var(--text-muted); font-weight: 500;">📖 實證文獻：NEJM 2008 (ACCORD trial / ADVANCE trial)【Level 1b, 大型 RCT】</span>
+        </div>
+
+        <!-- TIR 挑戰遊戲 -->
+        <div class="tir-challenge-box">
+          <div class="tir-header">
+            <span class="tir-title">🎮 TIR 日常生活控糖挑戰</span>
+            <span class="tir-score" id="tir-percent">TIR: 75%</span>
+          </div>
+          <p style="font-size: 16px; text-align: left; margin-bottom: 12px;"><strong>目標範圍內時間 (TIR)：</strong>血糖維持在安全區間 (70-180 mg/dL) 的時間比例，是控糖黃金標準。點選您今天的作息或飲食，看預期的 TIR 變化：</p>
+          <div class="tir-btn-group">
+            <button class="tir-option-btn active" data-value="15" id="btn-tir-1">🥦 每餐多吃一盤菜</button>
+            <button class="tir-option-btn" data-value="10" id="btn-tir-2">🚶 飯後散步 20 分鐘</button>
+            <button class="tir-option-btn" data-value="-25" id="btn-tir-3">🥤 喝了一杯微糖手搖</button>
+          </div>
+          <div class="progress-bar-wrapper" style="margin-top: 16px;">
+            <div class="progress-track" style="height: 16px;">
+              <div class="progress-fill" id="tir-progress" style="width: 75%; background: var(--safe-green);"></div>
+            </div>
+            <p id="tir-feedback" style="font-size: 15px; font-weight: 700; color: var(--safe-green); text-align: left; margin-top: 8px;">🟢 表現良好！TIR > 70% 代表血糖波動平穩，低血糖風險極低！</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 板塊 3: 【全身血管保衛戰】糖尿病併發症受累地圖 -->
+    <section class="card" id="sec-complications">
+      <div class="card-header">
+        <div class="card-icon">👣</div>
+        <div class="card-title-group">
+          <h3>【全身血管保衛戰】糖尿病併發症受累地圖</h3>
+          <p class="subtitle">Diabetic Complications Map</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <p style="margin-bottom: 24px;">高血糖會像糖水一樣醃漬全身血管。我們用溫和且科學的圖解，帶您認識併發症，並告訴您診所如何協助您預防。</p>
+        
+        <div class="map-grid">
+          
+          <!-- SVG 人體部位示意圖 -->
+          <div class="anatomy-svg-wrapper">
+            <svg viewBox="0 0 220 320" width="100%" height="280">
+              <!-- 人體簡化線條 -->
+              <path d="M110,40 C100,40 90,50 90,60 C90,70 100,80 110,80 C120,80 130,70 130,60 C130,50 120,40 110,40 Z" fill="var(--border-color)" />
+              <path d="M110,80 L110,180 M90,100 L60,160 M130,100 L160,160 M95,180 L80,290 L75,290 M125,180 L140,290 L145,290" stroke="var(--border-color)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+              
+              <!-- 互動眼 (點擊眼睛) -->
+              <g class="anatomy-pointer" onclick="selectAnatomy('eye')" id="svg-eye">
+                <circle cx="110" cy="55" r="10" fill="var(--primary)" opacity="0.8" />
+                <circle cx="110" cy="55" r="4" fill="#fff" />
+              </g>
+              <!-- 互動心 (點擊胸部) -->
+              <g class="anatomy-pointer" onclick="selectAnatomy('heart')" id="svg-heart">
+                <circle cx="110" cy="110" r="14" fill="var(--primary)" opacity="0.8" />
+                <path d="M110,105 C108,100 100,100 100,108 C100,115 110,121 110,121 C110,121 120,115 120,108 C120,100 112,100 110,105 Z" fill="#fff" />
+              </g>
+              <!-- 互動腎 (點擊腰部) -->
+              <g class="anatomy-pointer" onclick="selectAnatomy('kidney')" id="svg-kidney">
+                <circle cx="100" cy="155" r="10" fill="var(--primary)" opacity="0.8" />
+                <circle cx="120" cy="155" r="10" fill="var(--primary)" opacity="0.8" />
+                <path d="M98,151 C96,151 95,153 95,155 C95,157 96,159 98,159 Z M122,151 C124,151 125,153 125,155 C125,157 124,159 122,159 Z" fill="#fff" />
+              </g>
+              <!-- 互動足 (點擊腳部) -->
+              <g class="anatomy-pointer" onclick="selectAnatomy('foot')" id="svg-foot">
+                <circle cx="80" cy="285" r="12" fill="var(--accent)" opacity="0.9" />
+                <circle cx="140" cy="285" r="12" fill="var(--accent)" opacity="0.9" />
+                <path d="M78,282 H82 V288 H78 Z M138,282 H142 V288 H138 Z" fill="#fff" />
+              </g>
+            </svg>
+          </div>
+
+          <!-- 部位介紹字卡 -->
+          <div class="anatomy-details">
+            
+            <!-- 腳 -->
+            <div class="anatomy-card active" data-part="foot" onclick="selectAnatomy('foot')" id="card-part-foot">
+              <h4>👣 周邊神經與足部病變 (神經病變約 50% | 足潰瘍 19% - 34%) <span style="color: var(--accent);">★ 高比例</span></h4>
+              <div class="anatomy-card-desc" style="display: block;">
+                <p><strong>臨床表現：</strong>末梢感覺遲鈍、常有針刺麻木感。若有小傷口不易癒合，容易潰爛發炎，嚴重者面臨截肢風險。</p>
+                <p style="margin-top: 8px; font-size: 14px; color: var(--safe-green); font-weight: 700;">
+                  📊 發生比例：神經病變約 50%、足潰瘍累積率 19% - 34% (5年死亡率達 30%) | 📉 A1C 每降 1%：風險降低 43%<br>
+                  <span style="font-weight: 500; color: var(--text-muted);">📖 實證文獻：ADA Diabetes Care 2025【Level 1a】 / Lancet 2020; 396【Level 2a, Cohort Study】</span>
+                </p>
+                <span class="clinic-badge">🏥 診所守護：門診提供定期神經反射與足部防護篩檢</span>
+              </div>
+            </div>
+
+            <!-- 心 -->
+            <div class="anatomy-card" data-part="heart" onclick="selectAnatomy('heart')" id="card-part-heart">
+              <h4>🫀 心血管疾病 (盛行率 12.7% - 21.9% | 心肌梗塞風險 2 - 4 倍)</h4>
+              <div class="anatomy-card-desc">
+                <p><strong>臨床表現：</strong>高血糖會加速動脈硬化，容易形成血栓阻塞血管，引發心肌梗塞、中風或心臟衰竭。</p>
+                <p style="margin-top: 8px; font-size: 14px; color: var(--safe-green); font-weight: 700;">
+                  📊 發生比例：冠狀動脈疾病約 12.7% - 21.9% (心肌梗塞風險高 2 - 4 倍) | 📉 A1C 每降 1%：風險降低 14%<br>
+                  <span style="font-weight: 500; color: var(--text-muted);">📖 實證文獻：Lancet 2018; 391 (GLOBALTA study)【Level 1a, 系統性回顧】</span>
+                </p>
+                <span class="clinic-badge">🏥 診所守護：門診定期心電圖檢查與三高指標合宜調藥</span>
+              </div>
+            </div>
+
+            <!-- 腎 -->
+            <div class="anatomy-card" data-part="kidney" onclick="selectAnatomy('kidney')" id="card-part-kidney">
+              <h4>🩺 糖尿病腎臟病變 (盛行率 30% - 40% | 佔洗腎患者 45% - 47%)</h4>
+              <div class="anatomy-card-desc">
+                <p><strong>臨床表現：</strong>高血糖會傷害腎臟微血管濾網，初期出現微量蛋白尿，若不加以控制會演變為腎衰竭，甚至需要洗腎。</p>
+                <p style="margin-top: 8px; font-size: 14px; color: var(--safe-green); font-weight: 700;">
+                  📊 發生比例：最終發展為 DKD 約 30% - 40% (台灣洗腎患者中有 45% - 47% 由糖尿病引起) | 📉 A1C 每降 1%：風險降低 37%<br>
+                  <span style="font-weight: 500; color: var(--text-muted);">📖 實證文獻：KDIGO Clinical Practice Guideline 2024【Level 1a, 國際指引】</span>
+                </p>
+                <span class="clinic-badge">🏥 診所守護：每半年安排一次微量尿蛋白與腎功能精密檢查</span>
+              </div>
+            </div>
+
+            <!-- 眼 -->
+            <div class="anatomy-card" data-part="eye" onclick="selectAnatomy('eye')" id="card-part-eye">
+              <h4>👁️ 眼底視網膜病變 (全球盛行率 22.3% | 罹病20年以上達 60% - 80%)</h4>
+              <div class="anatomy-card-desc">
+                <p><strong>臨床表現：</strong>微血管因糖分過高而出血、滲出物累積導致黃斑部水腫，是中老年病患視力減退與失明的主要原因。</p>
+                <p style="margin-top: 8px; font-size: 14px; color: var(--safe-green); font-weight: 700;">
+                  📊 發生比例：全球約 22.3% (罹病超過 20 年盛行率達 60% - 80%，增殖性 PDR 約 6%) | 📉 A1C 每降 1%：微血管病變風險降低 37%<br>
+                  <span style="font-weight: 500; color: var(--text-muted);">📖 實證文獻：Ophthalmology 2023; 130 (Global Prevalence)【Level 1a, Meta-analysis】</span>
+                </p>
+                <span class="clinic-badge">🏥 診所守護：每年定期協助轉介醫學中心安排眼底散瞳篩檢</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 板塊 4: 【三高黃金防護網】糖尿病 ABC 達標數字 -->
+    <section class="card" id="sec-abc">
+      <div class="card-header">
+        <div class="card-icon">🛡️</div>
+        <div class="card-title-group">
+          <h3>【三高黃金防護網】糖尿病 ABC 達標數字</h3>
+          <p class="subtitle">ABC Targets for Health</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <p style="margin-bottom: 24px;">醫師提醒：糖尿病患者有 50% 以上最終死於心血管併發症。只控血糖是不夠的，血壓和血脂更是您的生命線。</p>
+        <div class="shield-grid">
+          
+          <!-- Shield A -->
+          <div class="shield-card active" data-shield="A" id="card-shield-a">
+            <div class="shield-icon">🍎</div>
+            <h4>【A】糖化血色素</h4>
+            <div class="shield-target">&lt; 7.0 %</div>
+            <div class="shield-detail" style="display: block;">
+              <p><strong>臨床意義：</strong>守護微血管，有效預防視網膜病變與腎臟受損。</p>
+              <p class="stigma-gold" style="margin-top: 8px;"><strong>長輩叮嚀：</strong>每 3 個月要固定回診抽血檢查一次，這就是您的「季度成績單」。</p>
+            </div>
+          </div>
+
+          <!-- Shield B -->
+          <div class="shield-card" data-shield="B" id="card-shield-b">
+            <div class="shield-icon">💓</div>
+            <h4>【B】血壓控制</h4>
+            <div class="shield-target">&lt; 130/80 mmHg</div>
+            <div class="shield-detail">
+              <p><strong>臨床意義：</strong>防範心腦血管病變，預防中風、腦血管阻塞與心臟衰竭。</p>
+              <p class="stigma-gold" style="margin-top: 8px;"><strong>長輩叮嚀：</strong>記住「722法則」：連續 7 天、天天量 2 次（起床與睡前）、每次量 2 遍取平均值。</p>
+              
+              <!-- 🩸 血壓每增加 20/10 mmHg 疾病風險倍增圖 (高齡友善大字版) -->
+              <div class="blood-pressure-risk-chart" style="margin-top: 16px; background: var(--bg-card); padding: 12px 16px; border-radius: 12px; border: 1.5px dashed var(--border-color); text-align: left;">
+                <h5 style="font-size: 15px; font-weight: 900; margin-bottom: 12px; color: var(--danger-red); display: flex; align-items: center; gap: 6px;">
+                  ⚠️ 心血管疾病死亡風險倍增警告 (血壓每增加 20/10 mmHg)
+                </h5>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                  <!-- 115/75 mmHg -->
+                  <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 15px; font-weight: 900; width: 100px; color: var(--text-main); text-align: right;">115 / 75</span>
+                    <div style="flex-grow: 1; background: var(--bg-warm); height: 24px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color);">
+                      <div style="width: 12.5%; background: var(--safe-green); height: 100%;"></div>
+                    </div>
+                    <span style="font-size: 18px; font-weight: 900; width: 110px; color: var(--safe-green); text-align: left;">1 倍 (基準)</span>
+                  </div>
+                  <!-- 135/85 mmHg -->
+                  <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 15px; font-weight: 900; width: 100px; color: var(--text-main); text-align: right;">135 / 85</span>
+                    <div style="flex-grow: 1; background: var(--bg-warm); height: 24px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color);">
+                      <div style="width: 25%; background: var(--warn-yellow); height: 100%;"></div>
+                    </div>
+                    <span style="font-size: 20px; font-weight: 900; width: 110px; color: var(--warn-yellow); text-align: left;">2 倍 📈</span>
+                  </div>
+                  <!-- 155/95 mmHg -->
+                  <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 15px; font-weight: 900; width: 100px; color: var(--text-main); text-align: right;">155 / 95</span>
+                    <div style="flex-grow: 1; background: var(--bg-warm); height: 24px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color);">
+                      <div style="width: 50%; background: var(--danger-red); height: 100%;"></div>
+                    </div>
+                    <span style="font-size: 22px; font-weight: 900; width: 110px; color: var(--danger-red); text-align: left;">4 倍 📈📈</span>
+                  </div>
+                  <!-- 175/105 mmHg -->
+                  <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 15px; font-weight: 900; width: 100px; color: var(--text-main); text-align: right;">175 / 105</span>
+                    <div style="flex-grow: 1; background: var(--bg-warm); height: 24px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color);">
+                      <div style="width: 100%; background: #820014; height: 100%;"></div>
+                    </div>
+                    <span style="font-size: 24px; font-weight: 900; width: 110px; color: #820014; text-align: left;">8 倍 📈📈📈</span>
+                  </div>
+                </div>
+                <p style="font-size: 12px; color: var(--text-muted); margin-top: 10px; line-height: 1.5; font-weight: 500;">
+                  * 數據來源：臨床高血壓指南。從血壓 115/75 mmHg 起算，收縮壓每增加 20 mmHg 且舒張壓每增加 10 mmHg，心血管死亡風險將呈翻倍（指數級）增長。積極將血壓控制在 &lt; 130/80 mmHg 以下，是保護心腦血管的生命線！
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shield C -->
+          <div class="shield-card" data-shield="C" id="card-shield-c">
+            <div class="shield-icon">🍳</div>
+            <h4>【C】低密度膽固醇</h4>
+            <div class="shield-target">&lt; 100 mg/dL</div>
+            <div class="shield-detail">
+              <p><strong>臨床意義：</strong>預防血管粥狀硬化，防止血管壁卡油、像老舊水管一樣塞住。</p>
+              <p class="stigma-gold" style="margin-top: 8px;"><strong>長輩叮嚀：</strong>少吃豬皮、肥肉、內臟與油炸物，保護心臟血管通暢無阻。</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 生活小叮嚀: 長輩日常實踐指南 -->
+    <section class="card" id="sec-daily-tips">
+      <div class="card-header">
+        <div class="card-icon">💡</div>
+        <div class="card-title-group">
+          <h3>【日常健康小叮嚀】簡單行出健康生活</h3>
+          <p class="subtitle">Easy Steps for Healthy Living</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <p style="margin-bottom: 24px; font-size: 19px; font-weight: 700; color: var(--primary);">
+          親愛的爸爸媽媽、阿公阿嬤：控糖其實一點都不難！只要在每天的生活中，輕鬆做到以下這 4 件事，身體就會越來越有活力喔！
+        </p>
+        <div class="tips-box-grid">
+          <!-- 1. 用藥 -->
+          <div class="tip-box-card">
+            <div class="tip-box-icon">💊</div>
+            <div class="tip-box-content">
+              <h4>按時吃藥：幫身體細胞放假</h4>
+              <p>藥物要天天按時服用喔！可以把藥盒放在水杯或餐桌等看得見的地方。吃藥是幫您體內過勞的細胞「請小幫手」，千萬不要自己隨便減藥或停藥。</p>
+            </div>
+          </div>
+          <!-- 2. 量測 -->
+          <div class="tip-box-card">
+            <div class="tip-box-icon">🩺</div>
+            <div class="tip-box-content">
+              <h4>每天量測：看懂身體好天氣</h4>
+              <p>天天量血壓與驗血糖，就像出門前看天氣預報。把每天的數字隨手寫在簿子上，看診時帶給醫生看，醫生能更準確地幫您調整最舒服的用藥。</p>
+            </div>
+          </div>
+          <!-- 3. 飲食 -->
+          <div class="tip-box-card">
+            <div class="tip-box-icon">🥦</div>
+            <div class="tip-box-content">
+              <h4>吃飯順序：菜肉飯口訣要記牢</h4>
+              <p>吃飯時請記得：<strong>先吃蔬菜，再吃魚肉，最後吃白飯/麵食</strong>。少喝手搖飲料、多喝溫開水。這樣血糖升得慢，肚子飽足又健康！</p>
+            </div>
+          </div>
+          <!-- 4. 運動 -->
+          <div class="tip-box-card">
+            <div class="tip-box-icon">🚶</div>
+            <div class="tip-box-content">
+              <h4>飯後散步：輕鬆走走保健康</h4>
+              <p>吃飽飯後半小時，出門在附近散步走走 20 到 30 分鐘。不用跑也不用太喘，讓手腳動一動、流點微汗，就是最棒、最安全的天然降糖藥！</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 門診預約轉化 CTA -->
+    <section class="cta-banner">
+      <h3>掌握主動控糖的黃金起跑點！</h3>
+      <p>我們的專科醫師、衛教護理師與營養師團隊，隨時為您規劃最合適的個人化照護方案。</p>
+      <div class="cta-buttons">
+        <a href="https://line.me" class="btn btn-primary" style="font-size: 18px; padding: 14px 28px;" id="btn-cta-line">
+          💬 加入診所 LINE 獲取客製方案
+        </a>
+        <button class="btn" style="font-size: 18px; padding: 14px 28px;" onclick="alert('請撥打專線：0800-000-000，將有專人為您服務。')" id="btn-cta-call">
+          📞 電話預約衛教門診
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer style="text-align: center; padding: 40px 0; color: var(--text-muted); font-size: 15px;">
+    <div class="container">
+      <p>© <span id="current-year">2026</span> 糖尿病積極控糖行動衛教網頁．專為開業醫學診所設計的照護系統</p>
+    </div>
+  </footer>
+
+  <!-- 互動腳本 JS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // ==========================================
+      // 🌟 1. 深淺色模式切換 (與 localStorage 同步)
+      // ==========================================
+      const themeToggle = document.getElementById('theme-toggle');
+      
+      // 載入預設主題
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        themeToggle.querySelector('.icon').textContent = '☀️';
+        themeToggle.querySelector('.btn-text').textContent = '淺色模式';
+      }
+
+      themeToggle.addEventListener('click', () => {
+        const isDark = document.body.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          document.body.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+          themeToggle.querySelector('.icon').textContent = '🌙';
+          themeToggle.querySelector('.btn-text').textContent = '深色模式';
+        } else {
+          document.body.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+          themeToggle.querySelector('.icon').textContent = '☀️';
+          themeToggle.querySelector('.btn-text').textContent = '淺色模式';
+        }
+      });
+
+      // 設定當前年分
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+
+      // ==========================================
+      // 🌟 2. Ⅰ. 情境引導入口動態渲染
+      // ==========================================
+      const entranceCards = document.querySelectorAll('.entrance-card');
+      const guidanceBox = document.getElementById('guidance-box');
+      const guidanceTitle = document.getElementById('guidance-title');
+      const guidanceDesc = document.getElementById('guidance-desc');
+      const guidanceHighlights = document.getElementById('guidance-highlights');
+
+      const guidanceData = {
+        "1": {
+          title: "刚發現糖尿病別怕：這不是你的錯，是胰島細胞累了！",
+          desc: "初診的焦慮我們非常理解，請先放下自責。糖尿病多是由於基因與身體自然的胰島素阻抗引起的。此時您最需要做的起步只有兩件事：",
+          highlights: [
+            "🥦 <strong>定時定量：</strong>每餐先吃足蔬菜，控制飯量，不要極端禁食，讓細胞慢慢適應。",
+            "🚶 <strong>飯後散步：</strong>餐後 20 分鐘去走走，能大幅減低餐後高血糖，幫胰島細胞分擔工作。"
+          ]
+        },
+        "2": {
+          title: "追求高畫質生活：導入黃金指標 TIR (目標範圍時間)",
+          desc: "傳統的糖化血色素(A1C)是「三個月的平均值」，無法看出一天內的高低劇烈震盪。高齡者更要防範致命的低血糖。因此，國際黃金標準是 TIR：",
+          highlights: [
+            "🟢 <strong>什麼是 TIR：</strong>每天血糖維持在 70 - 180 mg/dL 安全區間的時間，目標是每天大於 70% (約 17 小時)。",
+            "🎮 <strong>日常小挑戰：</strong>避開高糖手搖飲，每餐多蔬菜，多快走，即可輕鬆提升您的 TIR 達標率！"
+          ]
+        },
+        "3": {
+          title: "破除針劑迷思：打胰島素或 GLP-1，其實是幫细胞請特休假！",
+          desc: "很多長輩排斥打針，甚至以為打針就是洗腎的前兆。這是完全錯誤的迷思！",
+          highlights: [
+            "🏖️ <strong>讓細胞休假：</strong>提早使用針劑就像是為體內「瀕臨過勞」的細胞提供特休假與外援，休息後細胞功能才能維持更久！",
+            "🛡️ <strong>預防重度倂發症：</strong>及早打針能有效降低微血管與腎臟損傷，才是真正預防洗腎的有效方法。"
+          ]
+        }
+      };
+
+      entranceCards.forEach(card => {
+        card.addEventListener('click', () => {
+          entranceCards.forEach(c => c.classList.remove('active'));
+          card.classList.add('active');
+
+          const key = card.getAttribute('data-entrance');
+          const data = guidanceData[key];
+
+          guidanceTitle.textContent = data.title;
+          guidanceDesc.textContent = data.desc;
+          
+          guidanceHighlights.innerHTML = data.highlights
+            .map(text => `<div class="highlight-item">${text}</div>`)
+            .join('');
+
+          guidanceBox.style.display = 'block';
+          guidanceBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+      });
+
+      // ==========================================
+      // 🌟 3. 板塊 2: A1C 與 eAG 換算滑桿及 TIR 挑戰
+      // ==========================================
+      const a1cSlider = document.getElementById('a1c-slider');
+      const a1cValue = document.getElementById('a1c-value');
+      const eagValue = document.getElementById('eag-value');
+      const lighthouseCard = document.getElementById('lighthouse-card');
+      const lhTitle = document.getElementById('lh-title');
+      const lhDesc = document.getElementById('lh-desc');
+
+      function updateA1cCalculation(a1c) {
+        a1cValue.innerHTML = `${a1c.toFixed(1)}<span class="big-a1c-unit">%</span>`;
+        // 公式：eAG = 28.7 * A1C - 46.7
+        const eag = Math.round(28.7 * a1c - 46.7);
+        eagValue.textContent = `估算日常平均血糖值：${eag} mg/dL`;
+
+        // 判定燈號與口訣 (莫蘭迪綠/黃/磚紅)
+        lighthouseCard.className = 'lighthouse-card'; // reset
+        if (a1c < 7.0) {
+          lighthouseCard.classList.add('lh-green');
+          lhTitle.textContent = "🟢 綠燈安全 (A1C < 7.0%)";
+          lhDesc.innerHTML = "<strong>醫學意義：</strong>控糖模範生！併發症發生機率降到最低。<br><strong>日常口訣：</strong>「血糖乖乖聽話，血管跟著輕鬆、全家都安心！」";
+          a1cValue.style.color = 'var(--safe-green)';
+        } else if (a1c >= 7.0 && a1c <= 8.0) {
+          lighthouseCard.classList.add('lh-yellow');
+          lhTitle.textContent = "🟡 黃燈警示 (A1C 7.0% - 8.0%)";
+          lhDesc.innerHTML = "<strong>醫學意義：</strong>控制偏高。血管開始累積微小損傷，需檢視飲食與藥物。<br><strong>日常口訣：</strong>「血糖有點小超標，精緻澱粉、手搖飲要踩煞車囉！」";
+          a1cValue.style.color = 'var(--warn-yellow)';
+        } else {
+          lighthouseCard.classList.add('lh-red');
+          lhTitle.textContent = "🔴 紅燈危險 (A1C > 8.0%)";
+          lhDesc.innerHTML = "<strong>醫學意義：</strong>極高風險。器官病變與微血管受損正在加速發生。<br><strong>日常口訣：</strong>「紅燈警報！千萬別拖，快請專業衛教師與醫師協助調藥！」";
+          a1cValue.style.color = 'var(--danger-red)';
+        }
+      }
+
+      a1cSlider.addEventListener('input', (e) => {
+        updateA1cCalculation(parseFloat(e.target.value));
+      });
+
+      // 初始化 A1C
+      updateA1cCalculation(6.5);
+
+      // TIR 互動挑戰遊戲
+      const tirBtns = document.querySelectorAll('.tir-option-btn');
+      const tirPercent = document.getElementById('tir-percent');
+      const tirProgress = document.getElementById('tir-progress');
+      const tirFeedback = document.getElementById('tir-feedback');
+
+      let activeTirScore = 75; // 預設 75%
+
+      tirBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.classList.toggle('active');
+          
+          // 重新計算 TIR 達標率
+          let baseTir = 70; // 基底
+          tirBtns.forEach(b => {
+            if (b.classList.contains('active')) {
+              baseTir += parseInt(b.getAttribute('data-value'));
+            }
+          });
+
+          // 限制在 30% - 100% 區間
+          baseTir = Math.max(30, Math.min(100, baseTir));
+          
+          tirPercent.textContent = `TIR: ${baseTir}%`;
+          tirProgress.style.width = `${baseTir}%`;
+
+          // 回饋文字與顏色
+          if (baseTir >= 70) {
+            tirProgress.style.background = 'var(--safe-green)';
+            tirFeedback.style.color = 'var(--safe-green)';
+            tirFeedback.textContent = "🟢 表現良好！TIR > 70% 代表血糖波動平穩，低血糖與併發症風險極低！";
+          } else if (baseTir >= 50 && baseTir < 70) {
+            tirProgress.style.background = 'var(--warn-yellow)';
+            tirFeedback.style.color = 'var(--warn-yellow)';
+            tirFeedback.textContent = "🟡 警告！TIR 落在 50%-70% 之間，血糖有上下波動起伏，需檢視澱粉攝取與活動量。";
+          } else {
+            tirProgress.style.background = 'var(--danger-red)';
+            tirFeedback.style.color = 'var(--danger-red)';
+            tirFeedback.textContent = "🔴 危險！TIR 低於 50% 代表血糖波動大、血管損傷正在累積，建議回診由衛教師調整用藥。";
+          }
+        });
+      });
+
+      // ==========================================
+      // 🌟 4. 板塊 4: 三高黃金防護網盾牌點選
+      // ==========================================
+      const shieldCards = document.querySelectorAll('.shield-card');
+      shieldCards.forEach(card => {
+        card.addEventListener('click', () => {
+          shieldCards.forEach(c => {
+            c.classList.remove('active');
+            c.querySelector('.shield-detail').style.display = 'none';
+          });
+          card.classList.add('active');
+          card.querySelector('.shield-detail').style.display = 'block';
+        });
+      });
+
+    });
+
+    // ==========================================
+    // 🌟 5. 板塊 1: 胰島細胞退化曲線互動
+    // ==========================================
+    function selectYear(year) {
+      // 變更圓點視覺樣式
+      const pts = [0, 5, 10];
+      pts.forEach(y => {
+        const pt = document.getElementById(`pt-${y}`);
+        if (y === year) {
+          pt.setAttribute('fill', 'var(--primary)');
+          pt.setAttribute('r', '8');
+        } else {
+          pt.setAttribute('fill', 'var(--text-muted)');
+          pt.setAttribute('r', '6');
+        }
+      });
+
+      const title = document.getElementById('cell-year-title');
+      const desc = document.getElementById('cell-year-desc');
+
+      if (year === 0) {
+        title.textContent = "確診第 0 年 (胰島細胞功能剩餘約 50%)";
+        desc.innerHTML = "在您被診斷出糖尿病的第一天，胰島細胞便已經自然退化了將近一半。這<strong>不是因為您做錯了什麼</strong>，而是身體機能的自然耗損。此時應積極配合醫師使用一線藥物，保護剩下的胰臟功能。";
+      } else if (year === 5) {
+        title.textContent = "確診第 5 年 (胰島細胞功能剩餘約 35%)";
+        desc.innerHTML = "隨著時間推進，細胞剩餘功能降至 35% 左右。此時單靠一種藥物可能不夠，需要合併第二種或第三種不同機轉的藥物「多管齊下」，幫助身體平穩控糖。";
+      } else {
+        title.textContent = "確診第 10 年以上 (胰島細胞功能剩餘 20% 以下)";
+        desc.innerHTML = "此時細胞功能顯著衰退，藥物效果可能打折。專科醫師倡導：<span class='stigma-gold'>「這時配合打胰島素或 GLP-1 針劑，絕非病情沒救，而是直接幫剩下過勞的細胞請特休假！從外面補充電能，保護身體安穩不洗腎！」</span>";
+      }
+    }
+
+    // ==========================================
+    // 🌟 6. 板塊 3: 併發症受累地圖互動
+    // ==========================================
+    function selectAnatomy(part) {
+      // 更新文字卡片狀態
+      const cards = document.querySelectorAll('.anatomy-card');
+      cards.forEach(c => {
+        c.classList.remove('active');
+        c.querySelector('.anatomy-card-desc').style.display = 'none';
+      });
+
+      const activeCard = document.getElementById(`card-part-${part}`);
+      activeCard.classList.add('active');
+      activeCard.querySelector('.anatomy-card-desc').style.display = 'block';
+
+      // 更新 SVG 焦點顏色
+      const parts = ['eye', 'heart', 'kidney', 'foot'];
+      parts.forEach(p => {
+        const svgElement = document.getElementById(`svg-${p}`).querySelector('circle');
+        if (p === part) {
+          svgElement.setAttribute('fill', 'var(--danger-red)');
+          svgElement.setAttribute('r', p === 'heart' ? '18' : '14');
+        } else {
+          svgElement.setAttribute('fill', p === 'foot' ? 'var(--accent)' : 'var(--primary)');
+          svgElement.setAttribute('r', p === 'heart' ? '14' : '10');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
