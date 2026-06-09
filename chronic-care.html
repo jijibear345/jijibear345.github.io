@@ -1,0 +1,3450 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>慢性病智慧衛教中心 - 開業診所高齡友善全功能平台</title>
+  
+  <!-- 引入 Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* 🎨 全方位慢性病衛教中心 核心設計系統 */
+    :root {
+      --bg-warm: #FAF6EE;          /* 長者友善防眩光暖色底 */
+      --bg-card: #FFFFFF;
+      --bg-card-nested: #F5EFE4;
+      --text-main: #1E293B;        /* 高對比字體 */
+      --text-muted: #64748B;
+      --text-white: #FFFFFF;
+      
+      /* 各慢性病模組主題色 */
+      --theme-portal: #0284C7;     /* 主門戶藍 */
+      --theme-dm: #0284C7;         /* 糖尿病-醫學藍 */
+      --theme-htn: #E11D48;        /* 高血壓-玫瑰紅 */
+      --theme-lip: #D97706;        /* 高血脂-金橙 */
+      --theme-gout: #7C3AED;       /* 痛風-深紫 */
+      --theme-resp: #0D9488;       /* 呼吸道(氣喘/肺阻塞)-薄荷綠 */
+      --theme-mets: #4F46E5;       /* 代謝症候群-靛藍 */
+
+      --safe-green: #2D7D46;
+      --warn-yellow: #D46B08;
+      --danger-red: #C93B3B;
+      
+      --border-color: #E2D9C8;
+      --card-shadow: 0 10px 30px rgba(45, 38, 25, 0.06);
+      --transition-speed: 0.3s;
+    }
+
+    [data-theme="dark"] {
+      --bg-warm: #111827;          /* 暗色模式底色 */
+      --bg-card: #1F2937;
+      --bg-card-nested: #374151;
+      --text-main: #F9FAFB;
+      --text-muted: #9CA3AF;
+      --border-color: #374151;
+      
+      --theme-portal: #38BDF8;
+      --theme-dm: #38BDF8;
+      --theme-htn: #FB7185;
+      --theme-lip: #F59E0B;
+      --theme-gout: #A78BFA;
+      --theme-resp: #2DD4BF;
+      --theme-mets: #818CF8;
+      
+      --safe-green: #4ECB71;
+      --warn-yellow: #FFA940;
+      --danger-red: #FF7875;
+      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-warm);
+      color: var(--text-main);
+      line-height: 1.8;
+      font-size: 18px; /* 長者易讀字體大小 */
+      padding-bottom: 3rem;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* 頂部導航欄 */
+    .header {
+      background-color: var(--bg-card);
+      border-bottom: 2px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .logo-icon {
+      font-size: 32px;
+    }
+
+    .logo-title {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--theme-portal);
+    }
+
+    .logo-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 12px;
+      border: 2px solid var(--border-color);
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all var(--transition-speed);
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--card-shadow);
+      opacity: 0.95;
+    }
+
+    .btn-theme-toggle {
+      background-color: var(--bg-card-nested);
+    }
+
+    /* 門戶大廳視圖 (Portal View) */
+    .portal-section {
+      padding: 40px 0;
+    }
+
+    .portal-hero {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .portal-hero h2 {
+      font-size: 40px;
+      font-weight: 900;
+      color: var(--text-main);
+      margin-bottom: 16px;
+    }
+
+    .portal-hero p {
+      font-size: 20px;
+      color: var(--text-muted);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 28px;
+      margin-bottom: 40px;
+    }
+
+    .disease-card {
+      background-color: var(--bg-card);
+      border: 2px solid var(--border-color);
+      border-radius: 24px;
+      padding: 32px;
+      cursor: pointer;
+      transition: all var(--transition-speed);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+
+    .disease-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 100%;
+      background-color: var(--card-theme-color);
+    }
+
+    .disease-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--card-theme-color);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+    }
+
+    .disease-card-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .disease-card-icon {
+      font-size: 38px;
+      width: 60px;
+      height: 60px;
+      background-color: var(--bg-warm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 18px;
+    }
+
+    .disease-card-title h3 {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--text-main);
+    }
+
+    .disease-card-title .subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    .disease-card-body p {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .disease-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--card-theme-color);
+    }
+
+    /* 慢性病詳情頁面視圖 (Disease Detail View) */
+    .detail-view-wrapper {
+      display: none; /* 預設隱藏，點選後顯示 */
+      padding: 32px 0;
+    }
+
+    .detail-back-bar {
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* 疾病模組佈局：左側子頁籤切換，右側內容區 */
+    .disease-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .disease-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .disease-sidebar {
+      background-color: var(--bg-card);
+      border: 2px solid var(--border-color);
+      border-radius: 20px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sidebar-btn {
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 17px;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: all var(--transition-speed);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar-btn:hover {
+      background-color: var(--bg-warm);
+      color: var(--text-main);
+    }
+
+    .sidebar-btn.active {
+      background-color: var(--active-theme-color);
+      color: var(--text-white);
+    }
+
+    .disease-content {
+      background-color: var(--bg-card);
+      border: 2px solid var(--border-color);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: var(--card-shadow);
+      min-height: 500px;
+    }
+
+    /* 疾病各分頁卡片結構 */
+    .tab-pane {
+      display: none; /* 預設隱藏，由 JS 控制 active 狀態 */
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 疾病標題與修飾 */
+    .section-title {
+      font-size: 26px;
+      font-weight: 900;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 2px dashed var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    /* 統一卡片樣式 */
+    .card {
+      background-color: var(--bg-card);
+      border-radius: 20px;
+      border: 2px solid var(--border-color);
+      box-shadow: var(--card-shadow);
+      margin-bottom: 28px;
+      padding: 24px;
+    }
+
+    .card-nested {
+      background-color: var(--bg-card-nested);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* 🧳 共用元件：血管卡油斑塊模擬器 (Lipid / HTN) */
+    .vessel-simulator-container {
+      background: var(--bg-card-nested);
+      padding: 24px;
+      border-radius: 20px;
+      border: 2px solid var(--border-color);
+      margin-top: 24px;
+    }
+
+    .vessel-visual {
+      height: 80px;
+      background: #ffcccb;
+      border-radius: 40px;
+      position: relative;
+      overflow: hidden;
+      border: 4px solid #c93b3b;
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .vessel-blood {
+      height: 100%;
+      background: #d32f2f;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      transition: height 0.5s ease;
+    }
+
+    .vessel-plaque {
+      height: 100%;
+      background: #ffd54f; /* 黃色斑塊 */
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      z-index: 2;
+      transition: width 0.5s ease;
+    }
+
+    /* 📋 飲食紅綠燈樣式 (Gout / Mets) */
+    .diet-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+    @media (max-width: 768px) {
+      .diet-grid { grid-template-columns: 1fr; }
+    }
+    .diet-col {
+      border-radius: 16px;
+      padding: 20px;
+      color: var(--text-white);
+    }
+    .diet-red { background-color: var(--danger-red); }
+    .diet-yellow { background-color: var(--warn-yellow); }
+    .diet-green { background-color: var(--safe-green); }
+    .diet-col h5 {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 12px;
+      text-align: center;
+      border-bottom: 1px dashed rgba(255,255,255,0.4);
+      padding-bottom: 6px;
+    }
+    .diet-col ul {
+      padding-left: 18px;
+      font-size: 16px;
+    }
+
+    /* 🩺 國際評估問卷樣式 (Asthma ACT / COPD) */
+    .survey-question {
+      margin-bottom: 24px;
+      background: var(--bg-card);
+      padding: 20px;
+      border-radius: 16px;
+      border: 1.5px solid var(--border-color);
+    }
+    .survey-question p {
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .survey-options {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 768px) {
+      .survey-options { grid-template-columns: 1fr; }
+    }
+    .survey-btn {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border-color);
+      background: var(--bg-card-nested);
+      color: var(--text-main);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .survey-btn:hover {
+      background-color: var(--bg-card);
+      border-color: var(--active-theme-color);
+    }
+    .survey-btn.active {
+      background-color: var(--active-theme-color);
+      color: var(--text-white);
+      border-color: var(--active-theme-color);
+    }
+    
+    .survey-result-box {
+      background-color: var(--bg-card-nested);
+      border-left: 6px solid var(--active-theme-color);
+      padding: 20px;
+      border-radius: 0 16px 16px 0;
+      margin-top: 24px;
+      display: none;
+      animation: fadeIn 0.3s forwards;
+    }
+
+    /* ----------------------------------------------------- */
+    /* 1. 糖尿病專屬樣式 (已包含原 A1C/TIR/細胞退化/受累地圖) */
+    /* ----------------------------------------------------- */
+    .big-a1c-display {
+      font-size: 64px;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .big-a1c-unit { font-size: 24px; }
+    .range-slider {
+      width: 100%;
+      height: 20px;
+      border-radius: 10px;
+      outline: none;
+      margin: 20px 0;
+      cursor: pointer;
+      -webkit-appearance: none;
+      background: linear-gradient(to right, var(--safe-green) 0%, var(--safe-green) 27%, var(--warn-yellow) 27%, var(--warn-yellow) 40%, var(--danger-red) 40%, var(--danger-red) 100%);
+    }
+    .range-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--text-main);
+      border: 4px solid var(--bg-card);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      cursor: pointer;
+    }
+    .lighthouse-card {
+      padding: 20px;
+      border-radius: 16px;
+      color: var(--text-white);
+      text-align: left;
+      margin-top: 20px;
+    }
+    .lh-green { background-color: var(--safe-green); }
+    .lh-yellow { background-color: var(--warn-yellow); }
+    .lh-red { background-color: var(--danger-red); }
+    
+    .tir-challenge-box {
+      background-color: var(--bg-card-nested);
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 24px;
+      border: 1px solid var(--border-color);
+    }
+    .tir-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .tir-title { font-weight: 900; color: var(--safe-green); }
+    .tir-score { font-size: 24px; font-weight: 900; }
+    .tir-btn-group {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 12px 0;
+    }
+    @media (max-width: 576px) { .tir-btn-group { grid-template-columns: 1fr; } }
+    .tir-option-btn {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border-color);
+      background: var(--bg-card);
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+    .tir-option-btn.active {
+      border-color: var(--safe-green);
+      background-color: #EBF8EE;
+      color: var(--safe-green);
+    }
+    [data-theme="dark"] .tir-option-btn.active {
+      background-color: #1b3a27;
+      color: var(--safe-green);
+    }
+
+    .progress-track {
+      background-color: var(--border-color);
+      height: 16px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 75%;
+      transition: width 0.3s ease;
+    }
+
+    .anatomy-svg-wrapper {
+      display: flex;
+      justify-content: center;
+      background-color: var(--bg-card-nested);
+      border-radius: 20px;
+      padding: 20px;
+      border: 1px solid var(--border-color);
+    }
+    .anatomy-pointer { cursor: pointer; transition: opacity 0.2s; }
+    .anatomy-pointer:hover { opacity: 0.8; }
+    .anatomy-details { display: flex; flex-direction: column; gap: 16px; }
+    .anatomy-card {
+      border: 2px solid var(--border-color);
+      background-color: var(--bg-card-nested);
+      border-radius: 16px;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: all var(--transition-speed);
+    }
+    .anatomy-card:hover, .anatomy-card.active {
+      background-color: var(--bg-card);
+      border-color: var(--danger-red);
+      box-shadow: var(--card-shadow);
+    }
+    .anatomy-card-desc {
+      display: none;
+      animation: fadeIn 0.3s forwards;
+      font-size: 15px;
+      margin-top: 8px;
+    }
+    .anatomy-card.active .anatomy-card-desc { display: block; }
+    .clinic-badge {
+      background-color: var(--theme-dm);
+      color: var(--text-white);
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    /* ----------------------------------------------------- */
+    /* 2. 高血壓專屬樣式 (血壓階梯條狀圖) */
+    /* ----------------------------------------------------- */
+    .bp-risk-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .bp-risk-label {
+      width: 100px;
+      font-weight: 900;
+      text-align: right;
+    }
+    .bp-risk-bar-wrapper {
+      flex-grow: 1;
+      height: 24px;
+      background: var(--bg-card);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+    .bp-risk-bar {
+      height: 100%;
+      transition: width 0.5s ease;
+    }
+    .bp-risk-value {
+      width: 110px;
+      font-weight: 900;
+      text-align: left;
+    }
+
+    /* ----------------------------------------------------- */
+    /* 3. 代謝症候群專屬樣式 */
+    /* ----------------------------------------------------- */
+    .mets-calc-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 768px) {
+      .mets-calc-grid { grid-template-columns: 1fr; }
+    }
+    .mets-input-group {
+      background: var(--bg-card-nested);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1.5px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .mets-input-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .mets-input-item label {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .mets-input-row {
+      display: flex;
+      gap: 10px;
+    }
+    .mets-select, .mets-input {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border-color);
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      font-size: 16px;
+      outline: none;
+    }
+    .mets-select { width: 100px; }
+    .mets-input { flex-grow: 1; }
+    
+    /* ----------------------------------------------------- */
+    /* 4. KDIGO 腎衰竭相對風險表格 */
+    /* ----------------------------------------------------- */
+    .kdigo-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 4px;
+      font-size: 13px;
+    }
+    .kdigo-table th, .kdigo-table td {
+      padding: 8px;
+      text-align: center;
+      border-radius: 6px;
+      vertical-align: middle;
+    }
+    .kdigo-cell { cursor: pointer; transition: all 0.2s; }
+    .kdigo-cell:hover { transform: scale(1.03); }
+    .kdigo-cell.highlight-cell {
+      border: 3px solid var(--text-main) !important;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      font-weight: 900;
+    }
+    .uacr-header { background: var(--bg-card-nested); border: 1.5px solid var(--border-color); }
+    .egfr-header { background: var(--bg-card-nested); font-weight: 900; }
+    .egfr-val { background: var(--bg-card-nested); }
+    .risk-low { background-color: var(--safe-green) !important; color: #fff !important; }
+    .risk-mod { background-color: var(--warn-yellow) !important; color: #fff !important; }
+    .risk-high { background-color: #ff7a00 !important; color: #fff !important; }
+    .risk-vhigh { background-color: var(--danger-red) !important; color: #fff !important; }
+    
+    .legend-container {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-color { width: 14px; height: 14px; border-radius: 4px; }
+
+    /* 生活小叮嚀 & CTA Banner */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--active-theme-color, var(--theme-portal)) 0%, #312E81 100%);
+      color: var(--text-white);
+      text-align: center;
+      border-radius: 24px;
+      padding: 36px;
+      margin-top: 40px;
+      box-shadow: var(--card-shadow);
+      transition: background 0.3s;
+    }
+    .cta-banner h3 { font-size: 28px; font-weight: 900; margin-bottom: 12px; }
+    .cta-banner p { font-size: 18px; margin-bottom: 24px; opacity: 0.9; }
+
+    /* 頁尾 */
+    .footer {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--text-muted);
+      font-size: 15px;
+      border-top: 1px solid var(--border-color);
+      margin-top: 60px;
+    }
+
+    /* 🧠 糖尿病血管病變 SVG 樣式 */
+    .body-silhouette {
+      fill: none;
+      stroke: var(--text-muted);
+      stroke-width: 2;
+      opacity: 0.35;
+    }
+    .hotspot {
+      cursor: pointer;
+    }
+    .hotspot .core {
+      fill: var(--theme-dm);
+      transition: fill 0.3s, r 0.3s;
+    }
+    .hotspot .pulse {
+      fill: var(--theme-dm);
+      fill-opacity: 0.15;
+      animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+      transform-origin: center;
+    }
+    .hotspot .label {
+      font-size: 12px;
+      font-weight: 700;
+      fill: var(--text-main);
+      pointer-events: none;
+    }
+    .hotspot.active .core,
+    .hotspot:hover .core {
+      fill: var(--danger-red);
+      r: 8px;
+    }
+    .hotspot.active .pulse,
+    .hotspot:hover .pulse {
+      fill: var(--danger-red);
+      animation-duration: 1.2s;
+    }
+    .hotspot.active .label,
+    .hotspot:hover .label {
+      fill: var(--danger-red);
+      font-weight: bold;
+      opacity: 1;
+    }
+    @keyframes pulse-ring {
+      0% {
+        transform: scale(0.6);
+        opacity: 1;
+      }
+      80%, 100% {
+        transform: scale(2.2);
+        opacity: 0;
+      }
+    }
+
+    /* 📋 臨床對照表格樣式 */
+    .clinical-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 16px;
+    }
+    .clinical-table th, .clinical-table td {
+      border: 1.5px solid var(--border-color);
+      padding: 10px 14px;
+      text-align: left;
+    }
+    .clinical-table th {
+      background-color: var(--bg-card-nested);
+      font-weight: 900;
+      color: var(--text-main);
+    }
+    .clinical-table tr:nth-child(even) {
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+    [data-theme="dark"] .clinical-table tr:nth-child(even) {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+    .bg-light-green { background-color: rgba(45, 125, 70, 0.08); }
+    .bg-light-yellow { background-color: rgba(212, 107, 8, 0.08); }
+    .bg-light-red { background-color: rgba(201, 59, 59, 0.08); }
+    .text-bold { font-weight: 700; }
+
+    /* 氣喘與 COPD 專屬樣式 */
+    .pef-calc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .pef-zone-box {
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: 700;
+      text-align: center;
+      margin-top: 12px;
+    }
+    .gina-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .gina-step-card {
+      background-color: var(--bg-card);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .gina-step-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--card-shadow);
+      border-color: var(--theme-resp);
+    }
+    .gina-step-num {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--theme-resp);
+      margin-bottom: 6px;
+    }
+    .gina-step-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .gina-step-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* COPD CAT 問卷樣式 */
+    .cat-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+    .cat-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1.5px solid var(--border-color);
+    }
+    @media (max-width: 768px) {
+      .cat-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        text-align: center;
+      }
+    }
+    .cat-left-desc {
+      text-align: right;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .cat-right-desc {
+      text-align: left;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    @media (max-width: 768px) {
+      .cat-left-desc, .cat-right-desc {
+        text-align: center;
+      }
+    }
+    .cat-btn-group {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin: 8px 0;
+    }
+    .cat-score-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid var(--border-color);
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .cat-score-btn:hover {
+      border-color: var(--active-theme-color);
+      background-color: var(--bg-card-nested);
+    }
+    .cat-score-btn.active {
+      background-color: var(--active-theme-color);
+      color: var(--text-white);
+      border-color: var(--active-theme-color);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部導航 -->
+  <header class="header">
+    <div class="container header-content">
+      <div class="logo-area" onclick="goHome()">
+        <span class="logo-icon">🩺</span>
+        <div>
+          <h1 class="logo-title" id="main-logo-text">慢性病智慧衛教中心</h1>
+          <div class="logo-subtitle">開業醫學診所高齡友善全方位衛教系統</div>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <button onclick="goHome()" class="btn" id="btn-portal-home" style="display: none;">
+          <span>🏠</span> 返回大廳
+        </button>
+        <button id="theme-toggle" class="btn btn-theme-toggle" title="切換深淺色模式">
+          <span class="icon">🌙</span> <span class="btn-text">深色模式</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ========================================== -->
+    <!-- 🏠 A. 門戶大廳視圖 (Portal View)           -->
+    <!-- ========================================== -->
+    <section class="portal-section" id="portal-view">
+      <div class="portal-hero">
+        <h2>歡迎使用慢性病衛教中心</h2>
+        <p>專為開業診所打造的健康守護指南。由專業醫師團隊研擬，結合最新台灣照護指引，用最簡單的互動方式，帶您守護身體健康！</p>
+      </div>
+
+      <div class="portal-grid">
+        <!-- 1. 糖尿病 -->
+        <div class="disease-card" style="--card-theme-color: var(--theme-dm);" onclick="enterDisease('dm')">
+          <div class="disease-card-header">
+            <span class="disease-card-icon">🍭</span>
+            <div class="disease-card-title">
+              <h3>糖尿病智慧控糖</h3>
+              <span class="subtitle">Diabetes Mellitus</span>
+            </div>
+          </div>
+          <div class="disease-card-body">
+            <p>探索連續血糖監測(TIR)概念、糖化血色素(A1C)日常估算、β細胞退化曲線、全身併發症受累地圖與腎功能風險評估。</p>
+          </div>
+          <div class="disease-card-footer">
+            <span>進入專題</span>
+            <span>➡️</span>
+          </div>
+        </div>
+
+        <!-- 2. 高血壓 -->
+        <div class="disease-card" style="--card-theme-color: var(--theme-htn);" onclick="enterDisease('htn')">
+          <div class="disease-card-header">
+            <span class="disease-card-icon">💓</span>
+            <div class="disease-card-title">
+              <h3>高血壓黃金防線</h3>
+              <span class="subtitle">Hypertension</span>
+            </div>
+          </div>
+          <div class="disease-card-body">
+            <p>掌握最新 &lt; 130/80 mmHg 控制標準、居家測量 722 法則，以及血壓每增加 20/10 mmHg 心血管疾病風險倍增的實證警告。</p>
+          </div>
+          <div class="disease-card-footer">
+            <span>進入專題</span>
+            <span>➡️</span>
+          </div>
+        </div>
+
+        <!-- 3. 高血脂 -->
+        <div class="disease-card" style="--card-theme-color: var(--theme-lip);" onclick="enterDisease('lip')">
+          <div class="disease-card-header">
+            <span class="disease-card-icon">🥑</span>
+            <div class="disease-card-title">
+              <h3>高血脂防堵血管</h3>
+              <span class="subtitle">Hyperlipidemia</span>
+            </div>
+          </div>
+          <div class="disease-card-body">
+            <p>認識壞膽固醇(LDL-C)控制目標、防範血管粥狀硬化卡油，使用血管卡油互動模擬器看懂心肌梗塞與腦中風的危機。</p>
+          </div>
+          <div class="disease-card-footer">
+            <span>進入專題</span>
+            <span>➡️</span>
+          </div>
+        </div>
+
+        <!-- 4. 代謝症候群 -->
+        <div class="disease-card" style="--card-theme-color: var(--theme-mets);" onclick="enterDisease('mets')">
+          <div class="disease-card-header">
+            <span class="disease-card-icon">🎽</span>
+            <div class="disease-card-title">
+              <h3>代謝症候群預防</h3>
+              <span class="subtitle">Metabolic Syndrome</span>
+            </div>
+          </div>
+          <div class="disease-card-body">
+            <p>國健署「三高加二便」五大指標快速檢測計算機。評估您是否符合代謝症候群，提早阻斷慢性病的黃金關鍵期。</p>
+          </div>
+          <div class="disease-card-footer">
+            <span>進入專題</span>
+            <span>➡️</span>
+          </div>
+        </div>
+
+        <!-- 5. 痛風與高尿酸 -->
+        <div class="disease-card" style="--card-theme-color: var(--theme-gout);" onclick="enterDisease('gout')">
+          <div class="disease-card-header">
+            <span class="disease-card-icon">🥩</span>
+            <div class="disease-card-title">
+              <h3>痛風與高尿酸防線</h3>
+              <span class="subtitle">Gout & Hyperuricemia</span>
+            </div>
+          </div>
+          <div class="disease-card-body">
+            <p>解析高尿酸血症的危害與尿酸控制目標(&lt; 6.0 mg/dL)。提供高齡友善的「日常飲食紅綠燈」互動選擇清單。</p>
+          </div>
+          <div class="disease-card-footer">
+            <span>進入專題</span>
+            <span>➡️</span>
+          </div>
+        </div>
+
+        <!-- 6. 氣喘呼吸守護 -->
+        <div class="disease-card" style="--card-theme-color: var(--theme-resp);" onclick="enterDisease('resp')">
+          <div class="disease-card-header">
+            <span class="disease-card-icon">🫁</span>
+            <div class="disease-card-title">
+              <h3>氣喘與肺阻塞守護</h3>
+              <span class="subtitle">Asthma & COPD</span>
+            </div>
+          </div>
+          <div class="disease-card-body">
+            <p>依據 GINA 與 GOLD 國際指引，提供氣喘控制測試(ACT問卷)、COPD簡易篩檢，以及長者縮唇/腹式呼吸法教學。</p>
+          </div>
+          <div class="disease-card-footer">
+            <span>進入專題</span>
+            <span>➡️</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 🏥 B. 疾病詳情主區 (Disease Detail View)   -->
+    <!-- ========================================== -->
+    <section class="detail-view-wrapper" id="detail-view">
+      
+      <!-- 返回與名稱顯示列 -->
+      <div class="detail-back-bar">
+        <button onclick="goHome()" class="btn">
+          <span>⬅️</span> 返回衛教大廳
+        </button>
+        <h2 id="current-disease-main-title" style="font-size: 32px; font-weight: 900;">疾病名稱</h2>
+      </div>
+
+      <!-- 疾病模組佈局 -->
+      <div class="disease-layout">
+        
+        <!-- 左側子分頁選單 -->
+        <aside class="disease-sidebar" id="disease-sidebar-nav">
+          <!-- JS 動態生成按鈕 -->
+        </aside>
+
+        <!-- 右側衛教內容區 -->
+        <article class="disease-content" id="disease-content-area">
+          
+          <!-- ================================================= -->
+          <!-- 🍭 糖尿病 (dm) 子頁籤                            -->
+          <!-- ================================================= -->
+          <div class="tab-pane active" id="pane-dm-1">
+            <h3 class="section-title">📉 β 細胞功能的自然衰退與特休</h3>
+            <div class="card-nested">
+              <p>病友常因為「要吃更多藥」或「要打針」而感到自責。其實，胰島細胞功能退化是一個<strong>生理上的必然過程</strong>，並非您的過錯。</p>
+              
+              <!-- 胰島細胞退化折線圖 -->
+              <div class="cell-chart-container" style="position: relative; margin: 24px 0;">
+                <svg viewBox="0 0 500 250" width="100%" height="220">
+                  <line x1="50" y1="50" x2="450" y2="50" stroke="var(--border-color)" stroke-dasharray="4,4" />
+                  <line x1="50" y1="100" x2="450" y2="100" stroke="var(--border-color)" stroke-dasharray="4,4" />
+                  <line x1="50" y1="150" x2="450" y2="150" stroke="var(--border-color)" stroke-dasharray="4,4" />
+                  <line x1="50" y1="200" x2="450" y2="200" stroke="var(--border-color)" stroke-dasharray="4,4" />
+                  <line x1="50" y1="200" x2="450" y2="200" stroke="var(--text-main)" stroke-width="2" />
+                  <line x1="50" y1="30" x2="50" y2="200" stroke="var(--text-main)" stroke-width="2" />
+                  
+                  <text x="50" y="220" fill="var(--text-muted)" font-size="12" text-anchor="middle">診斷前</text>
+                  <text x="180" y="220" fill="var(--theme-dm)" font-size="13" font-weight="bold" text-anchor="middle">確診第 0 年</text>
+                  <text x="310" y="220" fill="var(--text-muted)" font-size="12" text-anchor="middle">第 5 年</text>
+                  <text x="440" y="220" fill="var(--text-muted)" font-size="12" text-anchor="middle">第 10 年+</text>
+                  
+                  <text x="25" y="55" fill="var(--text-muted)" font-size="12" text-anchor="middle">100%</text>
+                  <text x="25" y="125" fill="var(--text-muted)" font-size="12" text-anchor="middle">50%</text>
+                  <text x="25" y="200" fill="var(--text-muted)" font-size="12" text-anchor="middle">10%</text>
+                  
+                  <path d="M 50 50 Q 130 60, 180 125 T 310 155 T 440 185" fill="none" stroke="var(--danger-red)" stroke-width="4" stroke-linecap="round" />
+                  
+                  <g class="chart-point" onclick="selectYear(0)" style="cursor: pointer;">
+                    <circle cx="180" cy="125" r="8" fill="var(--theme-dm)" stroke="#fff" stroke-width="2" id="pt-0" />
+                    <text x="180" y="110" fill="var(--theme-dm)" font-size="12" font-weight="bold" text-anchor="middle">退化 50%</text>
+                  </g>
+                  <g class="chart-point" onclick="selectYear(5)" style="cursor: pointer;">
+                    <circle cx="310" cy="155" r="6" fill="var(--text-muted)" stroke="#fff" stroke-width="2" id="pt-5" />
+                    <text x="310" y="142" fill="var(--text-muted)" font-size="11" font-weight="bold" text-anchor="middle">退化 65%</text>
+                  </g>
+                  <g class="chart-point" onclick="selectYear(10)" style="cursor: pointer;">
+                    <circle cx="440" cy="185" r="6" fill="var(--text-muted)" stroke="#fff" stroke-width="2" id="pt-10" />
+                    <text x="440" y="172" fill="var(--text-muted)" font-size="11" font-weight="bold" text-anchor="middle">退化 80%+</text>
+                  </g>
+                </svg>
+                <p class="text-muted" style="text-align: center; font-size: 15px; margin-top: 8px;">👆 點擊圖表中的圓點，查看對應病程的去污名化解說與建議 👆</p>
+              </div>
+
+              <div class="card" id="cell-explanation" style="background-color: var(--bg-card-nested); margin-bottom: 0;">
+                <h4 id="cell-year-title" style="font-weight:900; color: var(--theme-dm);">確診第 0 年 (胰島細胞功能剩餘約 50%)</h4>
+                <p id="cell-year-desc" style="font-size:16px;">在您被診斷出糖尿病的第一天，胰島細胞便已經自然退化了將近一半。這<strong>不是因為您做錯了什麼</strong>，而是身體身體機能的自然耗損。請配合醫囑，積極吃藥保護殘存功能！</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="pane-dm-2">
+            <h3 class="section-title">🚦 個人化控糖紅綠燈 & eAG 換算</h3>
+            <div class="card-nested" style="text-align: center;">
+              <div class="big-a1c-display" id="a1c-value" style="color: var(--safe-green);">6.5<span class="big-a1c-unit">%</span></div>
+              <div class="eag-display" id="eag-value" style="font-size: 20px; color: var(--text-muted); margin-bottom: 16px;">估算日常平均血糖值：140 mg/dL</div>
+              
+              <input type="range" class="range-slider" id="a1c-slider" min="4.0" max="12.0" step="0.1" value="6.5">
+              <p class="text-muted" style="font-size: 15px;">⬅️ 拖動滑桿調整糖化血色素 (A1C) 值 ➡️</p>
+              
+              <div class="lighthouse-card lh-green" id="lighthouse-card">
+                <h4 id="lh-title" style="font-weight: 900;">🟢 綠燈安全 (A1C &lt; 7.0%)</h4>
+                <p id="lh-desc">控糖模範生！併發症發生機率降到最低。<br><strong>日常口訣：</strong>「血糖乖乖聽話，血管跟著輕鬆、全家都安心！」</p>
+              </div>
+              
+              <div class="elderly-target-note" style="text-align: left; margin-top: 16px; font-size: 16px; border-left: 4px solid var(--warn-yellow); background: var(--bg-card); padding: 12px 16px;">
+                💡 <strong>專科醫師小提醒與實證：</strong>高齡衰弱或施打胰島素的長輩，<strong>嚴重低血糖年發生率約 11% - 25%</strong>，且會使主要心血管事件 (MACE) 風險增加 2 倍。因此控制目標可彈性放寬至 <strong>8.0% 甚至 8.5%</strong>，安全第一，防範低血糖更重要！<br>
+                <span style="font-size: 13px; color: var(--text-muted); font-weight: 500;">📖 實證文獻：NEJM 2008 (ACCORD trial / ADVANCE trial)【Level 1b, 大型 RCT】</span>
+              </div>
+
+              <!-- 新增糖尿病與血糖診斷標準表格 -->
+              <div style="text-align: left; margin-top: 24px;">
+                <h4 style="font-weight: 900; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                  📋 血糖與糖化血色素 (HbA1c) 臨床診斷標準
+                </h4>
+                <p class="text-muted" style="font-size: 15px; margin-bottom: 12px;">依據中華民國糖尿病學會臨床照護指引：</p>
+                <div style="overflow-x: auto;">
+                  <table class="clinical-table">
+                    <thead>
+                      <tr>
+                        <th>分類</th>
+                        <th>空腹血糖 (Fasting Glucose)</th>
+                        <th>糖化血色素 (HbA1c)</th>
+                        <th>臨床狀態與處置建議</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="bg-light-green">
+                        <td class="text-bold">🟢 正常血糖</td>
+                        <td>&lt; 100 mg/dL</td>
+                        <td>&lt; 5.7%</td>
+                        <td>良好狀態。維持均衡飲食、規律運動，每年定期篩檢一次。</td>
+                      </tr>
+                      <tr class="bg-light-yellow">
+                        <td class="text-bold">🟡 糖尿病前期</td>
+                        <td>100 - 125 mg/dL</td>
+                        <td>5.7% - 6.4%</td>
+                        <td><strong>血糖警報！</strong>胰島 β 細胞已開始疲勞。此階段為「逆轉黃金期」，藉由飲食控制與每週 150 分鐘有氧運動，極大機會可恢復正常。</td>
+                      </tr>
+                      <tr class="bg-light-red">
+                        <td class="text-bold">🔴 糖尿病</td>
+                        <td>&ge; 126 mg/dL</td>
+                        <td>&ge; 6.5%</td>
+                        <td><strong>正式確診。</strong>應儘速接受專科醫師治療，合理使用第一線降血糖藥，守護全身血管。</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- TIR 挑戰遊戲 -->
+            <div class="tir-challenge-box">
+              <div class="tir-header">
+                <span class="tir-title">🎮 TIR 日常生活控糖挑戰</span>
+                <span class="tir-score" id="tir-percent">TIR: 75%</span>
+              </div>
+              <p style="font-size: 15px; margin-bottom: 12px;"><strong>目標範圍內時間 (TIR)：</strong>血糖維持在 70-180 mg/dL 的時間佔比。點選您今天的作息或飲食，看預期的 TIR 變化：</p>
+              <div class="tir-btn-group">
+                <button class="tir-option-btn active" data-value="15" id="btn-tir-1">🥦 每餐多吃一盤菜</button>
+                <button class="tir-option-btn" data-value="10" id="btn-tir-2">🚶 飯後散步 20 分鐘</button>
+                <button class="tir-option-btn" data-value="-25" id="btn-tir-3">🥤 喝了一杯微糖手搖</button>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" id="tir-progress" style="width: 75%; background: var(--safe-green);"></div>
+              </div>
+              <p id="tir-feedback" style="font-size: 15px; font-weight: 700; color: var(--safe-green); margin-top: 8px;">🟢 表現良好！TIR > 70% 代表血糖波動平穩，低血糖與併發症風險極低！</p>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="pane-dm-3">
+            <h3 class="section-title">👣 全身血管保衛戰：併發症地圖</h3>
+            <div class="card-nested">
+              <div class="map-grid" style="display: grid; grid-template-columns: 1.2fr 1.8fr; gap: 24px; align-items: start;">
+                <div class="anatomy-svg-wrapper">
+                  <svg id="human-body-svg" viewBox="0 0 280 400" width="100%" style="max-height: 380px;">
+                    <!-- 人體輪廓線條 (簡約現代設計) -->
+                    <path class="body-silhouette" d="M140,40 C148,40 155,47 155,55 C155,63 148,70 140,70 C132,70 125,63 125,55 C125,47 132,40 140,40 Z 
+                             M140,75 C146,75 148,82 148,85 L149,95 C159,97 172,105 178,115 L190,165 C192,172 186,177 180,175 C176,174 174,170 172,165 L164,120 L163,195 L163,260 L153,370 C152,375 146,375 145,370 L141,270 L139,270 L135,370 C134,375 128,375 127,370 L117,260 L117,195 L116,120 L108,165 C106,170 104,174 100,175 C94,177 88,172 90,165 L102,115 C108,105 121,97 131,95 L132,85 C132,82 134,75 140,75 Z" />
+                    
+                    <!-- 1. 腦 (中風) -->
+                    <g class="hotspot" id="hs-brain" onclick="selectAnatomy('brain')">
+                      <circle class="pulse" cx="140" cy="55" r="12" />
+                      <circle class="core" cx="140" cy="55" r="6" />
+                      <text class="label" x="165" y="58">腦血管 (中風)</text>
+                    </g>
+                    
+                    <!-- 2. 眼 (網膜病變) -->
+                    <g class="hotspot" id="hs-eye" onclick="selectAnatomy('eye')">
+                      <circle class="pulse" cx="145" cy="62" r="10" />
+                      <circle class="core" cx="145" cy="62" r="5" />
+                      <text class="label" x="165" y="78">視網膜病變</text>
+                    </g>
+
+                    <!-- 3. 心 (心肌梗塞) -->
+                    <g class="hotspot" id="hs-heart" onclick="selectAnatomy('heart')">
+                      <circle class="pulse" cx="136" cy="110" r="12" />
+                      <circle class="core" cx="136" cy="110" r="6" />
+                      <text class="label" x="75" y="113" text-anchor="end">心血管疾病</text>
+                    </g>
+
+                    <!-- 4. 腎 (腎病變) -->
+                    <g class="hotspot" id="hs-kidney" onclick="selectAnatomy('kidney')">
+                      <circle class="pulse" cx="146" cy="148" r="12" />
+                      <circle class="core" cx="146" cy="148" r="6" />
+                      <text class="label" x="170" y="152">腎臟病變 (CKD)</text>
+                    </g>
+
+                    <!-- 5. 足 (足部病變/截肢) -->
+                    <g class="hotspot" id="hs-foot" onclick="selectAnatomy('foot')">
+                      <circle class="pulse" cx="131" cy="365" r="14" />
+                      <circle class="core" cx="131" cy="365" r="7" />
+                      <text class="label" x="155" y="369">足部病變</text>
+                    </g>
+                  </svg>
+                </div>
+                
+                <div class="anatomy-details" style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+                  <!-- 腦 (中風) -->
+                  <div class="anatomy-card" data-part="brain" onclick="selectAnatomy('brain')" id="card-part-brain">
+                    <h4 style="font-size:16px; font-weight:900;">🧠 腦血管病變 (腦中風 | 缺血性中風風險增加 1.5 - 2.5 倍)</h4>
+                    <div class="anatomy-card-desc">
+                      <p>📊 發生比例：盛行率約 7.6% (糖尿病患者中風風險是非糖尿病患的 1.5 - 2.5 倍)<br>
+                      <span style="font-size:12px; color: var(--text-muted);">📖 實證文獻：ADA Care Guidelines 2026【Level 1a】</span></p>
+                      <span class="clinic-badge">🏥 診所照護：定期評估血管硬化、三高調藥、FAST症狀宣導</span>
+                    </div>
+                  </div>
+                  <!-- 眼 -->
+                  <div class="anatomy-card" data-part="eye" onclick="selectAnatomy('eye')" id="card-part-eye">
+                    <h4 style="font-size:16px; font-weight:900;">👁️ 眼底視網膜病變 (全球盛行率 22.3% | 罹病20年以上達 60% - 80%)</h4>
+                    <div class="anatomy-card-desc">
+                      <p>📊 發生比例：全球約 22.3% (罹病超過 20 年盛行率達 60% - 80%，增殖性 PDR 約 6%)<br>
+                      <span style="font-size:12px; color: var(--text-muted);">📖 實證文獻：Ophthalmology 2023; 130【Level 1a】</span></p>
+                      <span class="clinic-badge">🏥 診所照護：每年定期轉介眼科眼底散瞳篩檢</span>
+                    </div>
+                  </div>
+                  <!-- 心 -->
+                  <div class="anatomy-card" data-part="heart" onclick="selectAnatomy('heart')" id="card-part-heart">
+                    <h4 style="font-size:16px; font-weight:900;">🫀 心血管疾病 (盛行率 12.7% - 21.9% | 風險高 2 - 4 倍)</h4>
+                    <div class="anatomy-card-desc">
+                      <p>📊 發生比例：冠狀動脈疾病約 12.7% - 21.9% (心肌梗塞風險高出 2 - 4 倍)<br>
+                      <span style="font-size:12px; color: var(--text-muted);">📖 實證文獻：Lancet 2018; 391【Level 1a】</span></p>
+                      <span class="clinic-badge">🏥 診所照護：定期心電圖檢查與三高指標調藥</span>
+                    </div>
+                  </div>
+                  <!-- 腎 -->
+                  <div class="anatomy-card" data-part="kidney" onclick="selectAnatomy('kidney')" id="card-part-kidney">
+                    <h4 style="font-size:16px; font-weight:900;">🩺 糖尿病腎臟病變 (盛行率 30% - 40% | 佔洗腎 45% - 47%)</h4>
+                    <div class="anatomy-card-desc">
+                      <p>📊 發生比例：最終發展為 DKD 約 30% - 40% (台灣洗腎患者中有 45% - 47% 由糖尿病引起)<br>
+                      <span style="font-size:12px; color: var(--text-muted);">📖 實證文獻：KDIGO Clinical Practice Guideline 2024【Level 1a】</span></p>
+                      <span class="clinic-badge">🏥 診所照護：每半年微量尿蛋白與腎功能精密檢查</span>
+                    </div>
+                  </div>
+                  <!-- 腳 -->
+                  <div class="anatomy-card active" data-part="foot" onclick="selectAnatomy('foot')" id="card-part-foot">
+                    <h4 style="font-size:16px; font-weight:900;">👣 周邊神經與足部病變 (神經病變約 50% | 足潰瘍 19% - 34%)</h4>
+                    <div class="anatomy-card-desc" style="display: block;">
+                      <p>📊 發生比例：神經病變約 50%、足潰瘍累積率 19% - 34% (5年死亡率達 30%)<br>
+                      <span style="font-size:12px; color: var(--text-muted);">📖 實證文獻：ADA Diabetes Care 2025【Level 1a】 / Lancet 2020; 396【Level 2a】</span></p>
+                      <span class="clinic-badge">🏥 診所篩檢：神經反射與足部防護篩檢</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="pane-dm-4">
+            <h3 class="section-title">🧫 KDIGO 糖尿病慢性腎臟病 (CKD) 風險與監測矩陣</h3>
+            <div class="card-nested">
+              <div class="mets-calc-grid">
+                <!-- 腎功能計算輸入 -->
+                <div class="mets-input-group" style="padding: 16px; gap: 12px; align-self: start;">
+                  <h4 style="font-size: 18px; font-weight: 900;">🔍 腎功能快速評估</h4>
+                  <div class="mets-input-item">
+                    <label>腎絲球過濾率 (eGFR) <span class="text-muted" style="font-size:12px;">mL/min/1.73m²</span></label>
+                    <input type="number" id="dm-egfr-input" class="mets-input" value="75">
+                  </div>
+                  <div class="mets-input-item">
+                    <label>尿白蛋白/肌酸酐比 (UACR) <span class="text-muted" style="font-size:12px;">mg/g</span></label>
+                    <input type="number" id="dm-uacr-input" class="mets-input" value="15">
+                  </div>
+                  <button class="btn" style="background: var(--theme-dm); color: #fff; border:none;" onclick="calculateKdigo()">開始計算</button>
+                  
+                  <div id="kdigo-result-panel" class="card" style="display:none; padding:12px; margin-top:8px; border-left: 5px solid var(--border-color); background: var(--bg-card); margin-bottom: 0;">
+                    <h5 id="result-risk-level" style="font-size: 16px; font-weight: 900;">評估結果</h5>
+                    <p id="result-desc" style="font-size: 14px; color: var(--text-muted); margin-top: 4px; line-height: 1.5;"></p>
+                    <p id="result-frequency" style="font-size: 14px; font-weight: 700; margin-top: 4px;"></p>
+                  </div>
+                </div>
+                
+                <!-- KDIGO 表格區 -->
+                <div style="overflow-x: auto;">
+                  <!-- 表格切換按鈕 -->
+                  <div class="kdigo-switch no-print" style="margin-bottom: 12px; display: flex; gap: 8px; justify-content: flex-start;">
+                    <button type="button" class="active" id="btn-kdigo-freq" onclick="switchKdigoTable('freq')" style="font-size: 14px; padding: 6px 12px;">📅 臨床監測頻率</button>
+                    <button type="button" id="btn-kdigo-risk" onclick="switchKdigoTable('risk')" style="font-size: 14px; padding: 6px 12px;">📊 腎衰竭相對風險 (2024 KDIGO)</button>
+                  </div>
+
+                  <!-- 表格 A: 臨床監測頻率 -->
+                  <table class="kdigo-table" id="kdigo-table-freq">
+                    <thead>
+                      <tr>
+                        <th rowspan="2" colspan="2" class="uacr-header" style="font-size: 11px;">eGFR / UACR</th>
+                        <th class="uacr-header">A1 正常至輕微<br>&lt; 30 mg/g</th>
+                        <th class="uacr-header">A2 中度增加<br>30-300 mg/g</th>
+                        <th class="uacr-header">A3 重度增加<br>&gt; 300 mg/g</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="egfr-header">G1</td>
+                        <td class="egfr-val">&ge;90</td>
+                        <td class="kdigo-cell risk-low" id="cell-g1-a1" data-egfr="G1" data-uacr="A1">
+                          <span class="risk-label">低風險</span><br><span class="freq-label">1次/年</span>
+                        </td>
+                        <td class="kdigo-cell risk-mod" id="cell-g1-a2" data-egfr="G1" data-uacr="A2">
+                          <span class="risk-label">中度</span><br><span class="freq-label">1次/年</span>
+                        </td>
+                        <td class="kdigo-cell risk-high" id="cell-g1-a3" data-egfr="G1" data-uacr="A3">
+                          <span class="risk-label">高風險</span><br><span class="freq-label">2次/年</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="egfr-header">G2</td>
+                        <td class="egfr-val">60-89</td>
+                        <td class="kdigo-cell risk-low" id="cell-g2-a1" data-egfr="G2" data-uacr="A1">
+                          <span class="risk-label">低風險</span><br><span class="freq-label">1次/年</span>
+                        </td>
+                        <td class="kdigo-cell risk-mod" id="cell-g2-a2" data-egfr="G2" data-uacr="A2">
+                          <span class="risk-label">中度</span><br><span class="freq-label">1次/年</span>
+                        </td>
+                        <td class="kdigo-cell risk-high" id="cell-g2-a3" data-egfr="G2" data-uacr="A3">
+                          <span class="risk-label">高風險</span><br><span class="freq-label">2次/年</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="egfr-header">G3a</td>
+                        <td class="egfr-val">45-59</td>
+                        <td class="kdigo-cell risk-mod" id="cell-g3a-a1" data-egfr="G3a" data-uacr="A1">
+                          <span class="risk-label">中度</span><br><span class="freq-label">1次/年</span>
+                        </td>
+                        <td class="kdigo-cell risk-high" id="cell-g3a-a2" data-egfr="G3a" data-uacr="A2">
+                          <span class="risk-label">高風險</span><br><span class="freq-label">2次/年</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g3a-a3" data-egfr="G3a" data-uacr="A3">
+                          <span class="risk-label">極高</span><br><span class="freq-label">3次/年</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="egfr-header">G3b</td>
+                        <td class="egfr-val">30-44</td>
+                        <td class="kdigo-cell risk-high" id="cell-g3b-a1" data-egfr="G3b" data-uacr="A1">
+                          <span class="risk-label">高風險</span><br><span class="freq-label">2次/年</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g3b-a2" data-egfr="G3b" data-uacr="A2">
+                          <span class="risk-label">極高</span><br><span class="freq-label">3次/年</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g3b-a3" data-egfr="G3b" data-uacr="A3">
+                          <span class="risk-label">極高</span><br><span class="freq-label">&ge;3次/年</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="egfr-header">G4</td>
+                        <td class="egfr-val">15-29</td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g4-a1" data-egfr="G4" data-uacr="A1">
+                          <span class="risk-label">極高</span><br><span class="freq-label">3次/年</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g4-a2" data-egfr="G4" data-uacr="A2">
+                          <span class="risk-label">極高</span><br><span class="freq-label">&ge;3次/年</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g4-a3" data-egfr="G4" data-uacr="A3">
+                          <span class="risk-label">極高</span><br><span class="freq-label">&ge;4次/年</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="egfr-header">G5</td>
+                        <td class="egfr-val">&lt;15</td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g5-a1" data-egfr="G5" data-uacr="A1">
+                          <span class="risk-label">極高</span><br><span class="freq-label">&ge;4次/年</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g5-a2" data-egfr="G5" data-uacr="A2">
+                          <span class="risk-label">極高</span><br><span class="freq-label">&ge;4次/年</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g5-a3" data-egfr="G5" data-uacr="A3">
+                          <span class="risk-label">極高</span><br><span class="freq-label">&ge;4次/年</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <!-- 表格 B: 2024 KDIGO 腎衰竭相對風險 -->
+                  <table class="kdigo-table" id="kdigo-table-risk" style="display: none; font-size: 13px;">
+                    <thead>
+                      <tr>
+                        <th rowspan="2" colspan="2" class="uacr-header" style="font-size: 11px;">eGFR / UACR</th>
+                        <th class="uacr-header">&lt; 10<br>mg/g</th>
+                        <th class="uacr-header">10-29<br>mg/g</th>
+                        <th class="uacr-header">30-299<br>mg/g</th>
+                        <th class="uacr-header">300-999<br>mg/g</th>
+                        <th class="uacr-header">1000+<br>mg/g</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="egfr-header">G1a</td>
+                        <td class="egfr-val">&ge;105</td>
+                        <td class="kdigo-cell risk-low" id="cell-g1a-r1" data-egfr="G1a" data-uacr="R1">
+                          <span class="risk-label">低風險</span><br><span class="freq-label">0.5倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-low" id="cell-g1a-r2" data-egfr="G1a" data-uacr="R2">
+                          <span class="risk-label">低風險</span><br><span class="freq-label">1.2倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-mod" id="cell-g1a-r3" data-egfr="G1a" data-uacr="R3">
+                          <span class="risk-label">中度</span><br><span class="freq-label">2.9倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-high" id="cell-g1a-r4" data-egfr="G1a" data-uacr="R4">
+                          <span class="risk-label">高風險</span><br><span class="freq-label">7.7倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g1a-r5" data-egfr="G1a" data-uacr="R5">
+                          <span class="risk-label">極高</span><br><span class="freq-label">25倍</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="egfr-header">G1b</td>
+                        <td class="egfr-val">90-104</td>
+                        <td class="kdigo-cell risk-low" id="cell-g1b-r1" data-egfr="G1b" data-uacr="R1">
+                          <span class="risk-label">低風險</span><br><span class="freq-label">Ref</span>
+                        </td>
+                        <td class="kdigo-cell risk-low" id="cell-g1b-r2" data-egfr="G1b" data-uacr="R2">
+                          <span class="risk-label">低風險</span><br><span class="freq-label">1.8倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-mod" id="cell-g1b-r3" data-egfr="G1b" data-uacr="R3">
+                          <span class="risk-label">中度</span><br><span class="freq-label">4.3倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-high" id="cell-g1b-r4" data-egfr="G1b" data-uacr="R4">
+                          <span class="risk-label">高風險</span><br><span class="freq-label">12倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g1b-r5" data-egfr="G1b" data-uacr="R5">
+                          <span class="risk-label">極高</span><br><span class="freq-label">43倍</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="egfr-header">G2</td>
+                        <td class="egfr-val">60-89</td>
+                        <td class="kdigo-cell risk-low" id="cell-g2-r1" data-egfr="G2" data-uacr="R1">
+                          <span class="risk-label">低風險</span><br><span class="freq-label">2.3倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-mod" id="cell-g2-r2" data-egfr="G2" data-uacr="R2">
+                          <span class="risk-label">中度</span><br><span class="freq-label">4.9倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-mod" id="cell-g2-r3" data-egfr="G2" data-uacr="R3">
+                          <span class="risk-label">中度</span><br><span class="freq-label">10倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-high" id="cell-g2-r4" data-egfr="G2" data-uacr="R4">
+                          <span class="risk-label">高風險</span><br><span class="freq-label">27倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g2-r5" data-egfr="G2" data-uacr="R5">
+                          <span class="risk-label">極高</span><br><span class="freq-label">85倍</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="egfr-header">G3a</td>
+                        <td class="egfr-val">45-59</td>
+                        <td class="kdigo-cell risk-mod" id="cell-g3a-r1" data-egfr="G3a" data-uacr="R1">
+                          <span class="risk-label">中度</span><br><span class="freq-label">13倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-mod" id="cell-g3a-r2" data-egfr="G3a" data-uacr="R2">
+                          <span class="risk-label">中度</span><br><span class="freq-label">19倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-high" id="cell-g3a-r3" data-egfr="G3a" data-uacr="R3">
+                          <span class="risk-label">高風險</span><br><span class="freq-label">37倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g3a-r4" data-egfr="G3a" data-uacr="R4">
+                          <span class="risk-label">極高</span><br><span class="freq-label">89倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g3a-r5" data-egfr="G3a" data-uacr="R5">
+                          <span class="risk-label">極高</span><br><span class="freq-label">236倍</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="egfr-header">G3b</td>
+                        <td class="egfr-val">30-44</td>
+                        <td class="kdigo-cell risk-high" id="cell-g3b-r1" data-egfr="G3b" data-uacr="R1">
+                          <span class="risk-label">高風險</span><br><span class="freq-label">50倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-high" id="cell-g3b-r2" data-egfr="G3b" data-uacr="R2">
+                          <span class="risk-label">高風險</span><br><span class="freq-label">58倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g3b-r3" data-egfr="G3b" data-uacr="R3">
+                          <span class="risk-label">極高</span><br><span class="freq-label">115倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g3b-r4" data-egfr="G3b" data-uacr="R4">
+                          <span class="risk-label">極高</span><br><span class="freq-label">240倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g3b-r5" data-egfr="G3b" data-uacr="R5">
+                          <span class="risk-label">極高</span><br><span class="freq-label">463倍</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="egfr-header">G4</td>
+                        <td class="egfr-val">15-29</td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g4-r1" data-egfr="G4" data-uacr="R1">
+                          <span class="risk-label">極高</span><br><span class="freq-label">228倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g4-r2" data-egfr="G4" data-uacr="R2">
+                          <span class="risk-label">極高</span><br><span class="freq-label">228倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g4-r3" data-egfr="G4" data-uacr="R3">
+                          <span class="risk-label">極高</span><br><span class="freq-label">443倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g4-r4" data-egfr="G4" data-uacr="R4">
+                          <span class="risk-label">極高</span><br><span class="freq-label">796倍</span>
+                        </td>
+                        <td class="kdigo-cell risk-vhigh" id="cell-g4-r5" data-egfr="G4" data-uacr="R5">
+                          <span class="risk-label">極高</span><br><span class="freq-label">1253倍</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div class="legend-container">
+                    <span class="legend-item"><span class="legend-color risk-low"></span> 低風險</span>
+                    <span class="legend-item"><span class="legend-color risk-mod"></span> 中度風險</span>
+                    <span class="legend-item"><span class="legend-color risk-high"></span> 高風險</span>
+                    <span class="legend-item"><span class="legend-color risk-vhigh"></span> 極高風險</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================================================= -->
+          <!-- 💓 高血壓 (htn) 子頁籤                            -->
+          <!-- ================================================= -->
+          <div class="tab-pane" id="pane-htn-1">
+            <h3 class="section-title">💓 高血壓控制目標與 722 法則</h3>
+            <div class="card-nested">
+              <h4 style="color: var(--theme-htn); font-weight:900; margin-bottom: 12px;">🎯 控制標準：&lt; 130/80 mmHg</h4>
+              <p style="margin-bottom: 16px;">根據《2022台灣高血壓治療指引》，對一般人與糖尿病患而言，積極將血壓控制在 <strong>130/80 mmHg</strong> 以下，能最有效保護心腦血管與腎臟，降低心血管死亡率。</p>
+              
+              <div class="card" style="border-left: 6px solid var(--theme-htn); background: var(--bg-card); margin-bottom: 0;">
+                <h4 style="font-weight:900; margin-bottom: 8px;">🏠 居家血壓測量黃金公式：「722 法則」</h4>
+                <p style="font-size:16px;">
+                  • <strong>7</strong>：連續量 <strong>7 天</strong>（健檢前或調整藥物時）。<br>
+                  • <strong>2</strong>：天天量 <strong>2 次</strong>（早上起床後1小時內、晚上睡前1小時內）。<br>
+                  • <strong>2</strong>：每次量 <strong>2 遍</strong>（每次間隔1分鐘，取兩次平均值以防誤差）。
+                </p>
+              </div>
+
+              <!-- 新增正常血壓與高血壓分類表格 -->
+              <div style="margin-top: 24px;">
+                <h4 style="font-weight: 900; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                  📋 血壓分類與控制目標 (2022 台灣高血壓指引)
+                </h4>
+                <p class="text-muted" style="font-size: 15px; margin-bottom: 12px;">測量均以安靜狀態下的診間或居家測量平均值為準：</p>
+                <div style="overflow-x: auto;">
+                  <table class="clinical-table">
+                    <thead>
+                      <tr>
+                        <th>血壓分類</th>
+                        <th>收縮壓 (Systolic / 高壓)</th>
+                        <th></th>
+                        <th>舒張壓 (Diastolic / 低壓)</th>
+                        <th>臨床處置與照護建議</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="bg-light-green">
+                        <td class="text-bold">🟢 正常血壓</td>
+                        <td>&lt; 120 mmHg</td>
+                        <td class="text-bold" style="text-align: center;">與</td>
+                        <td>&lt; 80 mmHg</td>
+                        <td>良好狀態。維持健康低鈉飲食與運動，每年定期測量一次。</td>
+                      </tr>
+                      <tr class="bg-light-yellow">
+                        <td class="text-bold">🟡 血壓偏高</td>
+                        <td>120 - 129 mmHg</td>
+                        <td class="text-bold" style="text-align: center;">與</td>
+                        <td>&lt; 80 mmHg</td>
+                        <td><strong>血管開始緊繃！</strong>建議調整生活型態（限制鈉鹽、減重、規律有氧），每 3-6 個月追蹤。</td>
+                      </tr>
+                      <tr class="bg-light-red">
+                        <td class="text-bold">🔴 高血壓</td>
+                        <td>&ge; 130 mmHg</td>
+                        <td class="text-bold" style="text-align: center;">或</td>
+                        <td>&ge; 80 mmHg</td>
+                        <td><strong>已達診斷標準。</strong>應諮詢醫師，開始生活型態介入，並視風險配合藥物治療，控制目標 &lt; 130/80。</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="pane-htn-2">
+            <h3 class="section-title">⚠️ 血管硬化與風險倍增警告</h3>
+            <div class="card-nested">
+              <p style="margin-bottom: 20px;">當收縮壓每增加 20 mmHg，舒張壓每增加 10 mmHg，心血管死亡風險將呈現<strong>翻倍 (指數級) 增長</strong>！</p>
+              
+              <div class="bp-risk-chart" style="background: var(--bg-card); border-radius: 16px; padding: 20px; border: 1.5px solid var(--border-color);">
+                <div class="bp-risk-row">
+                  <span class="bp-risk-label">115 / 75</span>
+                  <div class="bp-risk-bar-wrapper"><div class="bp-risk-bar" style="width: 12.5%; background: var(--safe-green);"></div></div>
+                  <span class="bp-risk-value" style="color: var(--safe-green);">1 倍 (基準)</span>
+                </div>
+                <div class="bp-risk-row">
+                  <span class="bp-risk-label">135 / 85</span>
+                  <div class="bp-risk-bar-wrapper"><div class="bp-risk-bar" style="width: 25%; background: var(--warn-yellow);"></div></div>
+                  <span class="bp-risk-value" style="color: var(--warn-yellow);">2 倍 📈</span>
+                </div>
+                <div class="bp-risk-row">
+                  <span class="bp-risk-label">155 / 95</span>
+                  <div class="bp-risk-bar-wrapper"><div class="bp-risk-bar" style="width: 50%; background: #ff7a00;"></div></div>
+                  <span class="bp-risk-value" style="color: #ff7a00;">4 倍 📈📈</span>
+                </div>
+                <div class="bp-risk-row">
+                  <span class="bp-risk-label">175 / 105</span>
+                  <div class="bp-risk-bar-wrapper"><div class="bp-risk-bar" style="width: 100%; background: var(--danger-red);"></div></div>
+                  <span class="bp-risk-value" style="color: var(--danger-red); font-size:22px;">8 倍 📈📈📈</span>
+                </div>
+              </div>
+              <p class="text-muted" style="font-size:14px; margin-top: 12px;">* 註：從基準血壓 115/75 mmHg 開始，收縮壓每增加 20 mmHg 且舒張壓每增加 10 mmHg，心血管死亡風險便會**翻倍增長**。</p>
+
+              <!-- 新增高血壓併發症與發生風險發生率 -->
+              <div style="margin-top: 24px;">
+                <h4 style="font-weight: 900; margin-bottom: 8px;">📊 高血壓引發之慢性併發症與風險數據</h4>
+                <p class="text-muted" style="font-size: 15px; margin-bottom: 16px;">高血壓是隱形的殺手，長期忽視會導致全身血管與器官病變：</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+                  
+                  <div class="card" style="margin-bottom:0; border-top: 4px solid var(--theme-htn); padding: 16px; background: var(--bg-card);">
+                    <h5 style="font-size: 16px; font-weight: 900;">🧠 腦血管中風 (Stroke)</h5>
+                    <div style="font-size: 24px; font-weight: 900; color: var(--danger-red); margin: 8px 0;">風險高 2 - 4 倍</div>
+                    <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">高血壓是出血性及缺血性中風最主要的關鍵因素。控制在 130/80 以下可大幅改善。</p>
+                  </div>
+                  
+                  <div class="card" style="margin-bottom:0; border-top: 4px solid var(--theme-htn); padding: 16px; background: var(--bg-card);">
+                    <h5 style="font-size: 16px; font-weight: 900;">🫀 心肌梗塞與冠心病</h5>
+                    <div style="font-size: 24px; font-weight: 900; color: var(--danger-red); margin: 8px 0;">風險高 2 - 3 倍</div>
+                    <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">長期高血壓加速冠狀動脈粥狀硬化與血管狹窄，引發心肌梗塞與心臟衰竭。</p>
+                  </div>
+
+                  <div class="card" style="margin-bottom:0; border-top: 4px solid var(--theme-htn); padding: 16px; background: var(--bg-card);">
+                    <h5 style="font-size: 16px; font-weight: 900;">💥 主動脈剝離 (Dissection)</h5>
+                    <div style="font-size: 24px; font-weight: 900; color: var(--danger-red); margin: 8px 0;">風險高 5 倍以上</div>
+                    <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">高達 80% 的急性主動脈剝離患者有高血壓病史，血壓爆表是導致血管內皮撕裂的最危險因子。</p>
+                  </div>
+
+                  <div class="card" style="margin-bottom:0; border-top: 4px solid var(--theme-htn); padding: 16px; background: var(--bg-card);">
+                    <h5 style="font-size: 16px; font-weight: 900;">🩺 末期腎衰竭 (ESRD)</h5>
+                    <div style="font-size: 24px; font-weight: 900; color: var(--danger-red); margin: 8px 0;">風險高 2 倍</div>
+                    <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">高血壓使腎絲球內壓力過高，加速纖維化與硬化，是台灣僅次於糖尿病的洗腎次要原因。</p>
+                  </div>
+                  
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-top: 16px; border-top: 1px dashed var(--border-color); padding-top: 8px;">
+                  📖 臨床實證來源：2022 Taiwan Hypertension Guidelines / Lancet 2018 (GLOBALTA study)【Level 1a 系統性回顧】
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================================================= -->
+          <!-- 🥑 高血脂 (lip) 子頁籤                            -->
+          <!-- ================================================= -->
+          <div class="tab-pane" id="pane-lip-1">
+            <h3 class="section-title">🥑 壞膽固醇 (LDL-C) 控制目標</h3>
+            <div class="card-nested">
+              <p>高血脂的關鍵在於**低密度膽固醇 (LDL-C，又稱壞膽固醇)**。它會卡在血管壁上，形成粥狀硬化斑塊，就像老舊水管被油脂塞住一樣。</p>
+              
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 16px;">
+                <div class="card" style="margin-bottom:0; text-align: center; border-top: 5px solid var(--safe-green);">
+                  <h5 style="font-size: 16px; font-weight:700;">一般人目標</h5>
+                  <div style="font-size: 28px; font-weight: 900; color: var(--safe-green); margin: 8px 0;">&lt; 130</div>
+                  <span class="text-muted" style="font-size:13px;">mg/dL</span>
+                </div>
+                <div class="card" style="margin-bottom:0; text-align: center; border-top: 5px solid var(--warn-yellow);">
+                  <h5 style="font-size: 16px; font-weight:700;">糖尿病或 CKD</h5>
+                  <div style="font-size: 28px; font-weight: 900; color: var(--warn-yellow); margin: 8px 0;">&lt; 100</div>
+                  <span class="text-muted" style="font-size:13px;">mg/dL</span>
+                </div>
+                <div class="card" style="margin-bottom:0; text-align: center; border-top: 5px solid var(--danger-red);">
+                  <h5 style="font-size: 16px; font-weight:700;">合併心血管病史</h5>
+                  <div style="font-size: 28px; font-weight: 900; color: var(--danger-red); margin: 8px 0;">&lt; 70</div>
+                  <span class="text-muted" style="font-size:13px;">mg/dL</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="pane-lip-2">
+            <h3 class="section-title">🎚️ 血管卡油斑塊互動模擬器</h3>
+            <div class="card-nested">
+              <p>調整下方的 LDL-C 壞膽固醇值，觀察膽固醇對血管腔狹窄程度 of 影響：</p>
+              
+              <div class="vessel-simulator-container">
+                <div style="font-size: 22px; font-weight: 900; text-align: center;" id="lip-ldlc-display">低密度膽固醇 LDL-C: 100 mg/dL</div>
+                
+                <div class="vessel-visual">
+                  <div class="vessel-blood" id="vessel-blood-flow" style="height: 100%;"></div>
+                  <div class="vessel-plaque" id="vessel-plaque-width" style="width: 20%;"></div>
+                </div>
+                
+                <input type="range" class="range-slider" id="lip-ldlc-slider" min="50" max="220" step="5" value="100" style="background: var(--border-color);">
+                
+                <div class="card" id="vessel-feedback-box" style="margin-bottom:0; background: var(--bg-card); padding:16px;">
+                  <h5 id="vessel-feedback-title" style="font-weight:900;">🟡 中度斑塊累積 (糖尿病控制標準邊緣)</h5>
+                  <p id="vessel-feedback-desc" style="font-size:15px; color:var(--text-muted); margin-top:4px;">血管開始累積粥狀斑塊，已比正常人狹窄。需注意飲食，減少動物飽和脂肪，並視情況配合降脂藥物 (Statin)。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================================================= -->
+          <!-- 🥩 痛風與高尿酸 (gout) 子頁籤                     -->
+          <!-- ================================================= -->
+          <div class="tab-pane" id="pane-gout-1">
+            <h3 class="section-title">🥩 高尿酸血症與痛風石危機</h3>
+            <div class="card-nested">
+              <h4 style="color: var(--theme-gout); font-weight:900; margin-bottom: 12px;">🎯 尿酸控制目標：&lt; 6.0 mg/dL</h4>
+              <p>血中尿酸過高時，會在關節腔、軟骨或腎臟沈澱形成「尿酸鈉鹽結晶」。一旦發炎，會導致關節紅腫熱痛，這就是**痛風發作**。長期未控制，結晶會堆積成硬塊，也就是**痛風石**，甚至造成關節變形與腎結石、腎衰竭。</p>
+              
+              <div class="card" style="border-left: 6px solid var(--theme-gout); background: var(--bg-card); margin-bottom: 0; margin-top: 20px;">
+                <h5 style="font-weight:900; margin-bottom: 6px;">💡 專科醫師特別提醒：</h5>
+                <p style="font-size: 16px;">對於已經出現痛風石關節變形的病友，控制目標應更嚴格設定在 <strong>&lt; 5.0 mg/dL</strong>，才能有效溶解已經形成的關節結晶，保護腎功能免受結晶沈澱損傷！</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="pane-gout-2">
+            <h3 class="section-title">🥦 飲食紅綠燈：吃對食物不發作</h3>
+            <div class="card-nested">
+              <p>除了按時服用降尿酸藥物（抑制生成或促進排出），配合飲食調整可以大幅降低急性痛風發作頻率。</p>
+              
+              <div class="diet-grid">
+                <div class="diet-col diet-red">
+                  <h5>🔴 紅燈 (避免/禁用)</h5>
+                  <ul>
+                    <li>內臟類（豬肝、雞腎）</li>
+                    <li>啤酒與各式烈酒</li>
+                    <li>海鮮（蛤蜊、生蠔、蝦蟹）</li>
+                    <li>火鍋濃肉湯、肉汁</li>
+                    <li>高果糖糖漿飲料（手搖飲）</li>
+                  </ul>
+                </div>
+                <div class="diet-col diet-yellow">
+                  <h5>🟡 黃燈 (適量/限量)</h5>
+                  <ul>
+                    <li>紅肉類（豬、牛、羊肉）</li>
+                    <li>一般魚類、雞肉</li>
+                    <li>豆類與豆腐豆漿</li>
+                    <li>菇類（香菇、金針菇）</li>
+                    <li>蘆筍、菠菜、筍類</li>
+                  </ul>
+                </div>
+                <div class="diet-col diet-green">
+                  <h5>🟢 綠燈 (安心食用)</h5>
+                  <ul>
+                    <li>充足水分 (每天 &gt; 2000cc)</li>
+                    <li>低脂或無脂牛奶</li>
+                    <li>雞蛋、精緻穀類（米、麵）</li>
+                    <li>絕大多數蔬菜</li>
+                    <li>櫻桃、含維生素C水果</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================================================= -->
+          <!-- 🫁 氣喘與肺阻塞 (resp) 子頁籤                    -->
+          <!-- ================================================= -->
+          <div class="tab-pane" id="pane-resp-1">
+            <h3 class="section-title">🫁 氣喘控制、GINA 指引與 PEF 預估值試算</h3>
+            
+            <!-- GINA 衛教 -->
+            <div class="card-nested">
+              <h4 style="color: var(--theme-resp); font-weight: 900; margin-bottom: 8px;">🌟 GINA 指引核心觀念：控制發炎是唯一關鍵</h4>
+              <p style="font-size: 16px; line-height: 1.7;">
+                氣喘的<strong>核心病理是「氣道慢性發炎與狹窄」</strong>。這種慢性的氣道發炎會導致支氣管高度敏感，當遇到冷空氣、過敏原或感冒時，氣道平滑肌就會收縮痙攣，使管腔嚴重狹窄。全球氣喘創議組織 (GINA) 指引強調：
+              </p>
+              
+              <!-- 新增氣喘病理學對照圖片 -->
+              <div style="margin: 16px 0; text-align: center;">
+                <img src="./asthma_inflammation_pathology.png" alt="氣喘病理學：正常支氣管與氣道慢性發炎與狹窄對照圖" style="max-width: 100%; border-radius: 12px; border: 1.5px solid var(--border-color); box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <p class="text-muted" style="font-size: 13px; margin-top: 8px;">📊 正常支氣管 (左) vs 氣喘發作時平滑肌收縮、黏膜發炎腫脹及多痰導致之氣道慢性發炎與狹窄 (右)</p>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;">
+                <div class="card" style="margin-bottom:0; background: var(--bg-card); border-left: 5px solid var(--danger-red); padding: 16px;">
+                  <h5 style="font-size:16px; font-weight:900; color:var(--danger-red); margin-bottom:6px;">⚠️ 緩解型吸入劑 (SABA / 急救擴張劑)</h5>
+                  <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">
+                    俗稱「急救吸入劑」（如沙丁胺醇）。<strong>完全沒有抗發炎作用！</strong>僅能暫時放鬆氣管。過度依賴急救劑（每年用超過 3 支）會讓發炎加劇，急性發作死亡率增高。
+                  </p>
+                </div>
+                <div class="card" style="margin-bottom:0; background: var(--bg-card); border-left: 5px solid var(--safe-green); padding: 16px;">
+                  <h5 style="font-size:16px; font-weight:900; color:var(--safe-green); margin-bottom:6px;">🛡️ 控制型吸入劑 (ICS / 每日保養藥)</h5>
+                  <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">
+                    含有極低劑量的<strong>吸入型類固醇 (ICS)</strong>。直接作用於氣道，極少進入全身。必須<strong>每天規律吸入</strong>，才能真正保養氣管、防範氣喘急性發作！
+                  </p>
+                </div>
+              </div>
+              <div class="elderly-target-note" style="margin-bottom: 0; font-size:15px; border-left: 4px solid var(--warn-yellow); background: var(--bg-card); padding: 10px 14px;">
+                💡 <strong>用藥小常識：</strong>吸入型類固醇吸完後，<strong>務必用清水深部漱口 2 至 3 次並吐掉</strong>，以避免藥物殘留在口腔導致喉嚨沙啞、聲音變粗或感染口腔念珠菌（鵝口瘡）！
+              </div>
+            </div>
+
+            <!-- GINA 階梯式治療 -->
+            <div class="card-nested" style="margin-top: 24px;">
+              <h4 style="font-weight: 900; margin-bottom: 8px;">📶 GINA 氣喘階梯式治療 (Stepwise Approach)</h4>
+              <p class="text-muted" style="font-size: 15px; margin-bottom: 16px;">
+                醫師會根據您的發作次數與肺功能，動態調整您的用藥階梯（升階/降階）：
+              </p>
+              
+              <div class="gina-steps-grid">
+                <div class="gina-step-card">
+                  <div class="gina-step-num">Step 1</div>
+                  <div class="gina-step-title">症狀極輕微</div>
+                  <div class="gina-step-desc">有症狀時，吸入低劑量「類固醇+福莫特羅」緩解，不建議單用急救劑。</div>
+                </div>
+                <div class="gina-step-card">
+                  <div class="gina-step-num">Step 2</div>
+                  <div class="gina-step-title">輕度氣喘</div>
+                  <div class="gina-step-desc">每日規律吸入低劑量類固醇 (ICS) 保養，有症狀時再配合緩解劑。</div>
+                </div>
+                <div class="gina-step-card">
+                  <div class="gina-step-num">Step 3</div>
+                  <div class="gina-step-title">中度氣喘</div>
+                  <div class="gina-step-desc">每日使用「低劑量 ICS + LABA」複方保養型吸入劑，控制發炎。</div>
+                </div>
+                <div class="gina-step-card">
+                  <div class="gina-step-num">Step 4</div>
+                  <div class="gina-step-title">中重度氣喘</div>
+                  <div class="gina-step-desc">每日使用「中劑量 ICS + LABA」保養。檢視操作技巧與過敏原。</div>
+                </div>
+                <div class="gina-step-card">
+                  <div class="gina-step-num">Step 5</div>
+                  <div class="gina-step-title">重度氣喘</div>
+                  <div class="gina-step-desc">每日高劑量 ICS+LABA 複方，或考慮加入 LAMA/單株抗體生物製劑。</div>
+                </div>
+              </div>
+              <p style="font-size: 13px; color: var(--text-muted); margin-top: 12px; text-align: center;">
+                * 註：當症狀良好控制 <strong>3 個月以上</strong>，可在醫師指導下評估「降階治療」減少劑量，切勿擅自停藥。
+              </p>
+            </div>
+
+            <!-- PEF 預估值計算機 -->
+            <div class="card-nested" style="margin-top: 24px;">
+              <h4 style="font-weight: 900; margin-bottom: 8px;">📊 尖峰呼氣流速 (PEF) 預估值快速試算</h4>
+              <p class="text-muted" style="font-size: 15px; margin-bottom: 16px;">
+                尖峰呼氣流速代表您用盡全力吐氣時的最大氣流速度。輸入身高、年齡、體重，試算您的預估正常值：
+              </p>
+              
+              <div class="mets-input-group" style="padding: 20px; gap: 16px; background: var(--bg-card); border-color: var(--border-color); margin-top: 16px;">
+                <div class="pef-calc-grid">
+                  <div class="mets-input-item">
+                    <label>1. 族群分類</label>
+                    <select class="mets-select" id="pef-type" onchange="togglePefWeight()" style="width: 100%;">
+                      <option value="adult">成人 (Adult)</option>
+                      <option value="child">兒童 (Children 6-12歲)</option>
+                    </select>
+                  </div>
+                  <div class="mets-input-item">
+                    <label>2. 生理性別</label>
+                    <select class="mets-select" id="pef-gender" style="width: 100%;">
+                      <option value="male">男性</option>
+                      <option value="female">女性</option>
+                    </select>
+                  </div>
+                  <div class="mets-input-item">
+                    <label>3. 年齡 (歲)</label>
+                    <input type="number" id="pef-age" class="mets-input" value="65" min="6" max="100">
+                  </div>
+                  <div class="mets-input-item">
+                    <label>4. 身高 (公分)</label>
+                    <input type="number" id="pef-height" class="mets-input" value="165" min="80" max="220">
+                  </div>
+                  <div class="mets-input-item" id="pef-weight-wrapper" style="display: none;">
+                    <label>體重 (公斤)</label>
+                    <input type="number" id="pef-weight" class="mets-input" value="30" min="10" max="150">
+                  </div>
+                  <div class="mets-input-item">
+                    <label>5. 您的實測 PEF 值 (L/min) <span class="text-muted" style="font-size:11px; font-weight:normal;">(選填)</span></label>
+                    <input type="number" id="pef-actual" class="mets-input" placeholder="例如: 380">
+                  </div>
+                </div>
+                
+                <button class="btn" style="background: var(--theme-resp); color:#fff; border:none; width: 100%; display: block;" onclick="calculatePef()">開始計算預估值</button>
+                
+                <!-- 計算結果面板 -->
+                <div id="pef-result-panel" class="card" style="display:none; padding:16px; margin-top:12px; border-left: 5px solid var(--theme-resp); background: var(--bg-card-nested); margin-bottom: 0;">
+                  <h5 id="pef-result-title" style="font-size: 18px; font-weight: 900; color: var(--theme-resp);">計算結果</h5>
+                  <p id="pef-result-desc" style="font-size: 15px; margin-top: 8px; line-height: 1.6;"></p>
+                  
+                  <h6 style="font-size: 15px; font-weight: 900; margin-top: 14px; margin-bottom: 6px;">🟢 居家個人尖峰流速警戒區分配：</h6>
+                  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 14px;">
+                    <div class="pef-zone-box" style="background-color: var(--safe-green);">
+                      🟢 綠燈安全區 (80-100%)
+                      <div id="pef-zone-green" style="font-size:13px; margin-top:4px;"></div>
+                    </div>
+                    <div class="pef-zone-box" style="background-color: var(--warn-yellow);">
+                      🟡 黃燈警戒區 (50-79%)
+                      <div id="pef-zone-yellow" style="font-size:13px; margin-top:4px;"></div>
+                    </div>
+                    <div class="pef-zone-box" style="background-color: var(--danger-red);">
+                      🔴 紅燈危急區 (&lt;50%)
+                      <div id="pef-zone-red" style="font-size:13px; margin-top:4px;"></div>
+                    </div>
+                  </div>
+                  
+                  <!-- 實測評估結果顯示區 -->
+                  <div id="pef-actual-result-box" style="display:none; padding:12px; border-radius:8px; margin-top:12px; background:var(--bg-card);">
+                    <div style="display: grid; grid-template-columns: 1.2fr 1.5fr 1fr; gap:12px; text-align: center; align-items: center;">
+                      <div>
+                        <div style="font-size:12px; color:var(--text-muted); margin-bottom:4px;">1. 您的實測 PEF 值</div>
+                        <div id="val-actual-pef" style="font-size:20px; font-weight:900;">-- L/min</div>
+                      </div>
+                      <div>
+                        <div style="font-size:12px; color:var(--text-muted); margin-bottom:4px;">2. 佔預估正常值比例</div>
+                        <div id="val-actual-ratio" style="font-size:20px; font-weight:900; color:var(--theme-resp);">-- %</div>
+                      </div>
+                      <div>
+                        <div style="font-size:12px; color:var(--text-muted); margin-bottom:4px;">3. 目前控制燈號</div>
+                        <span id="val-actual-light" class="badge-custom" style="font-size:14px; display:inline-block; padding: 4px 8px; border-radius: 6px; font-weight:bold; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.2);">--</span>
+                      </div>
+                    </div>
+                    <p id="val-actual-desc" style="font-size:14px; margin-top:12px; margin-bottom:0; line-height: 1.5; color:var(--text-muted); border-top:1px dashed var(--border-color); padding-top:8px; text-align:left;"></p>
+                  </div>
+
+                  <p class="text-muted" style="font-size: 12px; margin-top: 14px; margin-bottom: 0;">
+                    * 預估公式來源：台北榮民總醫院胸腔部 (成人公式) / 馬偕紀念醫院兒童過敏免疫科 (兒童公式) 臨床常規計算。
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 氣喘控制問卷 (ACT) -->
+            <div class="card-nested" style="margin-top: 24px;">
+              <h4 style="font-weight: 900; margin-bottom: 8px;">📋 氣喘控制測試 (ACT) 國際評估問卷</h4>
+              <p style="font-size: 15px; margin-bottom: 16px;">請勾選您過去四週的狀況，評估氣喘控制情形：</p>
+              
+              <div class="survey-question" id="act-q1">
+                <p>1. 氣喘讓您無法完成工作、課業或日常活動的頻率？</p>
+                <div class="survey-options" data-q="1">
+                  <button class="survey-btn" data-score="1">總是 (1分)</button>
+                  <button class="survey-btn" data-score="2">經常 (2分)</button>
+                  <button class="survey-btn" data-score="3">有時 (3分)</button>
+                  <button class="survey-btn" data-score="4">很少 (4分)</button>
+                  <button class="survey-btn" data-score="5">從未 (5分)</button>
+                </div>
+              </div>
+              <div class="survey-question" id="act-q2">
+                <p>2. 您覺得呼吸困難、氣喘不過來的頻率？</p>
+                <div class="survey-options" data-q="2">
+                  <button class="survey-btn" data-score="1">一天多次 (1分)</button>
+                  <button class="survey-btn" data-score="2">一天一次 (2分)</button>
+                  <button class="survey-btn" data-score="3">每週 3-6 次 (3分)</button>
+                  <button class="survey-btn" data-score="4">每週 1-2 次 (4分)</button>
+                  <button class="survey-btn" data-score="5">從未 (5分)</button>
+                </div>
+              </div>
+              <div class="survey-question" id="act-q3">
+                <p>3. 氣喘症狀（喘鳴、咳嗽、胸悶）讓您夜間醒來或比平常早醒的頻率？</p>
+                <div class="survey-options" data-q="3">
+                  <button class="survey-btn" data-score="1">每週 4 次以上 (1分)</button>
+                  <button class="survey-btn" data-score="2">每週 2-3 次 (2分)</button>
+                  <button class="survey-btn" data-score="3">每週 1 次 (3分)</button>
+                  <button class="survey-btn" data-score="4">僅有 1-2 次 (4分)</button>
+                  <button class="survey-btn" data-score="5">從未 (5分)</button>
+                </div>
+              </div>
+              <div class="survey-question" id="act-q4">
+                <p>4. 您需要使用急救吸入劑（如支氣管擴張劑）的頻率？</p>
+                <div class="survey-options" data-q="4">
+                  <button class="survey-btn" data-score="1">一天 3 次以上 (1分)</button>
+                  <button class="survey-btn" data-score="2">一天 1-2 次 (2分)</button>
+                  <button class="survey-btn" data-score="3">每週 3 次以上 (3分)</button>
+                  <button class="survey-btn" data-score="4">每週 1-2 次 (4分)</button>
+                  <button class="survey-btn" data-score="5">從未 (5分)</button>
+                </div>
+              </div>
+              <div class="survey-question" id="act-q5">
+                <p>5. 您覺得過去四週以來，您的氣喘控制得如何？</p>
+                <div class="survey-options" data-q="5">
+                  <button class="survey-btn" data-score="1">控制極差 (1分)</button>
+                  <button class="survey-btn" data-score="2">控制不好 (2分)</button>
+                  <button class="survey-btn" data-score="3">控制尚可 (3分)</button>
+                  <button class="survey-btn" data-score="4">控制良好 (4分)</button>
+                  <button class="survey-btn" data-score="5">完全控制 (5分)</button>
+                </div>
+              </div>
+              
+              <div class="survey-result-box" id="act-result-box">
+                <h4 style="font-size:22px; font-weight:900;" id="act-result-title">評估結果</h4>
+                <p style="margin-top: 8px;" id="act-result-desc"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================================================= -->
+          <!-- 🚬 肺阻塞 (COPD) 子頁籤                          -->
+          <!-- ================================================= -->
+          <div class="tab-pane" id="pane-resp-2">
+            <h3 class="section-title">🚬 慢性阻塞性肺病 (COPD) 衛教與臨床評估</h3>
+            
+            <!-- COPD 衛教 -->
+            <div class="card-nested">
+              <h4 style="color:var(--theme-resp); font-weight:900; margin-bottom:12px;">🚭 認識肺阻塞 (COPD)：氣道退化與發炎</h4>
+              <p style="font-size: 16px; line-height: 1.7;">
+                慢性阻塞性肺病 (COPD) 俗稱「肺阻塞」，主要由於**長期吸菸**或**長期暴露於二手菸、粉塵、空汙**，導致支氣管與肺泡慢性發炎.發炎會使支氣管狹窄、肺泡彈性喪失（肺氣腫），且<strong>這類肺功能受損是無法逆轉的</strong>。
+              </p>
+              
+              <!-- 新增氣道阻塞與變形比較圖片 -->
+              <div style="margin: 16px 0; text-align: center;">
+                <img src="./airway_copd_comparison.png" alt="氣道阻塞與變形對照圖" style="max-width: 100%; border-radius: 12px; border: 1.5px solid var(--border-color); box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <p class="text-muted" style="font-size: 13px; margin-top: 8px;">📊 正常支氣管與肺泡 (左) vs 慢性肺阻塞發炎、黏液阻塞與管腔狹窄變形 (右)</p>
+              </div>
+
+              <div class="elderly-target-note" style="margin-top: 12px; margin-bottom: 0; font-size:15px; border-left: 4px solid var(--danger-red); background: var(--bg-card); padding: 10px 14px;">
+                💡 <strong>黃金臨床守則：</strong>預防肺阻塞惡化最有效的第一步是**「立即戒菸」**。配合氣管擴張吸入劑治療與每日呼吸復健，可顯著減緩氣喘不適，維持長者日常活動力。
+              </div>
+            </div>
+
+            <!-- mMRC 呼吸困難量表 -->
+            <div class="card-nested" style="margin-top: 24px;">
+              <h4 style="font-weight: 900; margin-bottom: 8px;">📋 mMRC 呼吸困難量表（喘氣程度自我評估）</h4>
+              <p class="text-muted" style="font-size: 15px; margin-bottom: 16px;">
+                請選擇最符合您最近日常活動喘氣狀況的描述（單選）：
+              </p>
+              
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button class="survey-btn mmrc-option-btn" data-score="0" style="text-align: left; padding: 12px 16px; width: 100%; display: block;" onclick="selectMmrc(0, this)">
+                  <strong>0 級：</strong> 只有在從事劇烈運動時，我才會覺得呼吸困難。
+                </button>
+                <button class="survey-btn mmrc-option-btn" data-score="1" style="text-align: left; padding: 12px 16px; width: 100%; display: block;" onclick="selectMmrc(1, this)">
+                  <strong>1 級：</strong> 當我在平地快步走或爬緩坡時，我會覺得呼吸短促、氣喘。
+                </button>
+                <button class="survey-btn mmrc-option-btn" data-score="2" style="text-align: left; padding: 12px 16px; width: 100%; display: block;" onclick="selectMmrc(2, this)">
+                  <strong>2 級：</strong> 因為喘，我在平地走路比同齡人慢，或者走一小段路就必須停下來喘氣。
+                </button>
+                <button class="survey-btn mmrc-option-btn" data-score="3" style="text-align: left; padding: 12px 16px; width: 100%; display: block;" onclick="selectMmrc(3, this)">
+                  <strong>3 級：</strong> 我在平地走大約 100 公尺或走幾分鐘，就必須停下來喘氣。
+                </button>
+                <button class="survey-btn mmrc-option-btn" data-score="4" style="text-align: left; padding: 12px 16px; width: 100%; display: block;" onclick="selectMmrc(4, this)">
+                  <strong>4 級：</strong> 我因為太喘而無法出門，或者在穿脫衣服時就會覺得喘。
+                </button>
+              </div>
+              
+              <div id="mmrc-result-box" class="survey-result-box" style="margin-top: 16px;">
+                <h5 id="mmrc-result-title" style="font-size: 16px; font-weight: 900;">評估結果</h5>
+                <p id="mmrc-result-desc" style="font-size: 14px; color: var(--text-muted); margin-top: 4px;"></p>
+              </div>
+            </div>
+
+            <!-- CAT 評估測試 -->
+            <div class="card-nested" style="margin-top: 24px;">
+              <h4 style="font-weight: 900; margin-bottom: 8px;">📋 CAT 肺阻塞評估測試 (COPD Assessment Test)</h4>
+              <p class="text-muted" style="font-size: 15px; margin-bottom: 16px;">
+                針對以下 8 項日常生活影響指標，點選最符合您的狀況分數（0 分為完全無影響，5 分為影響極嚴重）：
+              </p>
+              
+              <div class="cat-table">
+                <!-- 1. 咳嗽 -->
+                <div class="cat-row" data-cat-q="1">
+                  <div class="cat-left-desc">我從不咳嗽 (0分)</div>
+                  <div class="cat-btn-group">
+                    <button class="cat-score-btn" onclick="selectCat(1, 0, this)">0</button>
+                    <button class="cat-score-btn" onclick="selectCat(1, 1, this)">1</button>
+                    <button class="cat-score-btn" onclick="selectCat(1, 2, this)">2</button>
+                    <button class="cat-score-btn" onclick="selectCat(1, 3, this)">3</button>
+                    <button class="cat-score-btn" onclick="selectCat(1, 4, this)">4</button>
+                    <button class="cat-score-btn" onclick="selectCat(1, 5, this)">5</button>
+                  </div>
+                  <div class="cat-right-desc">我咳得很厲害 (5分)</div>
+                </div>
+                <!-- 2. 咳痰 -->
+                <div class="cat-row" data-cat-q="2">
+                  <div class="cat-left-desc">我的肺部完全沒有痰 (0分)</div>
+                  <div class="cat-btn-group">
+                    <button class="cat-score-btn" onclick="selectCat(2, 0, this)">0</button>
+                    <button class="cat-score-btn" onclick="selectCat(2, 1, this)">1</button>
+                    <button class="cat-score-btn" onclick="selectCat(2, 2, this)">2</button>
+                    <button class="cat-score-btn" onclick="selectCat(2, 3, this)">3</button>
+                    <button class="cat-score-btn" onclick="selectCat(2, 4, this)">4</button>
+                    <button class="cat-score-btn" onclick="selectCat(2, 5, this)">5</button>
+                  </div>
+                  <div class="cat-right-desc">我的肺部塞滿了痰 (5分)</div>
+                </div>
+                <!-- 3. 胸悶 -->
+                <div class="cat-row" data-cat-q="3">
+                  <div class="cat-left-desc">我完全沒有胸悶 (0分)</div>
+                  <div class="cat-btn-group">
+                    <button class="cat-score-btn" onclick="selectCat(3, 0, this)">0</button>
+                    <button class="cat-score-btn" onclick="selectCat(3, 1, this)">1</button>
+                    <button class="cat-score-btn" onclick="selectCat(3, 2, this)">2</button>
+                    <button class="cat-score-btn" onclick="selectCat(3, 3, this)">3</button>
+                    <button class="cat-score-btn" onclick="selectCat(3, 4, this)">4</button>
+                    <button class="cat-score-btn" onclick="selectCat(3, 5, this)">5</button>
+                  </div>
+                  <div class="cat-right-desc">我胸悶非常嚴重 (5分)</div>
+                </div>
+                <!-- 4. 爬坡/爬樓梯 -->
+                <div class="cat-row" data-cat-q="4">
+                  <div class="cat-left-desc">我爬坡或上一層樓不喘 (0分)</div>
+                  <div class="cat-btn-group">
+                    <button class="cat-score-btn" onclick="selectCat(4, 0, this)">0</button>
+                    <button class="cat-score-btn" onclick="selectCat(4, 1, this)">1</button>
+                    <button class="cat-score-btn" onclick="selectCat(4, 2, this)">2</button>
+                    <button class="cat-score-btn" onclick="selectCat(4, 3, this)">3</button>
+                    <button class="cat-score-btn" onclick="selectCat(4, 4, this)">4</button>
+                    <button class="cat-score-btn" onclick="selectCat(4, 5, this)">5</button>
+                  </div>
+                  <div class="cat-right-desc">我爬坡或上一層樓非常喘 (5分)</div>
+                </div>
+                <!-- 5. 居家活動限制 -->
+                <div class="cat-row" data-cat-q="5">
+                  <div class="cat-left-desc">我在家的活動不受限制 (0分)</div>
+                  <div class="cat-btn-group">
+                    <button class="cat-score-btn" onclick="selectCat(5, 0, this)">0</button>
+                    <button class="cat-score-btn" onclick="selectCat(5, 1, this)">1</button>
+                    <button class="cat-score-btn" onclick="selectCat(5, 2, this)">2</button>
+                    <button class="cat-score-btn" onclick="selectCat(5, 3, this)">3</button>
+                    <button class="cat-score-btn" onclick="selectCat(5, 4, this)">4</button>
+                    <button class="cat-score-btn" onclick="selectCat(5, 5, this)">5</button>
+                  </div>
+                  <div class="cat-right-desc">我在家的活動受嚴重限制 (5分)</div>
+                </div>
+                <!-- 6. 外出信心 -->
+                <div class="cat-row" data-cat-q="6">
+                  <div class="cat-left-desc">我外出時非常有信心 (0分)</div>
+                  <div class="cat-btn-group">
+                    <button class="cat-score-btn" onclick="selectCat(6, 0, this)">0</button>
+                    <button class="cat-score-btn" onclick="selectCat(6, 1, this)">1</button>
+                    <button class="cat-score-btn" onclick="selectCat(6, 2, this)">2</button>
+                    <button class="cat-score-btn" onclick="selectCat(6, 3, this)">3</button>
+                    <button class="cat-score-btn" onclick="selectCat(6, 4, this)">4</button>
+                    <button class="cat-score-btn" onclick="selectCat(6, 5, this)">5</button>
+                  </div>
+                  <div class="cat-right-desc">我完全沒有信心外出 (5分)</div>
+                </div>
+                <!-- 7. 睡眠品質 -->
+                <div class="cat-row" data-cat-q="7">
+                  <div class="cat-left-desc">我睡眠品質非常好 (0分)</div>
+                  <div class="cat-btn-group">
+                    <button class="cat-score-btn" onclick="selectCat(7, 0, this)">0</button>
+                    <button class="cat-score-btn" onclick="selectCat(7, 1, this)">1</button>
+                    <button class="cat-score-btn" onclick="selectCat(7, 2, this)">2</button>
+                    <button class="cat-score-btn" onclick="selectCat(7, 3, this)">3</button>
+                    <button class="cat-score-btn" onclick="selectCat(7, 4, this)">4</button>
+                    <button class="cat-score-btn" onclick="selectCat(7, 5, this)">5</button>
+                  </div>
+                  <div class="cat-right-desc">因為肺病我睡得極差 (5分)</div>
+                </div>
+                <!-- 8. 活力 -->
+                <div class="cat-row" data-cat-q="8">
+                  <div class="cat-left-desc">我精神飽滿、很有活力 (0分)</div>
+                  <div class="cat-btn-group">
+                    <button class="cat-score-btn" onclick="selectCat(8, 0, this)">0</button>
+                    <button class="cat-score-btn" onclick="selectCat(8, 1, this)">1</button>
+                    <button class="cat-score-btn" onclick="selectCat(8, 2, this)">2</button>
+                    <button class="cat-score-btn" onclick="selectCat(8, 3, this)">3</button>
+                    <button class="cat-score-btn" onclick="selectCat(8, 4, this)">4</button>
+                    <button class="cat-score-btn" onclick="selectCat(8, 5, this)">5</button>
+                  </div>
+                  <div class="cat-right-desc">我完全沒有活力 (5分)</div>
+                </div>
+              </div>
+              
+              <div id="cat-result-box" class="survey-result-box" style="margin-top: 16px;">
+                <h5 id="cat-result-title" style="font-size: 16px; font-weight: 900;">評估結果</h5>
+                <p id="cat-result-desc" style="font-size: 14px; color: var(--text-muted); margin-top: 4px;"></p>
+              </div>
+            </div>
+
+            <!-- GOLD Group A、B、E 評估與用藥指引 -->
+            <div class="card-nested" style="margin-top: 24px;">
+              <h4 style="font-weight: 900; margin-bottom: 8px;">📋 GOLD 肺阻塞 Group A、B、E 臨床分組與用藥指引</h4>
+              <p class="text-muted" style="font-size: 15px; margin-bottom: 16px;">
+                根據最新全球肺阻塞創議組織 (GOLD) 指引，臨床上依據患者的<strong>症狀喘度</strong>與<strong>惡化風險史</strong>，將患者劃分為 Group A、B、E 三組以精準用藥：
+              </p>
+
+              <!-- GOLD A B E 表格 -->
+              <div style="overflow-x: auto; margin-bottom: 20px;">
+                <table class="clinical-table" style="font-size:14px;">
+                  <thead>
+                    <tr>
+                      <th style="width: 120px;">分組</th>
+                      <th>臨床指標定義</th>
+                      <th>首選初始治療用藥</th>
+                      <th>重要治療觀念</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id="gold-row-a">
+                      <td class="text-bold" style="background-color: rgba(46, 204, 113, 0.1); color: var(--safe-green); text-align: center; font-size:18px;">Group A</td>
+                      <td>
+                        <strong>低症狀、低惡化風險：</strong><br>
+                        • 過去一年中重度惡化 &le; 1 次 (且無住院)<br>
+                        • mMRC 0 - 1 級 且 CAT &lt; 10 分
+                      </td>
+                      <td>
+                        <strong>單一長效或短效氣管擴張劑</strong><br>
+                        • 首選: LAMA (長效抗膽鹼藥) 或 LABA (長效&beta;2刺激劑)<br>
+                        • 或有症狀時使用短效 SABA / SAMA
+                      </td>
+                      <td>症狀輕微，以緩解症狀並按需吸藥為主。</td>
+                    </tr>
+                    <tr id="gold-row-b">
+                      <td class="text-bold" style="background-color: rgba(241, 196, 15, 0.1); color: var(--warn-yellow); text-align: center; font-size:18px;">Group B</td>
+                      <td>
+                        <strong>高症狀、低惡化風險：</strong><br>
+                        • 過去一年中重度惡化 &le; 1 次 (且無住院)<br>
+                        • mMRC &ge; 2 級 或 CAT &ge; 10 分
+                      </td>
+                      <td>
+                        <strong>雙效長效氣管擴張劑 (Dual Bronchodilators)</strong><br>
+                        • <strong>LAMA + LABA 複方吸入劑</strong><br>
+                        • 實證顯示雙效氣管擴張效果優於單一藥物
+                      </td>
+                      <td>持續有喘鳴或多痰症狀，需規律吸入雙效擴張劑保養。</td>
+                    </tr>
+                    <tr id="gold-row-e">
+                      <td class="text-bold" style="background-color: rgba(231, 76, 60, 0.1); color: var(--danger-red); text-align: center; font-size:18px;">Group E</td>
+                      <td>
+                        <strong>高惡化風險 (不論症狀多寡)：</strong><br>
+                        • 過去一年中重度惡化 &ge; 2 次<br>
+                        • <strong>或曾有 1 次以上因肺阻塞住院</strong>
+                      </td>
+                      <td>
+                        <strong>LAMA + LABA 雙效長效氣管擴張劑</strong><br>
+                        • <strong>特殊考量：</strong>若血中嗜酸性白血球 (EOS) &ge; 300 cells/&mu;L，或合併氣喘，應考慮使用<strong>三合一吸入劑 (ICS + LAMA + LABA)</strong>。
+                      </td>
+                      <td>惡化住院風險極高，必須規律吸藥以防急性發作與呼吸衰竭。</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- 互動評估小工具 -->
+              <div class="card" style="background: var(--bg-card-nested); padding: 16px; border: 1px solid var(--border-color); margin-bottom: 0;">
+                <h5 style="font-weight:900; margin-bottom:12px; color: var(--theme-resp);">🔍 智慧 COPD GOLD 分組自我檢測</h5>
+                <p class="text-muted" style="font-size:13px; margin-bottom:12px;">系統會自動結合您在上方點選的 mMRC (目前: <span id="mets-mmrc-display">未點選</span>) 與 CAT (目前: <span id="mets-cat-display">未點選</span>) 分數。請補充填寫過去一年的惡化史：</p>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                  <div class="mets-input-item">
+                    <label style="font-size: 13px;">1. 過去一年一般惡化次數 (不含住院)</label>
+                    <input type="number" id="copd-exac" class="mets-input" value="0" min="0" max="20" style="width: 100%;">
+                  </div>
+                  <div class="mets-input-item">
+                    <label style="font-size: 13px;">2. 過去一年曾因肺阻塞急性發作住院？</label>
+                    <select class="mets-select" id="copd-hosp" style="width: 100%;">
+                      <option value="no">沒有住院</option>
+                      <option value="yes">有住院過 (1次以上)</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <button class="btn" style="background: var(--theme-resp); color:#fff; border:none; width:100%; display:block;" onclick="calculateGoldGroup()">開始進行 GOLD 分組判定</button>
+                
+                <!-- 結果報告 -->
+                <div id="gold-result-panel" class="card" style="display:none; padding:14px; margin-top:12px; border-left: 5px solid var(--border-color); background: var(--bg-card); margin-bottom:0;">
+                  <h5 id="gold-result-title" style="font-size:18px; font-weight:900;">評估結果</h5>
+                  <p id="gold-result-desc" style="font-size:14px; margin-top:6px; line-height:1.6;"></p>
+                  <p id="gold-result-drug" style="font-size:14px; font-weight:700; margin-top:6px; color:var(--theme-resp);"></p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 呼吸訓練法 -->
+            <div class="card-nested" style="margin-top: 24px;">
+              <h4 style="font-weight:900; margin-bottom:12px;">🌬️ 長者防喘呼吸與排痰技巧訓練</h4>
+              <p class="text-muted" style="font-size:15px; margin-bottom: 16px;">
+                肺阻塞患者因為肺彈性變差，氣流受阻，常常覺得氣吐不乾淨、憋在肺裡。每日練習呼吸法可顯著舒緩喘度：
+              </p>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap:16px;">
+                <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); padding:16px; border-radius:12px;">
+                  <h5 style="font-size:17px; font-weight:900; color:var(--theme-resp); margin-bottom:6px;">🌬️ 1. 縮唇呼吸法</h5>
+                  <p style="font-size:14px; color:var(--text-muted); line-height: 1.6;">
+                    <strong>步驟：</strong>用鼻子深吸氣 2 秒，嘴唇縮成像吹口哨一樣，緩慢吐氣 4-6 秒（吐氣時間為吸氣的 2 倍）。<br>
+                    <strong>原理：</strong>防止小氣道過早塌陷，把積留的二氧化碳排乾淨！
+                  </p>
+                </div>
+                <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); padding:16px; border-radius:12px;">
+                  <h5 style="font-size:17px; font-weight:900; color:var(--theme-resp); margin-bottom:6px;">🧘 2. 腹式呼吸法</h5>
+                  <p style="font-size:14px; color:var(--text-muted); line-height: 1.6;">
+                    <strong>步驟：</strong>一手放胸口，一手放肚子。吸氣時肚子鼓起，吐氣時肚子扁下去，胸口不動。<br>
+                    <strong>原理：</strong>訓練橫膈膜，減少呼吸時的耗氧量與喘感。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================================================= -->
+          <!-- 🎽 代謝症候群 (mets) 子頁籤                       -->
+          <!-- ================================================= -->
+          <div class="tab-pane" id="pane-mets-1">
+            <h3 class="section-title">🎽 預防代謝症候群：「三高加二便」</h3>
+            <div class="card-nested">
+              <p>代謝症候群不是一個特定的疾病，而是一群**心血管危險因子的聚集指標**。符合代謝症候群的人，未來罹患糖尿病、高血壓、高血脂的機率會高出數倍！</p>
+              
+              <div class="mets-calc-grid" style="margin-top: 20px;">
+                <!-- 左側輸入 -->
+                <div class="mets-input-group">
+                  <h4 style="font-size: 20px; font-weight: 900; color: var(--theme-mets);">📊 5 大指標自我篩檢</h4>
+                  
+                  <!-- 1. 腰圍 -->
+                  <div class="mets-input-item">
+                    <label>1. 性別與腰圍測量</label>
+                    <div class="mets-input-row">
+                      <select class="mets-select" id="mets-gender">
+                        <option value="male">男性</option>
+                        <option value="female">女性</option>
+                      </select>
+                      <input type="number" id="mets-waist" class="mets-input" placeholder="腰圍 (公分)，如: 88">
+                    </div>
+                  </div>
+                  
+                  <!-- 2. 血壓 -->
+                  <div class="mets-input-item">
+                    <label>2. 收縮壓 / 舒張壓 <span style="font-size:12px; color:var(--text-muted);">mmHg</span></label>
+                    <div class="mets-input-row">
+                      <input type="number" id="mets-sbp" class="mets-input" placeholder="收縮壓 (高壓)，如: 125">
+                      <input type="number" id="mets-dbp" class="mets-input" placeholder="舒張壓 (低壓)，如: 80">
+                    </div>
+                  </div>
+                  
+                  <!-- 3. 空腹血糖 -->
+                  <div class="mets-input-item">
+                    <label>3. 空腹血糖值 <span style="font-size:12px; color:var(--text-muted);">mg/dL</span></label>
+                    <input type="number" id="mets-glu" class="mets-input" placeholder="空腹血糖，如: 98">
+                  </div>
+                  
+                  <!-- 4. 三酸甘油酯 -->
+                  <div class="mets-input-item">
+                    <label>4. 三酸甘油酯 (TG) <span style="font-size:12px; color:var(--text-muted);">mg/dL</span></label>
+                    <input type="number" id="mets-tg" class="mets-input" placeholder="TG 數值，如: 140">
+                  </div>
+                  
+                  <!-- 5. 好膽固醇 -->
+                  <div class="mets-input-item">
+                    <label>5. 好膽固醇 (HDL-C) <span style="font-size:12px; color:var(--text-muted);">mg/dL</span></label>
+                    <input type="number" id="mets-hdl" class="mets-input" placeholder="好膽固醇，如: 45">
+                  </div>
+                  
+                  <button class="btn" style="background: var(--theme-mets); color:#fff; border:none;" onclick="calculateMets()">開始評估</button>
+                </div>
+
+                <!-- 右側評估結果 -->
+                <div class="card" id="mets-result-card" style="border-left: 6px solid var(--border-color); background: var(--bg-card); display: none;">
+                  <h4 id="mets-result-title" style="font-weight:900;">檢測結果</h4>
+                  <div id="mets-result-indicators" style="margin: 16px 0; font-size:16px;">
+                    <!-- JS 動態寫入各指標判定結果 -->
+                  </div>
+                  <p id="mets-result-desc" style="font-size:15px; line-height: 1.6;"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 代謝症候群：飲食與運動建議分頁 -->
+          <div class="tab-pane" id="pane-mets-2">
+            <h3 class="section-title">🥗 長者日常飲食與運動黃金建議</h3>
+            
+            <div class="card-nested">
+              <p style="margin-bottom: 20px;">預防與逆轉代謝症候群，最有效且具備臨床實證的方法就是**調整生活飲食型態**與**規律身體活動**。以下為長者貼心設計的黃金守則：</p>
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <!-- 飲食建議 -->
+                <div class="card" style="margin-bottom:0; border-top: 5px solid var(--safe-green); background: var(--bg-card); padding: 20px;">
+                  <h4 style="font-weight: 900; color: var(--safe-green); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                    🥦 1. 飲食調整：得舒飲食原則 (DASH)
+                  </h4>
+                  <ul style="padding-left: 20px; font-size: 16px; line-height: 1.8; display: flex; flex-direction: column; gap: 8px;">
+                    <li><strong>多吃全穀雜糧：</strong>以糙米、燕麥、地瓜或南瓜，取代白米飯與白麵條，補充維生素 B 群與膳食纖維。</li>
+                    <li><strong>多吃蔬菜水果：</strong>每天建議 5 份蔬菜（如深綠色葉菜）與水果，補充足夠的鉀、鎂離子協助調節血壓。</li>
+                    <li><strong>優質蛋白質優先：</strong>以豆腐、豆漿、魚肉及去皮雞肉等白肉，取代紅肉（豬、牛肉），減少飽和脂肪攝取。</li>
+                    <li><strong>改用健康好油：</strong>使用橄欖油、芥花油，並每天補充一小把（約一湯匙）無調味堅果。</li>
+                    <li><strong>少鹽低鈉、減糖：</strong>每日鈉攝取量應小於 2000 毫克（約 5 克食鹽），避免加工食品與含糖手搖飲料。</li>
+                  </ul>
+                </div>
+                
+                <!-- 運動建議 -->
+                <div class="card" style="margin-bottom:0; border-top: 5px solid var(--theme-mets); background: var(--bg-card); padding: 20px;">
+                  <h4 style="font-weight: 900; color: var(--theme-mets); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                    🚶 2. 運動處方：333 有氧與阻力訓練
+                  </h4>
+                  <ul style="padding-left: 20px; font-size: 16px; line-height: 1.8; display: flex; flex-direction: column; gap: 8px;">
+                    <li><strong>規律有氧運動：</strong>每週至少 3 次，每次 30 分鐘，達到微喘但仍可說話的程度。例如：快走、土風舞、太極拳、慢跑。</li>
+                    <li><strong>肌力阻力訓練：</strong>每週 2 次，針對大肌肉群進行阻力訓練，例如：坐在椅子上進行起立坐下（深蹲）、彈力帶伸展。能有效維持肌肉量，預防肌少症與跌倒。</li>
+                    <li><strong>減少久坐時間：</strong>每坐 50 分鐘應站起來活動 5-10 分鐘，每天以累積 6000 步到 8000 步為生活目標。</li>
+                    <li><strong>安全第一：</strong>運動前後要做好充足伸展與暖身，若有頭暈、胸悶、關節疼痛應立即停止。</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div class="elderly-target-note" style="margin-top: 24px; font-size: 15px; border-left: 4px solid var(--safe-green); background: var(--bg-card); padding: 12px 16px; text-align: left;">
+                💡 <strong>實證文獻：</strong>台灣代謝症候群臨床照護指引指出，藉由持續性的飲食與運動調整，有高達 <strong>50% 以上</strong> 的代謝症候群前期患者能成功逆轉、不進展為糖尿病。
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- 診所關懷與預約引導 (與目前所屬疾病主題色同步) -->
+      <section class="cta-banner" id="disease-cta-banner">
+        <h3 id="cta-title">掌握健康管理的黃金起跑點！</h3>
+        <p id="cta-desc">我們的專科醫師、衛教護理師與營養師團隊，隨時為您規劃最合適的個人化照護方案。</p>
+        <div style="display:flex; justify-content:center; gap:16px;" class="no-print">
+          <a href="https://line.me" class="btn" id="btn-cta-line" style="background:var(--bg-card); border-color:var(--border-color);">
+            💬 加入診所 LINE 預約諮詢
+          </a>
+          <button class="btn" style="background:var(--bg-card); border-color:var(--border-color);" onclick="alert('請撥打診所諮詢專線：0800-000-000')">
+            📞 電話預約衛教門診
+          </button>
+        </div>
+      </section>
+
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="current-year">2026</span> 診所慢性病智慧衛教平台．專為開業醫學診所設計的個人化照護系統</p>
+      <p style="font-size:12px; color:var(--text-muted); margin-top:8px;">本平台衛教資訊均依據中華民國糖尿病學會、中華民國高血壓學會及台灣國健署指引彙整。臨床個案之精準用藥與治療請遵循主治醫師處方。</p>
+    </div>
+  </footer>
+
+  <!-- ========================================== -->
+  <!-- 🌟 C. 智慧衛教互動 JS 邏輯代碼             -->
+  <!-- ========================================== -->
+  <script>
+    // 儲存各疾病對應子分頁的設定
+    const diseaseMenuConfig = {
+      dm: {
+        title: "🍭 糖尿病智慧控糖",
+        theme: "var(--theme-dm)",
+        menu: [
+          { id: "pane-dm-1", name: "📉 胰島細胞自然退化表" },
+          { id: "pane-dm-2", name: "🚦 A1C 日常換算與TIR" },
+          { id: "pane-dm-3", name: "👣 糖尿病併發症地圖" },
+          { id: "pane-dm-4", name: "🧫 KDIGO 腎功能評估" }
+        ],
+        ctaTitle: "守護胰島細胞，啟動全方位防護！",
+        ctaDesc: "本診所提供連續血糖監測 (CGM) 照護諮詢與每季 A1C 定期門診，協助您穩健控糖。"
+      },
+      htn: {
+        title: "💓 高血壓黃金防線",
+        theme: "var(--theme-htn)",
+        menu: [
+          { id: "pane-htn-1", name: "🎯 控制目標與 722 法則" },
+          { id: "pane-htn-2", name: "⚠️ 血管硬化與風險倍增" }
+        ],
+        ctaTitle: "鞏固血壓防線，保護心腦血管！",
+        ctaDesc: "定期追蹤心電圖與微血管硬化評估，為您量身配置最合宜的心血管用藥。"
+      },
+      lip: {
+        title: "🥑 高血脂防堵血管",
+        theme: "var(--theme-lip)",
+        menu: [
+          { id: "pane-lip-1", name: "🎯 膽固醇標準大盤點" },
+          { id: "pane-lip-2", name: "🎚️ 血管卡油斑塊模擬" }
+        ],
+        ctaTitle: "清掃血管油垢，遠離心肌梗塞！",
+        ctaDesc: "專業醫療團隊提供詳細高低密度膽固醇 analysis、頸動脈超音波預約篩檢。"
+      },
+      mets: {
+        title: "🎽 代謝症候群預防與照護",
+        theme: "var(--theme-mets)",
+        menu: [
+          { id: "pane-mets-1", name: "📊 五大指標自我篩檢" },
+          { id: "pane-mets-2", name: "🥗 日常飲食與運動建議" }
+        ],
+        ctaTitle: "逆轉三高前期，防堵代謝症候群！",
+        ctaDesc: "為您規劃專屬的「低碳健康飲食菜單」與營養師體重控制門診，重拾健康體態。"
+      },
+      gout: {
+        title: "🥩 痛風與高尿酸防線",
+        theme: "var(--theme-gout)",
+        menu: [
+          { id: "pane-gout-1", name: "🎯 尿酸目標與腎石危害" },
+          { id: "pane-gout-2", name: "🥦 高齡友善飲食紅綠燈" }
+        ],
+        ctaTitle: "溶解關節結晶，痛風不再發作！",
+        ctaDesc: "提供精準血液尿酸常規檢測與防痛風護腎合理調藥，改善您的日常活動品質。"
+      },
+      resp: {
+        title: "🫁 氣喘與肺阻塞守護",
+        theme: "var(--theme-resp)",
+        menu: [
+          { id: "pane-resp-1", name: "🫁 氣喘、GINA與PEF試算" },
+          { id: "pane-resp-2", name: "🚬 肺阻塞(COPD)與評估" }
+        ],
+        ctaTitle: "暢快呼吸不卡氣，守護肺泡功能！",
+        ctaDesc: "診所引進高精密肺功能檢測儀與吸入劑操作個人衛教，隨時守護您的肺部健康。"
+      }
+    };
+
+    let currentDisease = "";
+    
+    // COPD CAT 評估分數儲存
+    let catScores = { 1: -1, 2: -1, 3: -1, 4: -1, 5: -1, 6: -1, 7: -1, 8: -1 };
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      // 🌟 1. 深淺色模式切換 (與 localStorage 同步)
+      const themeToggle = document.getElementById('theme-toggle');
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        themeToggle.querySelector('.icon').textContent = '☀️';
+        themeToggle.querySelector('.btn-text').textContent = '淺色模式';
+      }
+
+      themeToggle.addEventListener('click', () => {
+        const isDark = document.body.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          document.body.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+          themeToggle.querySelector('.icon').textContent = '🌙';
+          themeToggle.querySelector('.btn-text').textContent = '深色模式';
+        } else {
+          document.body.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+          themeToggle.querySelector('.icon').textContent = '☀️';
+          themeToggle.querySelector('.btn-text').textContent = '淺色模式';
+        }
+      });
+
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+
+      // =================-------------------------
+      // 🌟 2. 糖尿病 A1C / TIR 計算與互動
+      // =================-------------------------
+      const a1cSlider = document.getElementById('a1c-slider');
+      const a1cValue = document.getElementById('a1c-value');
+      const eagValue = document.getElementById('eag-value');
+      const lighthouseCard = document.getElementById('lighthouse-card');
+      const lhTitle = document.getElementById('lh-title');
+      const lhDesc = document.getElementById('lh-desc');
+
+      function updateA1cCalculation(a1c) {
+        a1cValue.innerHTML = `${a1c.toFixed(1)}<span class="big-a1c-unit">%</span>`;
+        const eag = Math.round(28.7 * a1c - 46.7);
+        eagValue.textContent = `估算日常平均血糖值：${eag} mg/dL`;
+
+        lighthouseCard.className = 'lighthouse-card';
+        if (a1c < 7.0) {
+          lighthouseCard.classList.add('lh-green');
+          lhTitle.textContent = "🟢 綠燈安全 (A1C < 7.0%)";
+          lhDesc.innerHTML = "<strong>臨床意義：</strong>控糖模範生！併發症發生機率降到最低。<br><strong>日常口訣：</strong>「血糖乖乖聽話，血管跟著輕鬆、全家都安心！」";
+          a1cValue.style.color = 'var(--safe-green)';
+        } else if (a1c >= 7.0 && a1c <= 8.0) {
+          lighthouseCard.classList.add('lh-yellow');
+          lhTitle.textContent = "🟡 黃燈警示 (A1C 7.0% - 8.0%)";
+          lhDesc.innerHTML = "<strong>臨床意義：</strong>控制偏高。血管開始累積微小損傷，需檢視飲食與藥物。<br><strong>日常口訣：</strong>「血糖有點小超標，精緻澱粉、手搖飲要踩煞車囉！」";
+          a1cValue.style.color = 'var(--warn-yellow)';
+        } else {
+          lighthouseCard.classList.add('lh-red');
+          lhTitle.textContent = "🔴 紅燈危險 (A1C > 8.0%)";
+          lhDesc.innerHTML = "<strong>臨床意義：</strong>極高風險。器官病變與微血管受損正在加速發生。<br><strong>日常口訣：</strong>「紅燈警報！千萬別拖，快請專業衛教師與醫師協助調藥！」";
+          a1cValue.style.color = 'var(--danger-red)';
+        }
+      }
+
+      if (a1cSlider) {
+        a1cSlider.addEventListener('input', (e) => {
+          updateA1cCalculation(parseFloat(e.target.value));
+        });
+      }
+
+      // TIR 互動挑戰遊戲
+      const tirBtns = document.querySelectorAll('.tir-option-btn');
+      const tirPercent = document.getElementById('tir-percent');
+      const tirProgress = document.getElementById('tir-progress');
+      const tirFeedback = document.getElementById('tir-feedback');
+
+      tirBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.classList.toggle('active');
+          let baseTir = 70;
+          tirBtns.forEach(b => {
+            if (b.classList.contains('active')) {
+              baseTir += parseInt(b.getAttribute('data-value'));
+            }
+          });
+          baseTir = Math.max(30, Math.min(100, baseTir));
+          
+          tirPercent.textContent = `TIR: ${baseTir}%`;
+          if (tirProgress) tirProgress.style.width = `${baseTir}%`;
+
+          if (baseTir >= 70) {
+            if (tirProgress) tirProgress.style.background = 'var(--safe-green)';
+            tirFeedback.style.color = 'var(--safe-green)';
+            tirFeedback.textContent = "🟢 表現良好！TIR > 70% 代表血糖波動平穩，低血糖與併發症風險極低！";
+          } else if (baseTir >= 50 && baseTir < 70) {
+            if (tirProgress) tirProgress.style.background = 'var(--warn-yellow)';
+            tirFeedback.style.color = 'var(--warn-yellow)';
+            tirFeedback.textContent = "🟡 警告！TIR 落在 50%-70% 之間，血糖有上下波動起伏，需檢視澱粉攝取與活動量。";
+          } else {
+            if (tirProgress) tirProgress.style.background = 'var(--danger-red)';
+            tirFeedback.style.color = 'var(--danger-red)';
+            tirFeedback.textContent = "🔴 危險！TIR 低於 50% 代表血糖波動大、血管損傷正在累積，建議回診衛教諮詢。";
+          }
+        });
+      });
+
+      // =================-------------------------
+      // 🌟 3. 高血脂卡油模擬器互動
+      // =================-------------------------
+      const ldlSlider = document.getElementById('lip-ldlc-slider');
+      const ldlDisplay = document.getElementById('lip-ldlc-display');
+      const plaqueWidth = document.getElementById('vessel-plaque-width');
+      const feedbackTitle = document.getElementById('vessel-feedback-title');
+      const feedbackDesc = document.getElementById('vessel-feedback-desc');
+
+      function updateLipidSimulation(ldl) {
+        if (!ldlDisplay) return;
+        ldlDisplay.textContent = `低密度膽固醇 LDL-C: ${ldl} mg/dL`;
+        
+        // 映射斑塊寬度 (50 mg/dL -> 5%, 220 mg/dL -> 85%)
+        const percentage = Math.round(5 + ((ldl - 50) / 170) * 80);
+        if (plaqueWidth) plaqueWidth.style.width = `${percentage}%`;
+
+        // 判定反饋
+        if (ldl < 70) {
+          feedbackTitle.textContent = "🟢 血管極淨安全區 (已達心血管患者黃金標準)";
+          feedbackTitle.style.color = "var(--safe-green)";
+          feedbackDesc.textContent = "斑塊體積縮小，血管流速極佳！壞膽固醇控制在理想狀態，發生急性心肌梗塞與二次中風的風險降到最低。";
+        } else if (ldl >= 70 && ldl <= 100) {
+          feedbackTitle.textContent = "🟡 輕度斑塊沉澱 (糖尿病友與慢性腎病控制標準)";
+          feedbackTitle.style.color = "var(--warn-yellow)";
+          feedbackDesc.textContent = "血管壁有輕微油脂硬化斑塊。若您是糖尿病友，低於 100 mg/dL 是合格成績。請繼續維持低飽和脂肪酸飲食。";
+        } else if (ldl > 100 && ldl <= 130) {
+          feedbackTitle.textContent = "🟠 中度斑塊堆積 (健康成年人合格標準)";
+          feedbackTitle.style.color = "var(--warn-yellow)";
+          feedbackDesc.textContent = "一般人在此範圍可接受，但對於糖尿病友或有心臟血管病史的患者，這個數字代表血管油垢正在累積，需配合處方藥 Statin 主動清淤！";
+        } else {
+          feedbackTitle.textContent = "🔴 嚴重血管硬化卡油區 (極高心梗與中風危機)";
+          feedbackTitle.style.color = "var(--danger-red)";
+          feedbackDesc.textContent = "血管嚴重狹窄！斑塊過大隨時可能破裂，引發急性血栓阻塞，導致缺血性腦中風或急性心肌梗塞。請立即請主治醫師協助降脂！";
+        }
+      }
+
+      if (ldlSlider) {
+        ldlSlider.addEventListener('input', (e) => {
+          updateLipidSimulation(parseInt(e.target.value));
+        });
+      }
+
+      // =================-------------------------
+      // 🌟 4. 氣喘 ACT 問卷評估邏輯
+      // =================-------------------------
+      const actQuestions = document.querySelectorAll('.survey-options[data-q]');
+      const actResultBox = document.getElementById('act-result-box');
+      const actResultTitle = document.getElementById('act-result-title');
+      const actResultDesc = document.getElementById('act-result-desc');
+
+      let actScores = { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0 };
+
+      actQuestions.forEach(qGroup => {
+        const qId = qGroup.getAttribute('data-q');
+        const btns = qGroup.querySelectorAll('.survey-btn');
+        
+        btns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            btns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            actScores[qId] = parseInt(btn.getAttribute('data-score'));
+            checkActCompletion();
+          });
+        });
+      });
+
+      function checkActCompletion() {
+        const allAnswered = Object.values(actScores).every(score => score > 0);
+        if (!allAnswered) return;
+
+        const totalScore = Object.values(actScores).reduce((a, b) => a + b, 0);
+        
+        actResultBox.style.display = "block";
+        if (totalScore === 25) {
+          actResultTitle.textContent = `🎉 控制極佳：${totalScore} 分`;
+          actResultTitle.style.color = "var(--safe-green)";
+          actResultDesc.textContent = "過去四週內您的氣喘控制非常完美，完全沒有喘鳴、胸悶或夜間醒來。請繼續遵循目前的吸入劑保養計畫，並定期回診！";
+        } else if (totalScore >= 20 && totalScore <= 24) {
+          actResultTitle.textContent = `🟡 部分控制：${totalScore} 分`;
+          actResultTitle.style.color = "var(--warn-yellow)";
+          actResultDesc.textContent = "您的氣喘控制尚可，但仍偶有症狀或需要用到急性擴張劑。建議與主治醫師討論，檢視您的吸入劑操作步驟是否正確、吸入劑劑量是否需要微調。";
+        } else {
+          actResultTitle.textContent = `🔴 控制不佳：${totalScore} 分 (氣喘發作高危險群)`;
+          actResultTitle.style.color = "var(--danger-red)";
+          actResultDesc.textContent = "控制不佳！您的氣喘發作機率極高。這代表您的氣氣管正處於慢性嚴重發炎中。請立即攜帶您目前使用的控制型吸入劑回診，由醫師與個案管理師為您調整用藥！";
+        }
+        
+        actResultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      // 初始化尖峰流速儀體重輸入
+      togglePefWeight();
+    });
+
+    // ==========================================
+    // 🌟 5. 門戶控制與切換
+    // ==========================================
+    function enterDisease(diseaseKey) {
+      currentDisease = diseaseKey;
+      const config = diseaseMenuConfig[diseaseKey];
+      if (!config) return;
+
+      // 更新詳情頁面視覺設定
+      document.getElementById('current-disease-main-title').textContent = config.title;
+      document.getElementById('btn-portal-home').style.display = "inline-flex";
+      
+      // 設定與更換主題色 (讓 CSS 變數可動態適配疾病類型)
+      document.documentElement.style.setProperty('--active-theme-color', config.theme);
+      
+      // 動態渲染 Sidebar 導航選單
+      const sidebarNav = document.getElementById('disease-sidebar-nav');
+      sidebarNav.innerHTML = config.menu.map((item, idx) => `
+        <button class="sidebar-btn ${idx === 0 ? 'active' : ''}" onclick="switchDiseaseTab('${item.id}', this)">
+          ${item.name}
+        </button>
+      `).join('');
+
+      // 隱藏所有分頁，並預設激活第一個分頁
+      const panes = document.querySelectorAll('.tab-pane');
+      panes.forEach(pane => pane.classList.remove('active'));
+      
+      const defaultPane = document.getElementById(config.menu[0].id);
+      if (defaultPane) defaultPane.classList.add('active');
+
+      // 更新 CTA 預約看板文案
+      document.getElementById('cta-title').textContent = config.ctaTitle;
+      document.getElementById('cta-desc').textContent = config.ctaDesc;
+      
+      // 切換視圖
+      document.getElementById('portal-view').style.display = "none";
+      document.getElementById('detail-view').style.display = "block";
+      
+      // 滾動到頂部
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // 糖尿病與高血脂模組初始化計算
+      if (diseaseKey === 'dm') {
+        // 預設高亮腳部
+        selectAnatomy('foot');
+        calculateKdigo();
+      } else if (diseaseKey === 'lip') {
+        const lipSlider = document.getElementById('lip-ldlc-slider');
+        if (lipSlider) updateLipidSimulation(parseInt(lipSlider.value));
+      }
+    }
+
+    function switchDiseaseTab(paneId, btnElement) {
+      // 移除側邊按鈕 active
+      const buttons = document.querySelectorAll('.sidebar-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      
+      btnElement.classList.add('active');
+
+      // 切換分頁卡片顯示
+      const panes = document.querySelectorAll('.tab-pane');
+      panes.forEach(pane => pane.classList.remove('active'));
+
+      const activePane = document.getElementById(paneId);
+      if (activePane) activePane.classList.add('active');
+    }
+
+    function goHome() {
+      document.getElementById('portal-view').style.display = "block";
+      document.getElementById('detail-view').style.display = "none";
+      document.getElementById('btn-portal-home').style.display = "none";
+      document.documentElement.style.setProperty('--active-theme-color', 'var(--theme-portal)');
+      
+      // 滾動到頂部
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ==========================================
+    // 🌟 6. 糖尿病 (DM) 互動邏輯
+    // ==========================================
+    function selectYear(year) {
+      const pts = [0, 5, 10];
+      pts.forEach(y => {
+        const pt = document.getElementById(`pt-${y}`);
+        if (pt) {
+          if (y === year) {
+            pt.setAttribute('fill', 'var(--theme-dm)');
+            pt.setAttribute('r', '8');
+          } else {
+            pt.setAttribute('fill', 'var(--text-muted)');
+            pt.setAttribute('r', '6');
+          }
+        }
+      });
+
+      const title = document.getElementById('cell-year-title');
+      const desc = document.getElementById('cell-year-desc');
+
+      if (year === 0) {
+        title.textContent = "確診第 0 年 (胰島細胞功能剩餘約 50%)";
+        desc.innerHTML = "在您被診斷出糖尿病的第一天，胰島細胞便已經自然退化了將近一半。這<strong>不是因為您做錯了什麼</strong>，而是身體機能的自然耗損。此時應積極配合醫師使用一線藥物，保護剩下的胰臟功能。";
+      } else if (year === 5) {
+        title.textContent = "確診第 5 年 (胰島細胞功能剩餘約 35%)";
+        desc.innerHTML = "隨著時間推進，細胞剩餘功能降至 35% 左右。此時單靠一種藥物可能不夠，需要合併第二種或第三種不同機轉的藥物「多管齊下」，幫助身體平穩控糖。";
+      } else {
+        title.textContent = "確診第 10 年以上 (胰島細胞功能剩餘 20% 以下)";
+        desc.innerHTML = "此時細胞功能顯著衰退，藥物效果可能打折。專科醫師倡導：<span style='color:var(--warn-yellow); font-weight:700;'>「這時配合打胰島素或 GLP-1 針劑，絕非病情沒救，而是直接幫剩下過勞的細胞請特休假！從外面補充電能，保護身體安穩不洗腎！」</span>";
+      }
+    }
+
+    function selectAnatomy(part) {
+      const cards = document.querySelectorAll('.anatomy-card');
+      cards.forEach(c => {
+        c.classList.remove('active');
+        const desc = c.querySelector('.anatomy-card-desc');
+        if (desc) desc.style.display = 'none';
+      });
+
+      const activeCard = document.getElementById(`card-part-${part}`);
+      if (activeCard) {
+        activeCard.classList.add('active');
+        const desc = activeCard.querySelector('.anatomy-card-desc');
+        if (desc) desc.style.display = 'block';
+      }
+
+      const parts = ['brain', 'eye', 'heart', 'kidney', 'foot'];
+      parts.forEach(p => {
+        const hsElement = document.getElementById(`hs-${p}`);
+        if (hsElement) {
+          if (p === part) {
+            hsElement.classList.add('active');
+          } else {
+            hsElement.classList.remove('active');
+          }
+        }
+      });
+    }
+
+    // KDIGO 表格切換
+    function switchKdigoTable(mode) {
+      const tableFreq = document.getElementById('kdigo-table-freq');
+      const tableRisk = document.getElementById('kdigo-table-risk');
+      const btnFreq = document.getElementById('btn-kdigo-freq');
+      const btnRisk = document.getElementById('btn-kdigo-risk');
+
+      if (mode === 'freq') {
+        tableFreq.style.display = 'table';
+        tableRisk.style.display = 'none';
+        btnFreq.classList.add('active');
+        btnRisk.classList.remove('active');
+      } else {
+        tableFreq.style.display = 'none';
+        tableRisk.style.display = 'table';
+        btnFreq.classList.remove('active');
+        btnRisk.classList.add('active');
+      }
+    }
+
+    // KDIGO 同步計算與雙表高亮
+    function calculateKdigo() {
+      const egfrInput = document.getElementById('dm-egfr-input');
+      const uacrInput = document.getElementById('dm-uacr-input');
+      const resultPanel = document.getElementById('kdigo-result-panel');
+      const resultRiskLevel = document.getElementById('result-risk-level');
+      const resultDesc = document.getElementById('result-desc');
+      const resultFrequency = document.getElementById('result-frequency');
+      const kdigoCells = document.querySelectorAll('.kdigo-cell');
+
+      if (!egfrInput || !uacrInput) return;
+      const egfr = parseFloat(egfrInput.value);
+      const uacr = parseFloat(uacrInput.value);
+
+      if (isNaN(egfr) || isNaN(uacr) || egfr <= 0 || uacr < 0) return;
+
+      // 1. 解析臨床監測頻率表 (3x6) 座標
+      let egfrStageFreq = '';
+      if (egfr >= 90) egfrStageFreq = 'G1';
+      else if (egfr >= 60) egfrStageFreq = 'G2';
+      else if (egfr >= 45) egfrStageFreq = 'G3a';
+      else if (egfr >= 30) egfrStageFreq = 'G3b';
+      else if (egfr >= 15) egfrStageFreq = 'G4';
+      else egfrStageFreq = 'G5';
+
+      let uacrStageFreq = '';
+      if (uacr < 30) uacrStageFreq = 'A1';
+      else if (uacr <= 300) uacrStageFreq = 'A2';
+      else uacrStageFreq = 'A3';
+
+      // 2. 解析相對風險表 (5x6) 座標
+      let egfrStageRisk = '';
+      if (egfr >= 105) egfrStageRisk = 'G1a';
+      else if (egfr >= 90) egfrStageRisk = 'G1b';
+      else if (egfr >= 60) egfrStageRisk = 'G2';
+      else if (egfr >= 45) egfrStageRisk = 'G3a';
+      else if (egfr >= 30) egfrStageRisk = 'G3b';
+      else egfrStageRisk = 'G4'; // 小於30皆落入最後一列 G4
+
+      let uacrStageRisk = '';
+      if (uacr < 10) uacrStageRisk = 'R1';
+      else if (uacr < 30) uacrStageRisk = 'R2';
+      else if (uacr < 300) uacrStageRisk = 'R3';
+      else if (uacr < 1000) uacrStageRisk = 'R4';
+      else uacrStageRisk = 'R5';
+
+      // 3. 清除所有 cells 高亮
+      kdigoCells.forEach(cell => cell.classList.remove('highlight-cell'));
+
+      // 4. 同步高亮兩張表格對應 cell
+      const targetFreqId = `cell-${egfrStageFreq.toLowerCase()}-${uacrStageFreq.toLowerCase()}`;
+      const targetFreqCell = document.getElementById(targetFreqId);
+      if (targetFreqCell) targetFreqCell.classList.add('highlight-cell');
+
+      const targetRiskId = `cell-${egfrStageRisk.toLowerCase()}-${uacrStageRisk.toLowerCase()}`;
+      const targetRiskCell = document.getElementById(targetRiskId);
+      if (targetRiskCell) targetRiskCell.classList.add('highlight-cell');
+
+      // 5. 抓取相對風險倍數並輸出報告
+      let riskMultiplierText = "";
+      if (targetRiskCell) {
+        const freqLabel = targetRiskCell.querySelector('.freq-label');
+        if (freqLabel) {
+          riskMultiplierText = freqLabel.textContent.trim();
+        }
+      }
+
+      if (targetFreqCell) {
+        let riskLevelText = '';
+        let adviceText = '';
+        let frequencyText = '';
+        let accentColor = '';
+
+        if (targetFreqCell.classList.contains('risk-low')) {
+          riskLevelText = '🟢 低風險 (Low Risk)';
+          adviceText = '您的腎臟功能與尿蛋白水準正常，屬於糖尿病腎病變低風險族群。';
+          frequencyText = '每年至少 1 次';
+          accentColor = 'var(--safe-green)';
+        } else if (targetFreqCell.classList.contains('risk-mod')) {
+          riskLevelText = '🟡 中度風險 (Moderately Increased)';
+          adviceText = '您的指標已出現早期腎病變跡象（如微量白蛋白尿）。請配合醫囑，積極使用護腎降壓調糖用藥。';
+          frequencyText = '每年至少 1 次';
+          accentColor = 'var(--warn-yellow)';
+        } else if (targetFreqCell.classList.contains('risk-high')) {
+          riskLevelText = '🟠 高風險 (High Risk)';
+          adviceText = '您的腎臟功能已有明顯衰退或尿蛋白顯著增加，心血管事件風險高。需要積極調藥介入治療。';
+          frequencyText = '每年至少 2 次';
+          accentColor = '#ff7a00';
+        } else if (targetFreqCell.classList.contains('risk-vhigh')) {
+          riskLevelText = '🔴 極高風險 (Very High Risk)';
+          adviceText = '您的腎功能嚴重受損或尿蛋白極高。請配合腎臟專科醫師共同照護，預防洗腎及心臟病變。';
+          frequencyText = '每年至少 3 至 4 次以上';
+          accentColor = 'var(--danger-red)';
+        }
+
+        if (resultRiskLevel) {
+          resultRiskLevel.textContent = `評估結果：${riskLevelText}`;
+          resultRiskLevel.style.color = accentColor;
+        }
+        
+        let multiplierReport = riskMultiplierText ? `📊 <strong>同類人群之腎衰竭相對風險：${riskMultiplierText}</strong><br>` : "";
+        
+        if (resultDesc) {
+          resultDesc.innerHTML = `${adviceText}<br>${multiplierReport}<span style="font-size:12px; color:var(--text-muted);">📖 指引文獻：KDIGO Clinical Practice Guideline 2024【Level 1a, 國際指引】</span>`;
+        }
+        if (resultFrequency) resultFrequency.innerHTML = `📅 建議監測頻率：<strong>${frequencyText}</strong>`;
+        if (resultPanel) {
+          resultPanel.style.borderLeftColor = accentColor;
+          resultPanel.style.display = 'block';
+        }
+      }
+    }
+
+    // 氣喘與肺阻塞專用全域變數
+    let currentPefPredicted = 0;
+    let currentMmrcScore = -1;
+    let currentCatScore = -1;
+
+    function togglePefWeight() {
+      const pefType = document.getElementById('pef-type').value;
+      const weightWrapper = document.getElementById('pef-weight-wrapper');
+      if (weightWrapper) {
+        if (pefType === 'child') {
+          weightWrapper.style.display = 'block';
+        } else {
+          weightWrapper.style.display = 'none';
+        }
+      }
+    }
+
+    function calculatePef() {
+      const pefType = document.getElementById('pef-type').value;
+      const gender = document.getElementById('pef-gender').value;
+      const age = parseFloat(document.getElementById('pef-age').value);
+      const height = parseFloat(document.getElementById('pef-height').value);
+      const weight = parseFloat(document.getElementById('pef-weight').value);
+      
+      const panel = document.getElementById('pef-result-panel');
+      const title = document.getElementById('pef-result-title');
+      const desc = document.getElementById('pef-result-desc');
+      const zoneGreen = document.getElementById('pef-zone-green');
+      const zoneYellow = document.getElementById('pef-zone-yellow');
+      const zoneRed = document.getElementById('pef-zone-red');
+
+      if (isNaN(age) || isNaN(height) || (pefType === 'child' && isNaN(weight))) {
+        alert('請填寫完整資訊以利計算！');
+        return;
+      }
+
+      let pefPredicted = 0;
+
+      if (pefType === 'adult') {
+        // 成人預估公式 (台北榮民總醫院胸腔部)
+        if (gender === 'male') {
+          pefPredicted = 3.89 * height - 2.95 * age + 43.59;
+        } else {
+          pefPredicted = 4.10 * height - 1.61 * age - 173.55;
+        }
+      } else {
+        // 兒童 6-12 歲預估公式 (馬偕紀念醫院兒童過敏免疫科)
+        if (gender === 'male') {
+          pefPredicted = 9.35 * age + 2.03 * height + 0.81 * weight - 130.5;
+        } else {
+          pefPredicted = 7.37 * age + 1.68 * height + 1.28 * weight - 98.87;
+        }
+      }
+
+      pefPredicted = Math.round(pefPredicted);
+      if (pefPredicted < 50) pefPredicted = 100; // 防呆安全閥
+      currentPefPredicted = pefPredicted; // 儲存預估值供實測判定使用
+
+      // 劃分警戒區 (80%, 50%)
+      const greenMin = Math.round(pefPredicted * 0.8);
+      const yellowMin = Math.round(pefPredicted * 0.5);
+
+      title.textContent = `📊 個人 PEF 預估正常值：${pefPredicted} L/min`;
+      desc.innerHTML = `您的預估尖峰吐氣流速為 <strong>${pefPredicted} L/min</strong>。以下為您專屬的居家綠黃紅燈監測區間，請每天早晚全力吹氣測量三次，並取最高值對照紀錄：`;
+      
+      zoneGreen.innerHTML = `<strong>&ge; ${greenMin} L/min</strong><br>(控制穩定，繼續保養)`;
+      zoneYellow.innerHTML = `<strong>${yellowMin} ~ ${greenMin - 1} L/min</strong><br>(警報！需用急救劑或回診)`;
+      zoneRed.innerHTML = `<strong>&lt; ${yellowMin} L/min</strong><br>(危急！立刻送醫急救)`;
+
+      panel.style.display = 'block';
+
+      // 檢查是否已填寫實測值。若有，直接同步顯示燈號判定
+      const actualInput = document.getElementById('pef-actual');
+      const actualVal = parseFloat(actualInput.value);
+      const resultBox = document.getElementById('pef-actual-result-box');
+
+      if (!isNaN(actualVal) && actualVal > 0) {
+        checkActualPef();
+      } else {
+        if (resultBox) resultBox.style.display = 'none';
+      }
+    }
+
+    function checkActualPef() {
+      const actualInput = document.getElementById('pef-actual');
+      const actualVal = parseFloat(actualInput.value);
+      const resultBox = document.getElementById('pef-actual-result-box');
+      const valActualPef = document.getElementById('val-actual-pef');
+      const valActualRatio = document.getElementById('val-actual-ratio');
+      const valActualLight = document.getElementById('val-actual-light');
+      const valActualDesc = document.getElementById('val-actual-desc');
+
+      if (isNaN(actualVal) || actualVal <= 0) {
+        if (resultBox) resultBox.style.display = 'none';
+        return;
+      }
+
+      if (currentPefPredicted === 0) {
+        alert('請先在上方計算您的預估正常值！');
+        return;
+      }
+
+      const ratio = Math.round((actualVal / currentPefPredicted) * 100);
+      valActualPef.textContent = `${Math.round(actualVal)} L/min`;
+      valActualRatio.textContent = `${ratio} %`;
+      
+      if (resultBox) resultBox.style.display = 'block';
+
+      if (ratio >= 80) {
+        valActualLight.textContent = '🟢 綠燈安全';
+        valActualLight.style.backgroundColor = 'var(--safe-green)';
+        valActualRatio.style.color = 'var(--safe-green)';
+        valActualDesc.innerHTML = '<strong>狀態說明：</strong>您的肺功能處於**安全綠燈區**（佔預估值 80% 以上）。代表氣喘控制穩定，請繼續遵醫囑每日使用保養型吸入劑，並遠離過敏原。';
+      } else if (ratio >= 50 && ratio < 80) {
+        valActualLight.textContent = '🟡 黃燈警戒';
+        valActualLight.style.backgroundColor = 'var(--warn-yellow)';
+        valActualRatio.style.color = 'var(--warn-yellow)';
+        valActualDesc.innerHTML = '<strong>狀態說明：</strong>您的肺功能處於**黃燈警戒區**（佔預估值 50% - 79%）。代表支氣管已有收縮、狹窄發炎。**請依照醫師制定的氣喘行動計畫，吸入急救型支氣管擴張劑（SABA）**，並在 20-30 分鐘後重測。若持續不見好轉或症狀惡化，請即刻就醫。';
+      } else {
+        valActualLight.textContent = '🔴 紅燈危急';
+        valActualLight.style.backgroundColor = 'var(--danger-red)';
+        valActualRatio.style.color = 'var(--danger-red)';
+        valActualDesc.innerHTML = '<strong>狀態說明：</strong>您的肺功能已掉入**紅燈危險區**（佔預估值低於 50%）。這代表您的支氣管正處於急性嚴重緊縮狀態，隨時會發生窒息！**請立刻吸入急救型擴張劑，並在家人協助下「即刻前往醫院急診」！**';
+      }
+    }
+
+    // mMRC 選擇
+    function selectMmrc(score, btnElement) {
+      // 清除同分組按鈕 active
+      const btns = document.querySelectorAll('.mmrc-option-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      
+      btnElement.classList.add('active');
+
+      const resultBox = document.getElementById('mmrc-result-box');
+      const title = document.getElementById('mmrc-result-title');
+      const desc = document.getElementById('mmrc-result-desc');
+
+      resultBox.style.display = 'block';
+      currentMmrcScore = score;
+      
+      const mmrcDisp = document.getElementById('mets-mmrc-display');
+      if (mmrcDisp) mmrcDisp.textContent = score + " 級";
+
+      if (score <= 1) {
+        title.textContent = `🟢 mMRC ${score} 級：低喘度 (Low Dyspnea)`;
+        title.style.color = 'var(--safe-green)';
+        desc.textContent = "您的活動喘度屬於輕微影響。日常生活中僅在劇烈活動或急行時有喘感，請維持規律作息與心肺有氧活動。";
+      } else {
+        title.textContent = `🔴 mMRC ${score} 級：高喘度 (High Dyspnea)`;
+        title.style.color = 'var(--danger-red)';
+        desc.innerHTML = "您的活動喘度已明顯限制日常生活，行走短距離即需停步歇息。<strong>建議與主治醫師研擬長效氣管擴張劑吸入處方，並啟動每日縮唇與腹式呼吸訓練。</strong>";
+      }
+    }
+
+    // CAT 評估
+    function selectCat(qNum, score, btnElement) {
+      // 找到該題的按鈕組
+      const row = btnElement.closest('.cat-row');
+      if (!row) return;
+
+      const btns = row.querySelectorAll('.cat-score-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      btnElement.classList.add('active');
+
+      catScores[qNum] = score;
+
+      checkCatCompletion();
+    }
+
+    function checkCatCompletion() {
+      const allAnswered = Object.values(catScores).every(score => score >= 0);
+      if (!allAnswered) return;
+
+      const totalScore = Object.values(catScores).reduce((a, b) => a + b, 0);
+      const resultBox = document.getElementById('cat-result-box');
+      const title = document.getElementById('cat-result-title');
+      const desc = document.getElementById('cat-result-desc');
+
+      resultBox.style.display = 'block';
+      currentCatScore = totalScore;
+
+      const catDisp = document.getElementById('mets-cat-display');
+      if (catDisp) catDisp.textContent = totalScore + " 分";
+
+      if (totalScore < 10) {
+        title.textContent = `🟢 輕微影響：${totalScore} 分 (低症狀度)`;
+        title.style.color = 'var(--safe-green)';
+        desc.textContent = "肺阻塞對您日常生活的影響尚不明顯。請務必遠離吸菸與空汙，每日進行防喘呼吸復健以維持目前的良好肺活量。";
+      } else if (totalScore >= 10 && totalScore <= 20) {
+        title.textContent = `🟡 中度影響：${totalScore} 分 (中症狀度)`;
+        title.style.color = 'var(--warn-yellow)';
+        desc.textContent = "肺阻塞已造成您時常咳嗽、多痰或胸悶，日常生活活動（如爬坡、做家事）受到限制。建議遵醫囑規律使用保養型吸入型藥物。";
+      } else {
+        title.textContent = `🔴 重度影響：${totalScore} 分 (高症狀度，危險警戒區)`;
+        title.style.color = 'var(--danger-red)';
+        desc.textContent = "生活品質受到肺病之極大摧殘！睡眠及日常外出信心嚴重喪失。應立刻諮詢胸腔內科團隊，優化藥物與氧氣搭配，並嚴格遵循肺復健訓練。";
+      }
+      
+      resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // GOLD Group A、B、E 判定邏輯
+    function calculateGoldGroup() {
+      const exac = parseInt(document.getElementById('copd-exac').value) || 0;
+      const hosp = document.getElementById('copd-hosp').value;
+      
+      const panel = document.getElementById('gold-result-panel');
+      const title = document.getElementById('gold-result-title');
+      const desc = document.getElementById('gold-result-desc');
+      const drug = document.getElementById('gold-result-drug');
+
+      // 清除表格列的高亮
+      document.getElementById('gold-row-a').style.backgroundColor = '';
+      document.getElementById('gold-row-b').style.backgroundColor = '';
+      document.getElementById('gold-row-e').style.backgroundColor = '';
+
+      // 防呆：確認是否完成評估問卷
+      if (currentMmrcScore === -1 && currentCatScore === -1) {
+        alert('請先在上方完成 mMRC 呼吸困難量表或 CAT 肺阻塞評估測試！');
+        return;
+      }
+
+      // 判定症狀度 (高症狀 vs 低症狀)
+      // GOLD指引：只要 mMRC >= 2 或 CAT >= 10 兩者之一成立，即為高症狀
+      let hasHighSymptoms = false;
+      if (currentMmrcScore >= 2) hasHighSymptoms = true;
+      if (currentCatScore >= 10) hasHighSymptoms = true;
+
+      // 判定惡化風險 (高惡化 vs 低惡化)
+      // GOLD指引：過去一年住院 >= 1 次，或一般惡化次數 >= 2 次，即為高惡化風險 (Group E)
+      let hasHighRisk = false;
+      if (hosp === 'yes') hasHighRisk = true;
+      if (exac >= 2) hasHighRisk = true;
+
+      let group = '';
+      let groupColor = '';
+      let groupDesc = '';
+      let groupDrug = '';
+
+      if (hasHighRisk) {
+        group = 'Group E';
+        groupColor = 'var(--danger-red)';
+        groupDesc = `您屬於 <strong>${group}（高急性惡化風險群）</strong>。<br>• 惡化風險判定標準：過去一年住院次數 &ge; 1 次 或 急性發作 &ge; 2 次。<br>由於惡化住院風險極高，臨床首要目標是預防再次發作，改善存活率並保護殘餘肺功能。`;
+        groupDrug = '💊 建議首選治療用藥：雙效長效氣管擴張劑 (LAMA + LABA)。若血中嗜酸性白血球 (EOS) &ge; 300 cells/&mu;L 或合併有氣喘，建議使用「三合一吸入劑 (ICS + LAMA + LABA)」。';
+        document.getElementById('gold-row-e').style.backgroundColor = 'rgba(231, 76, 60, 0.15)';
+      } else {
+        if (hasHighSymptoms) {
+          group = 'Group B';
+          groupColor = 'var(--warn-yellow)';
+          groupDesc = `您屬於 <strong>${group}（高症狀、低急性惡化風險群）</strong>。<br>• 症狀判定標準：mMRC &ge; 2 級 或 CAT &ge; 10 分。<br>因為日常活動中喘氣、咳嗽、痰多等症狀明顯，需規律吸藥以改善日常活動力與生活品質。`;
+          groupDrug = '💊 建議首選治療用藥：雙效長效氣管擴張劑 (LAMA + LABA) 複方吸入劑，能發揮更顯著的擴張氣管效果。';
+          document.getElementById('gold-row-b').style.backgroundColor = 'rgba(241, 196, 15, 0.15)';
+        } else {
+          group = 'Group A';
+          groupColor = 'var(--safe-green)';
+          groupDesc = `您屬於 <strong>${group}（低症狀、低急性惡化風險群）</strong>。<br>• 判定標準：mMRC 0-1 級 且 CAT &lt; 10 分。<br>您的症狀較輕微，日常活動受限程度低，且過去一年無住院或多次惡化。`;
+          groupDrug = '💊 建議首選治療用藥：單一長效或短效氣管擴張劑 (LAMA 或 LABA)。若僅有零星發作，可有症狀時按需吸入短效急救擴張劑 (SABA / SAMA)。';
+          document.getElementById('gold-row-a').style.backgroundColor = 'rgba(46, 204, 113, 0.15)';
+        }
+      }
+
+      title.textContent = `判定結果：${group}`;
+      title.style.color = groupColor;
+      desc.innerHTML = groupDesc;
+      drug.textContent = groupDrug;
+      panel.style.borderLeftColor = groupColor;
+      panel.style.display = 'block';
+      
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ==========================================
+    // 🌟 8. 代謝症候群 (Mets) 計算邏輯
+    // ==========================================
+    function calculateMets() {
+      const gender = document.getElementById('mets-gender').value;
+      const waist = parseFloat(document.getElementById('mets-waist').value);
+      const sbp = parseFloat(document.getElementById('mets-sbp').value);
+      const dbp = parseFloat(document.getElementById('mets-dbp').value);
+      const glu = parseFloat(document.getElementById('mets-glu').value);
+      const tg = parseFloat(document.getElementById('mets-tg').value);
+      const hdl = parseFloat(document.getElementById('mets-hdl').value);
+
+      const resultCard = document.getElementById('mets-result-card');
+      const resultTitle = document.getElementById('mets-result-title');
+      const resultIndicators = document.getElementById('mets-result-indicators');
+      const resultDesc = document.getElementById('mets-result-desc');
+
+      if (isNaN(waist) || isNaN(sbp) || isNaN(dbp) || isNaN(glu) || isNaN(tg) || isNaN(hdl)) {
+        alert('請填寫所有代謝指標數值以進行評估！');
+        return;
+      }
+
+      let positiveCount = 0;
+      let checkHtml = "";
+
+      // 1. 腰圍
+      const waistLimit = gender === 'male' ? 90 : 80;
+      const waistOk = waist < waistLimit;
+      if (!waistOk) positiveCount++;
+      checkHtml += `<div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+        <span>📏 腹部肥胖 (腰圍): ${waist} cm (標準: 男&lt;90, 女&lt;80)</span>
+        <span style="font-weight:bold; color:${waistOk ? 'var(--safe-green)' : 'var(--danger-red)'};">${waistOk ? '🟢 正常' : '🔴 超標'}</span>
+      </div>`;
+
+      // 2. 血壓
+      const bpOk = (sbp < 130 && dbp < 85);
+      if (!bpOk) positiveCount++;
+      checkHtml += `<div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+        <span>💓 居家血壓: ${sbp}/${dbp} mmHg (標準: &lt;130/85)</span>
+        <span style="font-weight:bold; color:${bpOk ? 'var(--safe-green)' : 'var(--danger-red)'};">${bpOk ? '🟢 正常' : '🔴 超標'}</span>
+      </div>`;
+
+      // 3. 空腹血糖
+      const gluOk = glu < 100;
+      if (!gluOk) positiveCount++;
+      checkHtml += `<div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+        <span>🍭 空腹血糖: ${glu} mg/dL (標準: &lt;100)</span>
+        <span style="font-weight:bold; color:${gluOk ? 'var(--safe-green)' : 'var(--danger-red)'};">${gluOk ? '🟢 正常' : '🔴 超標'}</span>
+      </div>`;
+
+      // 4. 三酸甘油酯
+      const tgOk = tg < 150;
+      if (!tgOk) positiveCount++;
+      checkHtml += `<div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+        <span>🥑 三酸甘油酯: ${tg} mg/dL (標準: &lt;150)</span>
+        <span style="font-weight:bold; color:${tgOk ? 'var(--safe-green)' : 'var(--danger-red)'};">${tgOk ? '🟢 正常' : '🔴 超標'}</span>
+      </div>`;
+
+      // 5. 好膽固醇
+      const hdlLimit = gender === 'male' ? 40 : 50;
+      const hdlOk = hdl >= hdlLimit;
+      if (!hdlOk) positiveCount++;
+      checkHtml += `<div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+        <span>🥛 好膽固醇 (HDL-C): ${hdl} mg/dL (標準: 男&ge;40, 女&ge;50)</span>
+        <span style="font-weight:bold; color:${hdlOk ? 'var(--safe-green)' : 'var(--danger-red)'};">${hdlOk ? '🟢 正常' : '🔴 偏低'}</span>
+      </div>`;
+
+      // 呈現結果
+      resultCard.style.display = "block";
+      resultIndicators.innerHTML = checkHtml;
+
+      const isMets = positiveCount >= 3;
+      if (isMets) {
+        resultCard.style.borderLeftColor = "var(--danger-red)";
+        resultTitle.textContent = `⚠️ 代謝症候群確診 (符合 ${positiveCount} 項)`;
+        resultTitle.style.color = "var(--danger-red)";
+        resultDesc.innerHTML = "您的 5 項指標中有 <strong>" + positiveCount + " 項超標</strong>。根據台灣衛生福利部國健署標準，已符合**代謝症候群**。符合者未來罹患糖尿病風險提高 5 倍、高血壓風險高 3 倍、腦中風風險高 2 倍！建議立即諮詢診所醫療團隊，啟動得舒飲食與體重管理計畫。";
+      } else {
+        resultCard.style.borderLeftColor = "var(--safe-green)";
+        resultTitle.textContent = `🟢 指標正常 (僅符合 ${positiveCount} 項)`;
+        resultTitle.style.color = "var(--safe-green)";
+        resultDesc.innerHTML = "恭喜！您僅有 <strong>" + positiveCount + " 項超標</strong>，尚未達到代謝症候群的診斷標準。請繼續保持規律運動、得舒低鈉飲食，定期回診監測指標。";
+      }
+
+      resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  </script>
+</body>
+</html>
